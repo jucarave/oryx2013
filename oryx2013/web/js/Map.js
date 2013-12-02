@@ -49,6 +49,17 @@ Map.prototype.isSolid = function(position){
 	return false;
 };
 
+Map.prototype.isVisible = function(position){
+	if (position.y < 0 || position.x < 0) return;
+	if (position.y >= this.map.length || position.x >= this.map[0].length) return;
+	var tile = this.map[position.y][position.x];
+	if (tile === 0) return false;
+	if (tile.wasVisible == true){
+		return true;
+	}
+	return false;
+};
+
 Map.prototype.setVisible = function(position, visible){
 	if (position.y < 0 || position.x < 0) return;
 	if (position.y >= this.map.length || position.x >= this.map[0].length) return;
@@ -87,7 +98,8 @@ Map.prototype.parseMap = function(){
 			this.map[i][j] = {
 				tileId: this.map[i][j],
 				tile: Tileset.environment.getByTileId(this.map[i][j]),
-				visible: 0
+				visible: 0,
+				wasVisible: false
 			};
 		}
 	}
@@ -106,11 +118,14 @@ Map.prototype.drawMap = function(game){
 				if (tile === 0)  continue;
 				if (tile.visible == 0) continue;
 				
+				tile.wasVisible = false;
 				if (tile.visible == 1)
 					game.drawTile(tile.tile, new Position(j - x, i - y), null, true);
-				else if (tile.visible == 2)
+				else if (tile.visible == 2){
 					game.drawTile(tile.tile, new Position(j - x, i - y), null, false);
-					
+					tile.wasVisible = true;
+				}
+				
 				tile.visible = 1;
 			}
 		}
@@ -118,6 +133,7 @@ Map.prototype.drawMap = function(game){
 		for (var i= 0,len=this.instances.length;i<len;i++){
 			this.instances[i].loop(game);
 		}
+		
 	}
 	
 	this.player.playerAction = false;
