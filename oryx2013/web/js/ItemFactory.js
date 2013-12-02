@@ -14,6 +14,16 @@ var ItemFactory = {
 	},
 	
 	getItemQuality: function(status){
-		
+		if (status == 0){
+			return "damaged";
+		}else if (status <= 0.3){
+			return "badly";
+		}else if (status <= 0.6){
+			return "fine";
+		}else if (status <= 0.9){
+			return "good";
+		}else{
+			return "excelent";
+		}
 	}
 };
