@@ -3,13 +3,17 @@ var Console = {
 	
 	newMessage: function(text, color){
 		var m = {
-				text: text,
-				color: color,
-				repeats: 1,
-				base: text
-			};
-			
-			this.messages.push(m);
+			text: text,
+			color: color,
+			repeats: 1,
+			base: text
+		};
+		
+		this.messages.push(m);
+		
+		while (this.messages.length > 3){
+			this.messages.splice(0,1);
+		}
 	},
 	
 	addMessage: function(text, color){

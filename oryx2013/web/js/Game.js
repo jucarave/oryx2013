@@ -73,14 +73,13 @@ Game.prototype.drawConsole = function(){
 	this.eng.drawLine(0,this.gridS.y + 3, ctx.width, this.gridS.y + 3, "rgb(255,255,255)");
 	
 	var messages = Console.messages;
-	var init = 0, end = messages.length;
-	if (messages.length > 3) init = messages.length - 3;
+	var end = messages.length;
 	
-	for (var i=init;i<end;i++){
+	for (var i=0;i<end;i++){
 		var m = messages[i];
 		
 		ctx.fillStyle = m.color;
-		ctx.fillText(m.text, 4, 8 + (8 * (i - init)));
+		ctx.fillText(m.text, 4, 8 + (8 * i));
 	}
 };
 

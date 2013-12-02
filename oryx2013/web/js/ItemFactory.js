@@ -11,5 +11,9 @@ var ItemFactory = {
 		nitem.name = name;
 		nitem.status = status;
 		return nitem;
+	},
+	
+	getItemQuality: function(status){
+		
 	}
 };

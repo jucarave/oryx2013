@@ -7,7 +7,7 @@ function Item(tile, position, item){
 
 Item.prototype.checkPlayer = function(){
 	if (this.mapManager.player.position.equals(this.position)){
-		Console.addMessage("You stepped into a(n) " + this.item.name);
+		Console.addMessage("You stepped into a(n) " + this.item.name, "rgb(255,255,255)");
 	}
 };
 
