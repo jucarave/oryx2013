@@ -9,12 +9,21 @@ function Player(tile, position){
 Player.prototype = Object.create(Character.prototype);
 Player.prototype.constructor = Player;
 
+Player.prototype.consoleMovement = function(xTo, yTo){
+	if (yTo < 0){ Console.addMessage("North", "rgb(255,255,255)"); }
+	else if (yTo > 0){ Console.addMessage("South", "rgb(255,255,255)"); }
+	else if (xTo < 0){ Console.addMessage("West", "rgb(255,255,255)"); }
+	else if (xTo > 0){ Console.addMessage("East", "rgb(255,255,255)"); }
+};
+
 Player.prototype.tryMove = function(key, xTo, yTo){
 	if (game.keyP[key]){ 
 		if (this.run == 0 || this.run > 20){
-			this.moveTo(xTo, yTo);
+			if (this.moveTo(xTo, yTo))
+				this.consoleMovement(xTo, yTo);
 			this.playerAction = true;
 			game.keyP[key] = 2;
+			
 		}
 		this.run++;
 		return true;
