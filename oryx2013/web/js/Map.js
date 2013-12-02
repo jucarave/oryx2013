@@ -57,6 +57,15 @@ Map.prototype.setVisible = function(position, visible){
 	tile.visible = visible;
 };
 
+Map.prototype.newItem = function(tile, position, item){
+	if (item.status == 0) return;
+	
+	var ins = new Item(tile, position, item);
+	ins.mapManager = this;
+	
+	this.instances.push(ins);
+};
+
 Map.prototype.loadInstances = function(game){
 	switch (game.room){
 		case 0:
@@ -64,6 +73,8 @@ Map.prototype.loadInstances = function(game){
 			this.player.mapManager = this;
 			this.player.setView(game);
 			FOV.getFOV(this.player.position, this, this.player.fovDistance);
+			
+			this.newItem(Tileset.itemsWeapons.sword, new Position(14, 1), ItemFactory.getItem("sword", Math.random()));
 		break;
 	}
 };

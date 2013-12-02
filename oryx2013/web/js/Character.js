@@ -8,7 +8,9 @@ Character.prototype.moveTo = function(x, y){
 	this.position.sum(x, y);
 	if (this.mapManager.isSolid(this.position)){
 		this.position.sum(-x, -y);
+		return false;
 	}
+	return true;
 };
 
 Character.prototype.draw = function(game){

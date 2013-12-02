@@ -1,8 +1,8 @@
 function Game(container){
 	this.eng = new Engine();
-	this.eng.createCanvas(320, 240, container);
-	this.eng.canvas.style.zoom = "200%";
-	this.eng.ctx.font = "10px courier";
+	this.eng.createCanvas(320, 264, container);
+	//this.eng.canvas.style.zoom = "200%";
+	this.eng.ctx.font = '8px "Courier New"';
 	
 	this.fps = 1000 / 30;
 	this.lastF = Date.now();
@@ -14,7 +14,7 @@ function Game(container){
 	this.loadImages();
 	
 	this.viewS = new Position(20, 8);
-	this.viewPos = new Position(0, 0);
+	this.viewPos = new Position(0, 1);
 	this.gridS = new Position(16, 24);
 	this.map = null;
 	
@@ -64,17 +64,34 @@ Game.prototype.drawTile = function(tile, position, view, darker){
 	}
 };
 
+Game.prototype.drawConsole = function(){
+	var ctx = this.eng.ctx;
+	
+	ctx.fillStyle = "rgb(33,33,33)";
+	ctx.fillRect(0,0,ctx.width, this.gridS.y + 4);
+	
+	this.eng.drawLine(0,this.gridS.y + 3, ctx.width, this.gridS.y + 3, "rgb(255,255,255)");
+	
+	var messages = Console.messages;
+	var init = 0, end = messages.length;
+	if (messages.length > 3) init = messages.length - 3;
+	
+	for (var i=init;i<end;i++){
+		var m = messages[i];
+		
+		ctx.fillStyle = m.color;
+		ctx.fillText(m.text, 4, 8 + (8 * (i - init)));
+	}
+};
+
 Game.prototype.drawInterface = function(){
+	this.drawConsole();
 	var ctx = this.eng.ctx;
 	
 	ctx.fillStyle = "rgb(33,33,33)";
 	ctx.fillRect(0,ctx.height - this.gridS.y * 2,ctx.width, this.gridS.y * 2);
 	
-	ctx.strokeStyle = "rgb(255,255,255)";
-	ctx.beginPath();
-	ctx.moveTo(0,ctx.height - this.gridS.y * 2 + 1);
-	ctx.lineTo(ctx.width,ctx.height - this.gridS.y * 2 + 1);
-	ctx.stroke();
+	this.eng.drawLine(0,ctx.height - this.gridS.y * 2 + 1, ctx.width,ctx.height - this.gridS.y * 2 + 1, "rgb(255,255,255)");
 	
 	//Health
 	var x = 8;
