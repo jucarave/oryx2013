@@ -20,7 +20,8 @@ function getColor(r, g, b){
 		subImg: this.subImg,
 		parent: this,
 		getColor: this.getColor,
-		solid: this.solid
+		solid: this.solid,
+		isWall: this.isWall
 	};
 	
 	return tile;
@@ -33,8 +34,8 @@ var Tileset = {
 	
 	environment: {
 		floor1: {img: "environment", subImg: new Position(9, 0), tileId: 1, getColor: getColor, color: {r:60,g:60,b:60}},
-		wall1: {img: "environment", subImg: new Position(0, 0), tileId: 2, getColor: getColor, solid: true, color: {r:100,g:100,b:200}},
-		sidewall: {img: "environment", subImg: new Position(7, 0), tileId: 3, getColor: getColor, solid: true, color: {r:100,g:100,b:200}},
+		wall1: {img: "environment", subImg: new Position(0, 0), tileId: 2, getColor: getColor, solid: true, color: {r:100,g:100,b:200}, isWall: true},
+		sidewall: {img: "environment", subImg: new Position(7, 0), tileId: 3, getColor: getColor, solid: true, color: {r:100,g:100,b:200}, isWall: true},
 		
 		getByTileId: function(tileId){
 			for (env in Tileset.environment){

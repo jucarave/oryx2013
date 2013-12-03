@@ -19,8 +19,10 @@ Player.prototype.consoleMovement = function(xTo, yTo){
 Player.prototype.tryMove = function(key, xTo, yTo){
 	if (game.keyP[key]){ 
 		if (this.run == 0 || this.run > 20){
-			if (this.moveTo(xTo, yTo))
+			if (this.moveTo(xTo, yTo)){
 				this.consoleMovement(xTo, yTo);
+				PlayerStats.steppedItems = [];
+			}
 			this.playerAction = true;
 			game.keyP[key] = 2;
 			
@@ -52,9 +54,29 @@ Player.prototype.setView = function(game){
 	view.set(x, y);
 };
 
+Player.prototype.checkItems = function(game){
+	var items = PlayerStats.steppedItems;
+	if (items.length == 0) return;
+	if (game.keyP[13] != 1) return;
+	
+	game.keyP[13] = 2;
+	this.playerAction = true;
+	var weapons = PlayerStats.weapons;
+	if (items.length == 1){
+		items[0].inWorld = false;
+		if (weapons.length == 0){
+			PlayerStats.currentW = 0;
+		}
+		weapons.push(items[0]);
+		PlayerStats.steppedItems = [];
+		Console.addMessage("You pick up a(n) " + ItemFactory.getItemQuality(items[0].item.status) + " " + items[0].item.name);
+	}
+};
+
 Player.prototype.loop = function(game){
 	this.step(game);
 	this.setView(game);
+	this.checkItems(game);
 	
 	if (this.playerAction){
 		FOV.getFOV(this.position, this.mapManager, this.fovDistance);
@@ -68,5 +90,10 @@ var PlayerStats = {
 	mHealth: 30,
 	
 	mana: 7,
-	mMana: 15
+	mMana: 15,
+	
+	weapons: [],
+	currentW: 0,
+	
+	steppedItems: []
 };

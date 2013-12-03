@@ -3,11 +3,14 @@ function Item(tile, position, item){
 	this.position = position;
 	this.mapManager = null;
 	this.item = item;
+	this.inWorld = true;
 }
 
 Item.prototype.checkPlayer = function(){
 	if (this.mapManager.player.position.equals(this.position)){
 		Console.addMessage("You stepped into a(n) " + ItemFactory.getItemQuality(this.item.status) + " " + this.item.name, "rgb(255,255,255)");
+		
+		PlayerStats.steppedItems.push(this);
 	}
 };
 
