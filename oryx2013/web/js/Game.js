@@ -1,7 +1,7 @@
 function Game(container){
 	this.eng = new Engine();
 	this.eng.createCanvas(320, 264, container);
-	//this.eng.canvas.style.zoom = "200%";
+	this.eng.canvas.style.zoom = "200%";
 	this.eng.ctx.font = '8px "Courier New"';
 	
 	this.fps = 1000 / 30;
@@ -130,6 +130,12 @@ Game.prototype.drawInterface = function(){
 	x = ctx.width - this.gridS.x * 5;
 	y = ctx.height - this.gridS.y * 2 + 8;
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
+	
+	if (PlayerStats.weapons[PlayerStats.currentW]){
+		var weapon = PlayerStats.weapons[PlayerStats.currentW];
+		tile = weapon.tile;
+		this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
+	}
 	
 	//Armor
 	tile = Tileset.itemsWeapons.frame;
