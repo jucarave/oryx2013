@@ -62,14 +62,19 @@ Player.prototype.checkItems = function(game){
 	game.keyP[13] = 2;
 	this.playerAction = true;
 	var weapons = PlayerStats.weapons;
+	var armours = PlayerStats.armours;
 	if (items.length == 1){
 		items[0].inWorld = false;
-		if (weapons.length == 0){
-			PlayerStats.currentW = 0;
+		
+		if (items[0].item.isWeapon){
+			weapons.push(items[0]);
+			if (weapons.length == 1){ PlayerStats.currentW = 0; }
+		}else if (items[0].item.isArmour){
+			armours.push(items[0]);
+			if (armours.length == 1){ PlayerStats.currentA = 0; }
 		}
-		weapons.push(items[0]);
 		PlayerStats.steppedItems = [];
-		Console.addMessage("You pick up a(n) " + ItemFactory.getItemQuality(items[0].item.status) + " " + items[0].item.name);
+		Console.addMessage("You pick up a(n) " + ItemFactory.getItemQuality(items[0].item.status) + " " + items[0].item.name, "rgb(255,255,255)");
 	}
 };
 
@@ -94,6 +99,9 @@ var PlayerStats = {
 	
 	weapons: [],
 	currentW: 0,
+	
+	armours: [],
+	currentA: 0,
 	
 	steppedItems: []
 };

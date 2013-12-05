@@ -86,6 +86,7 @@ Map.prototype.loadInstances = function(game){
 			FOV.getFOV(this.player.position, this, this.player.fovDistance);
 			
 			this.newItem(Tileset.itemsWeapons.sword, new Position(14, 1), ItemFactory.getItem("sword", Math.random()));
+			this.newItem(Tileset.itemsWeapons.cottomCloth, new Position(15, 1), ItemFactory.getItem("cottomCloth", Math.random()));
 		break;
 	}
 };
