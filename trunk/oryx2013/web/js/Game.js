@@ -1,8 +1,8 @@
 function Game(container){
 	this.eng = new Engine();
-	this.eng.createCanvas(320, 264, container);
-	this.eng.canvas.style.zoom = "200%";
-	this.eng.ctx.font = '8px "Courier New"';
+	this.eng.createCanvas(640, 528, container);
+	//this.eng.canvas.style.zoom = "200%";
+	this.eng.ctx.font = '16px "Courier New"';
 	
 	this.fps = 1000 / 30;
 	this.lastF = Date.now();
@@ -15,7 +15,7 @@ function Game(container){
 	
 	this.viewS = new Position(20, 8);
 	this.viewPos = new Position(0, 1);
-	this.gridS = new Position(16, 24);
+	this.gridS = new Position(32, 48);
 	this.map = null;
 	
 	this.keyP = new Array(255);
@@ -79,7 +79,7 @@ Game.prototype.drawConsole = function(){
 		var m = messages[i];
 		
 		ctx.fillStyle = m.color;
-		ctx.fillText(m.text, 4, 8 + (8 * i));
+		ctx.fillText(m.text, 4, 16 + (16 * i));
 	}
 };
 
@@ -106,7 +106,7 @@ Game.prototype.drawInterface = function(){
 		x, y + img.imgHeight - per, img.imgWidth, per);
 		
 	//Magic
-	x = 30;
+	x = 52;
 	y = ctx.height - this.gridS.y * 2 + 8;
 	this.eng.drawImage(Tileset.hud.manaBack.getColor(58,135,175).img, x, y, Tileset.hud.manaBack.subImg);
 	
@@ -120,10 +120,11 @@ Game.prototype.drawInterface = function(){
 		
 	//Stats
 	x = 8;
-	y += 27;
+	y += 54;
 	
 	ctx.fillStyle = "rgb(255,255,255)";
 	ctx.fillText("Kram", x, y);
+	ctx.fillText(this.map.name, x, y + 16);
 	
 	//Weapon
 	tile = Tileset.itemsWeapons.frame;
@@ -135,27 +136,40 @@ Game.prototype.drawInterface = function(){
 		var weapon = PlayerStats.weapons[PlayerStats.currentW];
 		tile = weapon.tile;
 		this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
+		
+		ctx.fillText(Math.round(weapon.item.status * 100) + "%", x, y + this.gridS.y + 16);
 	}
 	
-	//Armor
+	//Armour
 	tile = Tileset.itemsWeapons.frame;
-	x += 20;
+	x += 40;
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 	
 	if (PlayerStats.armours[PlayerStats.currentA]){
 		var armour = PlayerStats.armours[PlayerStats.currentA];
 		tile = armour.tile;
 		this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
+		
+		ctx.fillText(Math.round(armour.item.status * 100) + "%", x, y + this.gridS.y + 16);
 	}
 	
 	//Food
 	tile = Tileset.itemsWeapons.frame;
-	x += 20;
+	x += 40;
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
+	
+	tile = Tileset.itemsWeapons.food.getColor(170, 120, 70);
+	this.eng.drawImage(tile.img, x, y, tile.subImg);
+	
+	ctx.fillStyle = "rgb(170, 120, 70)";
+	ctx.fillText(PlayerStats.food, x, y + this.gridS.y + 16);
 	
 	//stats
 	tile = Tileset.itemsWeapons.frame;
-	x += 20;
+	x += 40;
+	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
+	
+	tile = this.map.player.tile.parent;
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 };
 
@@ -184,7 +198,8 @@ Game.prototype.gameLoop = function(){
 	
 	if (delta > g.fps){
 		g.lastF = now - (delta % g.fps);
-		g.map.drawMap(g);
+		if (g.map)
+			g.map.drawMap(g);
 	}
 	
 	requestAnimationFrame(function(){ g.gameLoop(); });
