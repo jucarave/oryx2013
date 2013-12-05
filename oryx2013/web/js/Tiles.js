@@ -61,7 +61,12 @@ var Tileset = {
 	},
 	
 	itemsWeapons: {
+		//Weapons
 		sword: {img: "itemsWeapons", subImg: new Position(0, 0), getColor: getColor},
+		
+		//Armours
+		cottomCloth: ({img: "itemsWeapons", subImg: new Position(0, 1), getColor: getColor}),
+		
 		frame: {img: "itemsWeapons", subImg: new Position(4, 4), getColor: getColor}
 	}
 };

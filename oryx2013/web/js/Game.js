@@ -142,6 +142,12 @@ Game.prototype.drawInterface = function(){
 	x += 20;
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 	
+	if (PlayerStats.armours[PlayerStats.currentA]){
+		var armour = PlayerStats.armours[PlayerStats.currentA];
+		tile = armour.tile;
+		this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
+	}
+	
 	//Food
 	tile = Tileset.itemsWeapons.frame;
 	x += 20;

@@ -1,5 +1,9 @@
 var ItemFactory = {
-	sword: {dmg: 5, dice:"2D4", color: null},
+	//Weapons
+	sword: {dmg: 5, dice:"2D4", isWeapon: true},
+	
+	//Armours
+	cottomCloth: {shd: 2, dice:"2D4", isArmour: true},
 	
 	getItem: function(name, status){
 		var item = ItemFactory[name];
