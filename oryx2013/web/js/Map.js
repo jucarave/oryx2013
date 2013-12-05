@@ -1,5 +1,6 @@
 function Map(params){
 	this.map = null;
+	this.name = "";
 	this.tiles = [];
 	this.instances = [];
 	this.view = new Position( 0, 0);
@@ -12,6 +13,8 @@ function Map(params){
 }
 
 Map.prototype.loadMap = function(map){
+	this.name = "Test map - Level 1";
+	
 	this.map = [
 		[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 		[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

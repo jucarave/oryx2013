@@ -103,5 +103,7 @@ var PlayerStats = {
 	armours: [],
 	currentA: 0,
 	
+	food: 100,
+	
 	steppedItems: []
 };
