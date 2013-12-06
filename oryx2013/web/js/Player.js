@@ -34,11 +34,18 @@ Player.prototype.tryMove = function(key, xTo, yTo){
 };
 
 Player.prototype.step = function(game){
+	if (PlayerStats.weaponsMenu) return;
+	
 	if (!this.tryMove(37,-1,0))
 	if (!this.tryMove(38,0,-1))
 	if (!this.tryMove(39,1,0))
 	if (!this.tryMove(40,0,1))
 		this.run = 0;
+		
+	if (game.keyP[81] == 1){
+		PlayerStats.weaponsMenu = true;
+		game.keyP[81] = 2;
+	}
 };
 
 Player.prototype.setView = function(game){
@@ -78,6 +85,11 @@ Player.prototype.checkItems = function(game){
 	}
 };
 
+Player.prototype.act = function(){
+	this.playerAction = true;
+	FOV.getFOV(this.position, this.mapManager, this.fovDistance);
+};
+
 Player.prototype.loop = function(game){
 	this.step(game);
 	this.setView(game);
@@ -91,6 +103,9 @@ Player.prototype.loop = function(game){
 };
 
 var PlayerStats = {
+	name: "kram",
+	class: "Fighter",
+	
 	health: 30,
 	mHealth: 30,
 	
@@ -105,5 +120,15 @@ var PlayerStats = {
 	
 	food: 100,
 	
-	steppedItems: []
+	lvl: 1,
+	exp: 0,
+	str: 12,
+	def: 10,
+	spd: 12,
+	wsd: 8,
+	int: 10,
+	
+	steppedItems: [],
+	
+	weaponsMenu: false
 };

@@ -13,6 +13,8 @@ function Game(container){
 	
 	this.loadImages();
 	
+	this.selectedOpt = 0;
+	
 	this.viewS = new Position(20, 8);
 	this.viewPos = new Position(0, 1);
 	this.gridS = new Position(32, 48);
@@ -61,6 +63,74 @@ Game.prototype.drawTile = function(tile, position, view, darker){
 		var ctx = this.eng.ctx;
 		ctx.fillStyle = "rgba(0,0,0,0.8)";
 		ctx.fillRect(x*spr.imgWidth,y*spr.imgHeight,spr.imgWidth,spr.imgHeight);
+	}
+};
+
+Game.prototype.navigateMenu = function(quitK){
+	if (this.keyP[40] == 1){
+		this.selectedOpt += 1;
+		this.keyP[40] = 2;
+	}else if (this.keyP[38] == 1){
+		this.selectedOpt -= 1;
+		this.keyP[38] = 2;
+	}
+	
+	if (this.selectedOpt < 0) this.selectedOpt = 6;
+	else if (this.selectedOpt > 6) this.selectedOpt = 0;
+	
+	if (this.keyP[quitK] == 1){
+		this.selectedOpt = 0;
+		this.keyP[quitK] = 2;
+		return true;
+	}
+	
+	return false;
+};
+
+Game.prototype.drawWeaponsMenu = function(){
+	if (!PlayerStats.weaponsMenu) return;
+	
+	var ctx = this.eng.ctx;
+
+	tile = Tileset.itemsWeapons.frame;
+	x = ctx.width - this.gridS.x * 6 - 16;
+	y = this.gridS.y + 16;
+	
+	for (var i=0;i<7;i++){
+		this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
+		if (PlayerStats.weapons[i]){
+			var weapon = PlayerStats.weapons[i];
+			var wtile = weapon.tile;
+			this.eng.drawImage(this.sprites[wtile.img], x, y, wtile.subImg);
+			
+			if (this.selectedOpt == i && this.keyP[68] == 1){
+				weapon.position.set(this.map.player.position);
+				weapon.inWorld = true;
+				this.map.instances.push(weapon);
+				PlayerStats.weapons.splice(i,1);
+				i--;
+				this.map.player.act();
+				this.keyP[68] = 2;
+				Console.addMessage("You dropped a(n) " + weapon.item.name, "rgb(255,255,255)");
+				continue;
+			}
+		}
+		
+		if (this.selectedOpt == i){
+			this.eng.drawImage(tile.getColor(255,255,0).img, x, y, tile.subImg);
+			
+			if (this.keyP[13] == 1){
+				PlayerStats.currentW = i;
+				this.keyP[13] = 2;
+			}
+		}
+	
+		y += this.gridS.y + 4;
+	}
+	
+	if (this.navigateMenu(81)){
+		PlayerStats.weaponsMenu = false;
+		this.map.player.act();
 	}
 };
 
@@ -122,13 +192,29 @@ Game.prototype.drawInterface = function(){
 	x = 8;
 	y += 54;
 	
+	var ps = PlayerStats;
 	ctx.fillStyle = "rgb(255,255,255)";
-	ctx.fillText("Kram", x, y);
+	ctx.fillText(ps.name + ", " + ps.class, x, y);
 	ctx.fillText(this.map.name, x, y + 16);
+	
+	x = 100 + this.gridS.x;
+	y = ctx.height - this.gridS.y * 2 + 24;
+	
+	ctx.fillText("lvl: " + ps.lvl, x, y);
+	ctx.fillText("exp: " + ps.exp, x, y + 20);
+	
+	x += 100;
+	ctx.fillText("str: " + ps.str, x, y);
+	ctx.fillText("def: " + ps.def, x, y + 20);
+	
+	x += 100;
+	ctx.fillText("spd: " + ps.spd, x, y);
+	ctx.fillText("int: " + ps.int, x, y + 20);
+	ctx.fillText("wsd: " + ps.wsd, x, y + 40);
 	
 	//Weapon
 	tile = Tileset.itemsWeapons.frame;
-	x = ctx.width - this.gridS.x * 5;
+	x = ctx.width - this.gridS.x * 6 - 16;
 	y = ctx.height - this.gridS.y * 2 + 8;
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 	
@@ -164,13 +250,17 @@ Game.prototype.drawInterface = function(){
 	ctx.fillStyle = "rgb(170, 120, 70)";
 	ctx.fillText(PlayerStats.food, x, y + this.gridS.y + 16);
 	
-	//stats
+	//Magic
 	tile = Tileset.itemsWeapons.frame;
 	x += 40;
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 	
-	tile = this.map.player.tile.parent;
+	//Items
+	tile = Tileset.itemsWeapons.frame;
+	x += 40;
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
+	
+	this.drawWeaponsMenu();
 };
 
 Game.prototype.clearScreen = function(){
