@@ -87,31 +87,28 @@ Game.prototype.navigateMenu = function(quitK){
 	return false;
 };
 
-Game.prototype.drawWeaponsMenu = function(){
-	if (!PlayerStats.weaponsMenu) return;
-	
+Game.prototype.drawPlayerMenu = function(bucket, current, x){
 	var ctx = this.eng.ctx;
 
 	tile = Tileset.itemsWeapons.frame;
-	x = ctx.width - this.gridS.x * 6 - 16;
 	y = this.gridS.y + 16;
 	
 	for (var i=0;i<7;i++){
 		this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
-		if (PlayerStats.weapons[i]){
-			var weapon = PlayerStats.weapons[i];
-			var wtile = weapon.tile;
+		if (bucket[i]){
+			var item = bucket[i];
+			var wtile = item.tile;
 			this.eng.drawImage(this.sprites[wtile.img], x, y, wtile.subImg);
 			
 			if (this.selectedOpt == i && this.keyP[68] == 1){
-				weapon.position.set(this.map.player.position);
-				weapon.inWorld = true;
-				this.map.instances.push(weapon);
-				PlayerStats.weapons.splice(i,1);
+				item.position.set(this.map.player.position);
+				item.inWorld = true;
+				this.map.instances.push(item);
+				bucket.splice(i,1);
 				i--;
 				this.map.player.act();
 				this.keyP[68] = 2;
-				Console.addMessage("You dropped a(n) " + weapon.item.name, "rgb(255,255,255)");
+				Console.addMessage("You dropped a(n) " + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
 				continue;
 			}
 		}
@@ -120,16 +117,37 @@ Game.prototype.drawWeaponsMenu = function(){
 			this.eng.drawImage(tile.getColor(255,255,0).img, x, y, tile.subImg);
 			
 			if (this.keyP[13] == 1){
-				PlayerStats.currentW = i;
+				PlayerStats[current] = i;
 				this.keyP[13] = 2;
 			}
 		}
 	
 		y += this.gridS.y + 4;
 	}
+};
+
+Game.prototype.drawWeaponsMenu = function(){
+	if (!PlayerStats.weaponsMenu) return;
+	
+	var ctx = this.eng.ctx;
+	x = ctx.width - this.gridS.x * 6 - 16;
+	this.drawPlayerMenu(PlayerStats.weapons, "currentW", x);
 	
 	if (this.navigateMenu(81)){
 		PlayerStats.weaponsMenu = false;
+		this.map.player.act();
+	}
+};
+
+Game.prototype.drawArmourMenu = function(){
+	if (!PlayerStats.armourMenu) return;
+	
+	var ctx = this.eng.ctx;
+	x = ctx.width - this.gridS.x * 6 + 24;
+	this.drawPlayerMenu(PlayerStats.armours, "currentA", x);
+	
+	if (this.navigateMenu(87)){
+		PlayerStats.armourMenu = false;
 		this.map.player.act();
 	}
 };
@@ -261,6 +279,7 @@ Game.prototype.drawInterface = function(){
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 	
 	this.drawWeaponsMenu();
+	this.drawArmourMenu();
 };
 
 Game.prototype.clearScreen = function(){

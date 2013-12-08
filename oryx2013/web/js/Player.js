@@ -1,7 +1,10 @@
 function Player(tile, position){
 	this.playerAction = true;
+	this.playerMoved = false;
 	this.fovDistance = 4;
 	this.run = 0;
+	
+	this.stepCount = 0;
 	
 	Character.call(this, tile, position);
 }
@@ -16,11 +19,21 @@ Player.prototype.consoleMovement = function(xTo, yTo){
 	else if (xTo > 0){ Console.addMessage("East", "rgb(255,255,255)"); }
 };
 
+Player.prototype.consumeFood = function(){
+	this.stepCount++;
+	if (this.stepCount == 10){
+		PlayerStats.food--;
+		this.stepCount = 0;
+	}
+};
+
 Player.prototype.tryMove = function(key, xTo, yTo){
 	if (game.keyP[key]){ 
 		if (this.run == 0 || this.run > 20){
 			if (this.moveTo(xTo, yTo)){
+				this.consumeFood();
 				this.consoleMovement(xTo, yTo);
+				this.playerMoved = true;
 				PlayerStats.steppedItems = [];
 			}
 			this.playerAction = true;
@@ -35,6 +48,7 @@ Player.prototype.tryMove = function(key, xTo, yTo){
 
 Player.prototype.step = function(game){
 	if (PlayerStats.weaponsMenu) return;
+	if (PlayerStats.armourMenu) return;
 	
 	if (!this.tryMove(37,-1,0))
 	if (!this.tryMove(38,0,-1))
@@ -45,6 +59,9 @@ Player.prototype.step = function(game){
 	if (game.keyP[81] == 1){
 		PlayerStats.weaponsMenu = true;
 		game.keyP[81] = 2;
+	}else if (game.keyP[87] == 1){
+		PlayerStats.armourMenu = true;
+		game.keyP[87] = 2;
 	}
 };
 
@@ -74,14 +91,22 @@ Player.prototype.checkItems = function(game){
 		items[0].inWorld = false;
 		
 		if (items[0].item.isWeapon){
+			if (weapons.length == 7){
+				Console.addMessage("You can't carry more weapons!", "rgb(255,0,0)");
+				return;
+			}
 			weapons.push(items[0]);
 			if (weapons.length == 1){ PlayerStats.currentW = 0; }
 		}else if (items[0].item.isArmour){
+			if (armours.length == 7){
+				Console.addMessage("You can't carry more armours!", "rgb(255,0,0)");
+				return;
+			}
 			armours.push(items[0]);
 			if (armours.length == 1){ PlayerStats.currentA = 0; }
 		}
 		PlayerStats.steppedItems = [];
-		Console.addMessage("You pick up a(n) " + ItemFactory.getItemQuality(items[0].item.status) + " " + items[0].item.name, "rgb(255,255,255)");
+		Console.addMessage("You pick up a(n) " + ItemFactory.getItemQuality(items[0].item.status) + " " + ItemFactory.getItemName(items[0].item), "rgb(255,255,255)");
 	}
 };
 
@@ -91,6 +116,8 @@ Player.prototype.act = function(){
 };
 
 Player.prototype.loop = function(game){
+	this.playerMoved = false;
+	
 	this.step(game);
 	this.setView(game);
 	this.checkItems(game);
@@ -130,5 +157,6 @@ var PlayerStats = {
 	
 	steppedItems: [],
 	
-	weaponsMenu: false
+	weaponsMenu: false,
+	armourMenu: false
 };

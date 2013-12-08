@@ -6,6 +6,8 @@ function Map(params){
 	this.view = new Position( 0, 0);
 	this.player = null;
 	
+	this.passTurn = 0;
+	
 	if (params.map){
 		this.loadMap(params.map);
 		this.parseMap();
@@ -115,7 +117,10 @@ Map.prototype.drawMap = function(game){
 	var x = this.view.x;
 	var y = this.view.y;
 	
+	this.passTurn++;
+	
 	if (this.player.playerAction){
+		this.passTurn = 0;
 		game.clearScreen();
 		
 		for (var i=y,len=y+game.viewS.y;i<len;i++){
@@ -150,6 +155,13 @@ Map.prototype.drawMap = function(game){
 	
 	this.player.playerAction = false;
 	this.player.loop(game);
+	
+	if (this.passTurn == 500 || game.keyP[32] == 1){
+		Console.addMessage("Pass", "rgb(130,160,90)");
+		this.player.act();
+		if (game.keyP[32] == 1)
+			game.keyP[32] = 2;
+	}
 	
 	game.drawInterface();
 };
