@@ -1,0 +1,60 @@
+************************************
+*           DOR EREB               *
+************************************
+*                                  *
+* Title: DOR-EREB                  *
+* Author: Camilo Ramírez (Jucarave)*
+* Version: 0.1                     *
+* Start Date: 01/12/2013           *
+*                                  *
+************************************
+
+************************************
+* ACTIVITIES COMPLETED             *
+************************************
+* Basic Setup                      *
+* Colouring Sprites                *
+* Main Rendering                   *
+* Character Movement               *
+* Collision System                 *
+* Player inheritance               *
+* Items pickup                     *
+* Weapons Menu                     *
+* Armour Menu                      *
+* Food Comsuption                  *
+* Item Factory                     *
+* Map Manager                      *
+* Tiles Manager                    *
+* Pass the turn                    *
+*                                  *
+************************************
+
+************************************
+* ACTIVITIES PENDING               *
+************************************
+* Multiple Items Pickup            *
+* Main Screen                      *
+* Death Screen                     *
+* Starvation                       *
+* Location                         *
+* Switch Location                  *
+* Random Dungeons                  *
+* Overworld                        *
+* Food collection                  *
+* Weapons Data                     *
+* Armours Data                     *
+* Magic Data                       *
+* Items Data                       *
+* Start Menu                       *
+* Character Creation               *
+* Progress Saving                  *
+* Progress Restore                 *
+* Basic Enemies                    *
+* Enemy Factory                    *
+* Enemies Data                     *
+* Attack Enemies                   *
+* Wear equipment                   *
+* Use of Magic                     *
+* Story Events                     *
+*                                  *
+************************************

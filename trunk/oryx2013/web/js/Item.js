@@ -7,8 +7,10 @@ function Item(tile, position, item){
 }
 
 Item.prototype.checkPlayer = function(){
+	if (!this.mapManager.player.playerMoved) return;
+	
 	if (this.mapManager.player.position.equals(this.position)){
-		Console.addMessage("You stepped into a(n) " + ItemFactory.getItemQuality(this.item.status) + " " + this.item.name, "rgb(255,255,255)");
+		Console.addMessage("You stepped into a(n) " + ItemFactory.getItemQuality(this.item.status) + " " + ItemFactory.getItemName(this.item), "rgb(255,255,255)", "stepped");
 		
 		PlayerStats.steppedItems.push(this);
 	}

@@ -29,5 +29,23 @@ var ItemFactory = {
 		}else{
 			return "excelent";
 		}
+	},
+	
+	getItemName: function(item){
+		if (item.rName) return item.rName;
+		
+		var name = "";
+		for (var i=0;i<item.name.length;i++){
+			var letter = item.name.charAt(i);
+			if (letter === letter.toUpperCase()){
+				name += " ";
+				letter = letter.toLowerCase();
+			}
+			
+			name += letter;
+		}
+		
+		item.rName = name;
+		return name;
 	}
 };
