@@ -17,9 +17,11 @@
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Item.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Console.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/ItemFactory.js?version=<?php echo $version; ?>"></script>
+		<script type="text/javascript" src="<?php echo $contextPath; ?>js/MainScreen.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript">
 			var cp = "<?php echo $contextPath; ?>";
 			var version = "<?php echo $version; ?>";
+			var exitPath ="<?php echo $exitPath; ?>";
 		</script>
 	</head>
 	

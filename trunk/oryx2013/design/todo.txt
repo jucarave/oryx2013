@@ -1,8 +1,8 @@
 ************************************
-*           DOR EREB               *
+*              DOR                 *
 ************************************
 *                                  *
-* Title: DOR-EREB                  *
+* Title: DOR                       *
 * Author: Camilo Ramírez (Jucarave)*
 * Version: 0.1                     *
 * Start Date: 01/12/2013           *
@@ -27,17 +27,17 @@
 * Tiles Manager                    *
 * Pass the turn                    *
 * Multiple Items Pickup            *
+* Main Screen                      *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* Main Screen                      *
-* Death Screen                     *
-* Starvation                       *
 * Location                         *
 * Switch Location                  *
+* Death Screen                     *
+* Starvation                       *
 * Random Dungeons                  *
 * Overworld                        *
 * Food collection                  *
@@ -56,5 +56,6 @@
 * Wear equipment                   *
 * Use of Magic                     *
 * Story Events                     *
+* Sprite fonts                     *
 *                                  *
 ************************************
