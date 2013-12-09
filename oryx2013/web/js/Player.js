@@ -49,6 +49,7 @@ Player.prototype.tryMove = function(key, xTo, yTo){
 Player.prototype.step = function(game){
 	if (PlayerStats.weaponsMenu) return;
 	if (PlayerStats.armourMenu) return;
+	if (PlayerStats.pickItemsMenu) return;
 	
 	if (!this.tryMove(37,-1,0))
 	if (!this.tryMove(38,0,-1))
@@ -78,35 +79,45 @@ Player.prototype.setView = function(game){
 	view.set(x, y);
 };
 
+Player.prototype.pickItem = function(item){
+	item.inWorld = false;
+		
+	var items = PlayerStats.steppedItems;
+	var weapons = PlayerStats.weapons;
+	var armours = PlayerStats.armours;
+	if (item.item.isWeapon){
+		if (weapons.length == 7){
+			Console.addMessage("You can't carry more weapons!", "rgb(255,0,0)");
+			return;
+		}
+		weapons.push(item);
+		if (weapons.length == 1){ PlayerStats.currentW = 0; }
+	}else if (item.item.isArmour){
+		if (armours.length == 7){
+			Console.addMessage("You can't carry more armours!", "rgb(255,0,0)");
+			return;
+		}
+		armours.push(item);
+		if (armours.length == 1){ PlayerStats.currentA = 0; }
+	}
+	Console.addMessage("You pick up a(n) " + ItemFactory.getItemQuality(item.item.status) + " " + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
+};
+
 Player.prototype.checkItems = function(game){
+	if (PlayerStats.weaponsMenu) return;
+	if (PlayerStats.armourMenu) return;
+	
 	var items = PlayerStats.steppedItems;
 	if (items.length == 0) return;
-	if (game.keyP[13] != 1) return;
+	if (game.keyP[13] != 1 || PlayerStats.pickItemsMenu) return;
 	
 	game.keyP[13] = 2;
 	this.playerAction = true;
-	var weapons = PlayerStats.weapons;
-	var armours = PlayerStats.armours;
 	if (items.length == 1){
-		items[0].inWorld = false;
-		
-		if (items[0].item.isWeapon){
-			if (weapons.length == 7){
-				Console.addMessage("You can't carry more weapons!", "rgb(255,0,0)");
-				return;
-			}
-			weapons.push(items[0]);
-			if (weapons.length == 1){ PlayerStats.currentW = 0; }
-		}else if (items[0].item.isArmour){
-			if (armours.length == 7){
-				Console.addMessage("You can't carry more armours!", "rgb(255,0,0)");
-				return;
-			}
-			armours.push(items[0]);
-			if (armours.length == 1){ PlayerStats.currentA = 0; }
-		}
+		this.pickItem(items[0]);
 		PlayerStats.steppedItems = [];
-		Console.addMessage("You pick up a(n) " + ItemFactory.getItemQuality(items[0].item.status) + " " + ItemFactory.getItemName(items[0].item), "rgb(255,255,255)");
+	}else{
+		PlayerStats.pickItemsMenu = true;
 	}
 };
 
@@ -158,5 +169,6 @@ var PlayerStats = {
 	steppedItems: [],
 	
 	weaponsMenu: false,
-	armourMenu: false
+	armourMenu: false,
+	pickItemsMenu: false
 };

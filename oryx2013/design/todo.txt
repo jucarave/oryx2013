@@ -26,13 +26,13 @@
 * Map Manager                      *
 * Tiles Manager                    *
 * Pass the turn                    *
+* Multiple Items Pickup            *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* Multiple Items Pickup            *
 * Main Screen                      *
 * Death Screen                     *
 * Starvation                       *

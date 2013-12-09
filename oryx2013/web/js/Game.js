@@ -66,6 +66,76 @@ Game.prototype.drawTile = function(tile, position, view, darker){
 	}
 };
 
+Game.prototype.navigateItemsMenu = function(quitK){
+	var limit = PlayerStats.steppedItems.length;
+	
+	if (this.keyP[39] == 1){
+		this.selectedOpt += 1;
+		this.keyP[39] = 2;
+	}else if (this.keyP[37] == 1){
+		this.selectedOpt -= 1;
+		this.keyP[37] = 2;
+	}
+	if (limit > 14){
+		if (this.keyP[38] == 1){
+			this.selectedOpt -= 14;
+			this.keyP[38] = 2;
+		}else if (this.keyP[40] == 1){
+			this.selectedOpt += 14;
+			this.keyP[40] = 2;
+		}
+	}
+	
+	if (this.selectedOpt < 0) this.selectedOpt = limit + this.selectedOpt;
+	else if (this.selectedOpt > limit - 1) this.selectedOpt -= limit;
+	
+	if (this.keyP[quitK] == 1){
+		this.selectedOpt = 0;
+		this.keyP[quitK] = 2;
+		return true;
+	}
+	
+	return false;
+};
+
+Game.prototype.drawPickupItemsMenu = function(){
+	if (!PlayerStats.pickItemsMenu) return;
+	
+	var tile = Tileset.itemsWeapons.frame;
+	var x = game.gridS.x;
+	var y = game.gridS.y * 2;
+	var items = PlayerStats.steppedItems;
+	
+	for (var i=0;i<items.length;i++){
+		var xx = x + (game.gridS.x * (i % 14));
+		this.eng.drawImage(game.sprites[tile.img], xx, y, tile.subImg);
+		
+		var itile = items[i].tile;
+		this.eng.drawImage(game.sprites[itile.img], xx, y, itile.subImg);
+		
+		if (this.selectedOpt == i)
+			this.eng.drawImage(tile.getColor(255,255,0).img, xx, y, tile.subImg);
+			
+		x += 10;
+		if (i > 0 && i % 14 == 13){
+			x = game.gridS.x;
+			y += game.gridS.y + 8;
+		}
+	}
+	
+	if (this.keyP[13] == 1){
+		this.map.player.pickItem(items[this.selectedOpt]);
+		items.splice(this.selectedOpt,1);
+		this.map.player.act();
+		this.keyP[13] = 2;
+	}
+	
+	if (this.navigateItemsMenu(27) || items.length == 0){
+		PlayerStats.pickItemsMenu = false;
+		this.map.player.act();
+	}
+};
+
 Game.prototype.navigateMenu = function(quitK){
 	if (this.keyP[40] == 1){
 		this.selectedOpt += 1;
@@ -109,6 +179,7 @@ Game.prototype.drawPlayerMenu = function(bucket, current, x){
 				this.map.player.act();
 				this.keyP[68] = 2;
 				Console.addMessage("You dropped a(n) " + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
+				PlayerStats.steppedItems.push(item);
 				continue;
 			}
 		}
@@ -280,6 +351,7 @@ Game.prototype.drawInterface = function(){
 	
 	this.drawWeaponsMenu();
 	this.drawArmourMenu();
+	this.drawPickupItemsMenu();
 };
 
 Game.prototype.clearScreen = function(){
