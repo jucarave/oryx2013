@@ -19,6 +19,7 @@ function Game(container){
 	this.viewPos = new Position(0, 1);
 	this.gridS = new Position(32, 48);
 	this.map = null;
+	this.scene = null;
 	
 	this.keyP = new Array(255);
 }
@@ -28,10 +29,6 @@ Game.prototype.loadImages = function(){
 	this.sprites["environment"] = this.eng.loadImage(cp + "img/environment.png?version=" + version, 19, 4);
 	this.sprites["hud"] = this.eng.loadImage(cp + "img/hud.png?version=" + version, 4, 1);
 	this.sprites["itemsWeapons"] = this.eng.loadImage(cp + "img/itemsWeapons.png?version=" + version, 19, 5);
-};
-
-Game.prototype.loadMap = function(){
-	this.map = new Map({map: "test"});
 };
 
 Game.prototype.drawLoading = function(){
@@ -360,11 +357,18 @@ Game.prototype.clearScreen = function(){
 	ctx.fillRect(this.viewPos.x*this.gridS.x,this.viewPos.y*this.gridS.y, this.viewS.x*this.gridS.x,this.viewS.y*this.gridS.y);
 };
 
+Game.prototype.gotoMap = function(map){
+	this.scene = null;
+	this.map = new Map(map);
+	this.map.loadInstances(this);
+};
+
 Game.prototype.newGame = function(){
 	var g = this;
 	if (g.eng.imagesReady()){
-		game.loadMap();
-		g.map.loadInstances(g);
+		/*game.loadMap();
+		g.map.loadInstances(g);*/
+		g.scene = new MainScreen();
 		g.gameLoop();
 	}else{
 		requestAnimationFrame(function(){ g.newGame(); });
@@ -381,6 +385,8 @@ Game.prototype.gameLoop = function(){
 		g.lastF = now - (delta % g.fps);
 		if (g.map)
 			g.map.drawMap(g);
+		else if (g.scene)
+			g.scene.loop(g);
 	}
 	
 	requestAnimationFrame(function(){ g.gameLoop(); });
