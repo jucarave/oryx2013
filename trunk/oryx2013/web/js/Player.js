@@ -121,6 +121,14 @@ Player.prototype.checkItems = function(game){
 	}
 };
 
+Player.prototype.checkStairs = function(){
+	if (!PlayerStats.stairs) return;
+	if (game.keyP[13] == 1){
+		game.gotoMap({map: PlayerStats.stairs.dungeonName});
+		game.keyP[13] = 2;
+	}
+};
+
 Player.prototype.act = function(){
 	this.playerAction = true;
 	FOV.getFOV(this.position, this.mapManager, this.fovDistance);
@@ -132,6 +140,7 @@ Player.prototype.loop = function(game){
 	this.step(game);
 	this.setView(game);
 	this.checkItems(game);
+	this.checkStairs();
 	
 	if (this.playerAction){
 		FOV.getFOV(this.position, this.mapManager, this.fovDistance);
@@ -167,6 +176,7 @@ var PlayerStats = {
 	int: 10,
 	
 	steppedItems: [],
+	stairs: null,
 	
 	weaponsMenu: false,
 	armourMenu: false,

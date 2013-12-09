@@ -31,6 +31,9 @@ MainScreen.prototype.drawTitle = function(ctx){
 
 MainScreen.prototype.step = function(game){
 	if (game.keyP[65] == 1){
+		var item = new Item(Tileset.itemsWeapons.cottomCloth, new Position(0,0), ItemFactory.getItem("cottomCloth", 0.7));
+		PlayerStats.armours.push(item);
+		
 		game.gotoMap({map: "test"});
 		game.keyP[65] = 2;
 	}else if (game.keyP[66] == 1){
