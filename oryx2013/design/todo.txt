@@ -28,19 +28,19 @@
 * Pass the turn                    *
 * Multiple Items Pickup            *
 * Main Screen                      *
+* Location                         *
+* Switch Location                  *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* Location                         *
-* Switch Location                  *
+* Town                             *
 * Death Screen                     *
 * Starvation                       *
 * Random Dungeons                  *
-* Overworld                        *
-* Food collection                  *
+* Store system                     *
 * Weapons Data                     *
 * Armours Data                     *
 * Magic Data                       *

@@ -18,6 +18,8 @@ function Game(container){
 	this.viewS = new Position(20, 8);
 	this.viewPos = new Position(0, 1);
 	this.gridS = new Position(32, 48);
+	
+	this.maps = [];
 	this.map = null;
 	this.scene = null;
 	
@@ -175,6 +177,7 @@ Game.prototype.drawPlayerMenu = function(bucket, current, x){
 				i--;
 				this.map.player.act();
 				this.keyP[68] = 2;
+				item.mapManager = this.map;
 				Console.addMessage("You dropped a(n) " + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
 				PlayerStats.steppedItems.push(item);
 				continue;
@@ -359,8 +362,25 @@ Game.prototype.clearScreen = function(){
 
 Game.prototype.gotoMap = function(map){
 	this.scene = null;
-	this.map = new Map(map);
-	this.map.loadInstances(this);
+	if (map.map){
+		this.map = null;
+		for (var i=0;i<this.maps.length;i++){
+			if (this.maps[i].key == map.map){
+				this.map = this.maps[i];
+				this.map.player.act();
+				break;
+			}
+		}
+		if (this.map == null){
+			this.map = new Map(map);
+			this.maps.push(this.map);
+			this.map.loadInstances(this);
+		}
+	}else{
+		this.map = new Map(map);
+		this.maps.push(this.map);
+		this.map.loadInstances(this);
+	}
 };
 
 Game.prototype.newGame = function(){

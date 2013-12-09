@@ -32,6 +32,8 @@ var Tileset = {
 		warrior1: {img: "heroes", subImg: new Position(0, 0), getColor: getColor}
 	},
 	
+	stairs: {img: "environment", subImg: new Position(0, 3), getColor: getColor},
+	
 	environment: {
 		floor1: {img: "environment", subImg: new Position(9, 0), tileId: 1, getColor: getColor, color: {r:60,g:60,b:60}},
 		wall1: {img: "environment", subImg: new Position(0, 0), tileId: 2, getColor: getColor, solid: true, color: {r:100,g:100,b:200}, isWall: true},
