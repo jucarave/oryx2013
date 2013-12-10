@@ -127,7 +127,9 @@ Player.prototype.checkStairs = function(){
 		var dir = "ascend";
 		if (PlayerStats.stairs.direction == 'D')
 			dir = "descend";
-		if (PlayerStats.stairs.level == 0)
+		if (PlayerStats.stairs.direction == 'E'){
+			Console.addMessage("You enter the dungeon!", "rgb(255,255,255)");
+		}else if (PlayerStats.stairs.level == 0)
 			Console.addMessage("You enter the town!", "rgb(255,255,255)");
 		else
 			Console.addMessage("You " + dir + " to level " + PlayerStats.stairs.level, "rgb(255,255,255)");

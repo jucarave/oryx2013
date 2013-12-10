@@ -23,26 +23,34 @@ Map.prototype.loadMap = function(map){
 		this.key = map;
 		this.light = true;
 		
+		var a = [5, 10];
+		var b = [4, 10];
+		var c = [4, 10, 11];
+		var d = [4, 11, 10];
+		var e = [1, 15];
+		var f = [5, 16];
+		var g = [5, 17];
+		
 		this.map = [
-			[ 4, 4, 4, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-			[ 4, 4, 4, 4, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 1, 1, 4, 4, 2, 7, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-			[ 4, 4, 4, 4, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 1, 4, 4, 4, 2, 8, 8, 8, 8, 8, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-			[ 4, 4, 4, 4, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 1, 4, 4, 4, 2, 7, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-			[ 4, 4, 4, 4, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 1, 4, 4, 4, 2, 7, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-			[ 4, 4, 4, 4, 2, 5, 5, 4, 4, 1, 4, 4, 4, 4, 4, 1, 4, 4, 4, 2, 7, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+			[ 4, 4, 4, 4, 2, d, a, a, a, a,14, e,-4, e,14, a, a, a, d, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+			[ 4, 4, 4, 4, 2, a, 5, 5, 5, 5,13,13, 1,13,13, 5, 5, 5, a, 2, 7, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+			[ 4, 4, 4, 4, 2, b, 5, f, 5, f, 5, 5, 1, 5, 5, f, 5, g, b, 2, 8, 8, 8, 8, 8, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+			[ 4, 4, 4, 4, 2, a, 5, 5, 5, 1, 1, 1, 1, 5, 5, 5, 5, 5, a, 2, 7, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+			[ 4, 4, 4, 4, 2, a, 5, g, 5, 1, 5, 5, 5, g, 5, 5, 5, f, a, 2, 7, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+			[ 4, 4, 4, 4, 2, c, a, a, b, 1, b, b, b, a, b, b, b, a, c, 2, 7, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
 			[ 4, 4, 4, 4, 2, 5, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4],
 			[ 4, 4, 4, 4, 2, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 2, 7, 7, 7, 7, 7, 8, 7, 2, 4, 4, 4, 4, 4, 4, 4],
-			[ 2, 2, 2, 2, 2, 2, 2, 2, 4, 1, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 2, 7, 7, 7, 7, 7, 8, 7, 2, 4, 4, 4, 4, 4, 4, 4],
+			[ 2, 2, 2, 2, 2, 2, 2, 2, 4, 1, 4,-1, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 2, 7, 7, 7, 7, 7, 8, 7, 2, 4, 4, 4, 4, 4, 4, 4],
 			[ 2, 2, 7, 7, 7, 7, 7, 2, 4, 1, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 2, 7, 7, 7, 7, 7, 8, 7, 2, 4, 4, 4, 4, 4, 4, 4],
 			[ 2, 2, 8, 8, 8, 8, 8, 2, 5, 1, 5, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 2, 7, 7, 7, 7, 7, 8, 7, 2, 4, 4, 4, 4, 6, 6, 6],
 			[ 2, 2, 7, 7, 7, 7, 7, 1, 1, 1, 1, 1, 1, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 2, 7, 7, 7, 7, 7, 8, 7, 2, 4, 4, 4, 4, 6, 6, 6],
-			[ 2, 2, 7, 7, 7, 7, 7, 2, 5, 5, 5, 5, 1, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 4, 4, 6, 6, 6],
-			[ 2, 2, 7, 7, 7, 7, 7, 2, 5, 5, 5, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 6, 6, 6, 6, 2, 6, 6, 6, 6, 6],
+			[ 2, 2, 7, 7, 7, 7, 7, 2, 5, 5, 5, 5, 1, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 4, 4, 6, 6, 6],
+			[ 2, 2, 7, 7, 7, 7, 7, 2, 5, 5, 5, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 6, 6, 6, 6, 6, 2, 6, 6, 6, 6, 6],
 			[ 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 1, 4, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 2, 6, 6, 6, 6, 6],
 			[ 2, 2, 7, 8, 7, 7, 7, 2, 5, 5, 5, 5, 1, 4, 4, 4, 4, 4, 4, 4, 6, 1, 6, 6, 6, 4, 5, 5, 5, 2, 2, 2, 2, 2, 2, 4, 4, 6, 6, 6],
 			[ 2, 2, 7, 8, 7, 7, 7, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 6, 6, 6, 1, 4, 4, 4, 4, 4, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 6, 6, 6],
 			[ 2, 2, 7, 8, 7, 7, 7, 2, 5, 5, 5, 4, 4, 4, 4, 6, 6, 6, 6, 4, 4, 1, 4, 4, 4, 4, 4, 5, 5, 2, 8, 8, 8, 8, 2, 4, 4, 6, 6, 6],
-			[ 2, 2, 7, 8, 7, 7, 7, 2, 5, 5, 5, 5, 4, 6, 6, 6, 4, 4, 4, 4, 4, 1, 4, 4, 4,-1, 4, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
+			[ 2, 2, 7, 8, 7, 7, 7, 2, 5, 5, 5, 5, 4, 6, 6, 6, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
 			[ 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 6, 6, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
 			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 6, 6, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
 			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
@@ -109,12 +117,14 @@ Map.prototype.loadMap = function(map){
 };
 
 Map.prototype.isSolid = function(position){
-	if (position.y < 0 || position.x < 0) return;
-	if (position.y >= this.map.length || position.x >= this.map[0].length) return;
+	if (position.y < 0 || position.x < 0) return true;
+	if (position.y >= this.map.length || position.x >= this.map[0].length) return true;
 	var tile = this.map[position.y][position.x];
-	if (tile === 0) return false;
-	if (tile.tile.solid){
-		return true;
+	for (var i=0,len=tile.length;i<len;i++){
+		if (tile[i] === 0) return false;
+		if (tile[i].tile.solid){
+			return true;
+		}
 	}
 	return false;
 };
@@ -122,7 +132,7 @@ Map.prototype.isSolid = function(position){
 Map.prototype.isVisible = function(position){
 	if (position.y < 0 || position.x < 0) return;
 	if (position.y >= this.map.length || position.x >= this.map[0].length) return;
-	var tile = this.map[position.y][position.x];
+	var tile = this.map[position.y][position.x][0];
 	if (tile === 0) return false;
 	if (tile.wasVisible > 0){
 		return tile.wasVisible;
@@ -134,8 +144,10 @@ Map.prototype.setVisible = function(position, visible){
 	if (position.y < 0 || position.x < 0) return;
 	if (position.y >= this.map.length || position.x >= this.map[0].length) return;
 	var tile = this.map[position.y][position.x];
-	if (tile === 0) return;
-	tile.visible = visible;
+	for (var i=0,len=tile.length;i<len;i++){
+		if (tile[i] === 0) return;
+		tile[i].visible = visible;
+	}
 };
 
 Map.prototype.createStairs = function(tile, position, direction){
@@ -153,7 +165,13 @@ Map.prototype.createStairs = function(tile, position, direction){
 			name = this.key + "_2";
 		else{
 			name = "town";
-			level = 0;
+			
+		level = 0;
+		if (direction == 'E'){
+			name = "test";
+			level = 1;
+		}
+			
 		}
 	}
 	
@@ -185,7 +203,7 @@ Map.prototype.loadInstances = function(game){
 			this.player.setView(game);
 			FOV.getFOV(this.player.position, this, this.player.fovDistance);
 			
-			this.newItem(Tileset.itemsWeapons.sword, new Position(14, 1), ItemFactory.getItem("sword", Math.random()));
+			//this.newItem(Tileset.itemsWeapons.sword, new Position(14, 1), ItemFactory.getItem("sword", Math.random()));
 		break;
 	}
 };
@@ -204,18 +222,31 @@ Map.prototype.parseMap = function(){
 			}else if (tile == -3){
 				this.createStairs(Tileset.misc.stairsUp, new Position(j, i), 'A');
 				tile = this.map[i + 1][j];
+			}else if (tile == -4){
+				this.createStairs(Tileset.misc.stairsDungeon, new Position(j, i), 'E');
+				tile = this.map[i + 1][j];
 			}
-			if (Tileset.environment.getByTileId(tile).isWall)
-				if (this.map[i + 1] && this.map[i + 1][j] == tile) tile += 1;
-				
-			var visible = 0;
-			if (this.light) visible = 2;
-			this.map[i][j] = {
-				tileId: tile,
-				tile: Tileset.environment.getByTileId(tile),
-				visible: visible,
-				wasVisible: false
-			};
+			
+			if (tile instanceof Array){
+				tile = tile.clone();
+			}else{
+				tile = [tile];
+			}
+			
+			this.map[i][j] = [];
+			for (var t=0;t<tile.length;t++){
+				if (Tileset.environment.getByTileId(tile[t]).isWall)
+					if (this.map[i + 1] && (this.map[i + 1][j] == tile[t] || this.map[i + 1][j][t] == tile[t])) tile[t] += 1;
+					
+				var visible = 0;
+				if (this.light) visible = 2;
+				this.map[i][j][t] = {
+					tileId: tile[t],
+					tile: Tileset.environment.getByTileId(tile[t]),
+					visible: visible,
+					wasVisible: false
+				};
+			}
 		}
 	}
 };
@@ -233,23 +264,25 @@ Map.prototype.drawMap = function(game){
 		for (var i=y,len=y+game.viewS.y;i<len;i++){
 			for (var j=x,jlen=x+game.viewS.x;j<jlen;j++){
 				var tile = this.map[i][j];
-				if (tile === 0)  continue;
-				if (tile.visible == 0) continue;
-				
-				tile.wasVisible = 0;
-				if (this.light){
-					tile.wasVisible = 2;
-					tile.visible = 2;
+				for (var t=0,tlen=tile.length;t<tlen;t++){
+					if (tile[t] === 0)  continue;
+					if (tile[t].visible == 0) continue;
+					
+					tile[t].wasVisible = 0;
+					if (this.light){
+						tile[t].wasVisible = 2;
+						tile[t].visible = 2;
+					}
+					if (tile[t].visible == 1){
+						game.drawTile(tile[t].tile, new Position(j - x, i - y), null, true);
+						tile[t].wasVisible = 1;
+					}else if (tile[t].visible == 2){
+						game.drawTile(tile[t].tile, new Position(j - x, i - y), null, false);
+						tile[t].wasVisible = 2;
+					}
+					
+					tile[t].visible = 1;
 				}
-				if (tile.visible == 1){
-					game.drawTile(tile.tile, new Position(j - x, i - y), null, true);
-					tile.wasVisible = 1;
-				}else if (tile.visible == 2){
-					game.drawTile(tile.tile, new Position(j - x, i - y), null, false);
-					tile.wasVisible = 2;
-				}
-				
-				tile.visible = 1;
 			}
 		}
 		

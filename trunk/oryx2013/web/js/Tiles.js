@@ -36,12 +36,20 @@ var Tileset = {
 		floor1: {img: "environment", subImg: new Position(9, 0), tileId: 1, getColor: getColor, color: {r:95,g:110,b:130}},
 		wall1: {img: "environment", subImg: new Position(0, 0), tileId: 2, getColor: getColor, solid: true, isWall: true, color: {r:170,g:40,b:40}},
 		sidewall: {img: "environment", subImg: new Position(7, 0), tileId: 3, getColor: getColor, solid: true, isWall: true, color: {r:170,g:40,b:40}},
-		grass: {img: "misc", subImg: new Position(17, 6), tileId: 4, getColor: getColor, color: {r:0,g:130,b:0} },
+		grass: {img: "misc", subImg: new Position(17, 6), tileId: 4, getColor: getColor, color: {r:0,g:160,b:0} },
 		highGrass: {img: "misc", subImg: new Position(16, 6), tileId: 5, getColor: getColor, color: {r:0,g:160,b:0} },
 		water: {img: "environment", subImg: new Position(1, 3), tileId: 6, getColor: getColor, solid: true, color: {r:0,g:0,b:100} },
 		woodFloor: {img: "environment", subImg: new Position(18, 1), tileId: 7, getColor: getColor, color: {r:165,g:100,b:70}},
 		table: {img: "environment", subImg: new Position(16, 0), tileId: 8, getColor: getColor, solid: true, isWall: true, color: {r:100,g:60,b:40}},
 		sideTable: {img: "environment", subImg: new Position(17, 0), tileId: 9, getColor: getColor, solid: true, isWall: true, color: {r:100,g:60,b:40}},
+		fence: {img: "misc", subImg: new Position(0, 4), tileId: 10, getColor: getColor, solid: true, isWall: true},
+		sideFence: {img: "misc", subImg: new Position(8, 4), tileId: 11, getColor: getColor, solid: true, isWall: true},
+		fenceDR: {img: "misc", subImg: new Position(4, 4), tileId: 12, getColor: getColor, solid: true},
+		dungeonW: {img: "environment", subImg: new Position(5, 0), tileId: 13, getColor: getColor, solid: true, color: {r:197,g:197,b:197}},
+		dungeonSW: {img: "environment", subImg: new Position(7, 0), tileId: 14, getColor: getColor, solid: true, color: {r:197,g:197,b:197}},
+		candle: {img: "misc", subImg: new Position(10, 2), tileId: 15, getColor: getColor, solid: true, color: {r:198,g:198,b:0}},
+		grave: {img: "misc", subImg: new Position(12, 2), tileId: 16, getColor: getColor, solid: true, color: {r:198,g:198,b:198}},
+		grave2: {img: "misc", subImg: new Position(15, 2), tileId: 17, getColor: getColor, solid: true, color: {r:198,g:198,b:198}},
 		
 		getByTileId: function(tileId){
 			for (env in Tileset.environment){
@@ -80,6 +88,7 @@ var Tileset = {
 	
 	misc: {
 		stairsUp: {img: "misc", subImg: new Position(0, 1), getColor: getColor},
-		stairsDown: {img: "misc", subImg: new Position(1, 1), getColor: getColor}	
+		stairsDown: {img: "misc", subImg: new Position(1, 1), getColor: getColor},
+		stairsDungeon: {img: "misc", subImg: new Position(16, 2), getColor: getColor}	
 	}
 };
