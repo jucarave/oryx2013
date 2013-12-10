@@ -124,7 +124,15 @@ Player.prototype.checkItems = function(game){
 Player.prototype.checkStairs = function(){
 	if (!PlayerStats.stairs) return;
 	if (game.keyP[13] == 1){
+		var dir = "ascend";
+		if (PlayerStats.stairs.direction == 'D')
+			dir = "descend";
+		if (PlayerStats.stairs.level == 0)
+			Console.addMessage("You enter the town!", "rgb(255,255,255)");
+		else
+			Console.addMessage("You " + dir + " to level " + PlayerStats.stairs.level, "rgb(255,255,255)");
 		game.gotoMap({map: PlayerStats.stairs.dungeonName});
+		PlayerStats.stairs = null;
 		game.keyP[13] = 2;
 	}
 };
@@ -142,7 +150,7 @@ Player.prototype.loop = function(game){
 	this.checkItems(game);
 	this.checkStairs();
 	
-	if (this.playerAction){
+	if (this.playerAction && !this.mapManager.light){
 		FOV.getFOV(this.position, this.mapManager, this.fovDistance);
 	}
 	

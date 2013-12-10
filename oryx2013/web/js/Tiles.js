@@ -32,12 +32,16 @@ var Tileset = {
 		warrior1: {img: "heroes", subImg: new Position(0, 0), getColor: getColor}
 	},
 	
-	stairs: {img: "environment", subImg: new Position(0, 3), getColor: getColor},
-	
 	environment: {
-		floor1: {img: "environment", subImg: new Position(9, 0), tileId: 1, getColor: getColor, color: {r:60,g:60,b:60}},
-		wall1: {img: "environment", subImg: new Position(0, 0), tileId: 2, getColor: getColor, solid: true, color: {r:100,g:100,b:200}, isWall: true},
-		sidewall: {img: "environment", subImg: new Position(7, 0), tileId: 3, getColor: getColor, solid: true, color: {r:100,g:100,b:200}, isWall: true},
+		floor1: {img: "environment", subImg: new Position(9, 0), tileId: 1, getColor: getColor, color: {r:95,g:110,b:130}},
+		wall1: {img: "environment", subImg: new Position(0, 0), tileId: 2, getColor: getColor, solid: true, isWall: true, color: {r:170,g:40,b:40}},
+		sidewall: {img: "environment", subImg: new Position(7, 0), tileId: 3, getColor: getColor, solid: true, isWall: true, color: {r:170,g:40,b:40}},
+		grass: {img: "misc", subImg: new Position(17, 6), tileId: 4, getColor: getColor, color: {r:0,g:130,b:0} },
+		highGrass: {img: "misc", subImg: new Position(16, 6), tileId: 5, getColor: getColor, color: {r:0,g:160,b:0} },
+		water: {img: "environment", subImg: new Position(1, 3), tileId: 6, getColor: getColor, solid: true, color: {r:0,g:0,b:100} },
+		woodFloor: {img: "environment", subImg: new Position(18, 1), tileId: 7, getColor: getColor, color: {r:165,g:100,b:70}},
+		table: {img: "environment", subImg: new Position(16, 0), tileId: 8, getColor: getColor, solid: true, isWall: true, color: {r:100,g:60,b:40}},
+		sideTable: {img: "environment", subImg: new Position(17, 0), tileId: 9, getColor: getColor, solid: true, isWall: true, color: {r:100,g:60,b:40}},
 		
 		getByTileId: function(tileId){
 			for (env in Tileset.environment){
@@ -72,5 +76,10 @@ var Tileset = {
 		food: {img: "itemsWeapons", subImg: new Position(13, 1), getColor: getColor},
 		
 		frame: {img: "itemsWeapons", subImg: new Position(4, 4), getColor: getColor}
+	},
+	
+	misc: {
+		stairsUp: {img: "misc", subImg: new Position(0, 1), getColor: getColor},
+		stairsDown: {img: "misc", subImg: new Position(1, 1), getColor: getColor}	
 	}
 };

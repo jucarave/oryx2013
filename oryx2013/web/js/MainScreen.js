@@ -1,7 +1,7 @@
 function MainScreen(){
 	this.title = [
 		[0,0,3,3,0,0,3,2,3,0,3,2,3],
-		[0,0,3,0,3,0,3,0,3,0,3,0,3],
+		[0,0,3,0,3,0,3,0,3,0,3,0,2],
 		[0,0,3,0,3,0,3,0,3,0,3,2,0],
 		[0,0,3,0,2,0,3,0,3,0,3,0,3],
 		[0,0,2,2,0,0,2,2,2,0,2,0,2]
@@ -34,7 +34,7 @@ MainScreen.prototype.step = function(game){
 		var item = new Item(Tileset.itemsWeapons.cottomCloth, new Position(0,0), ItemFactory.getItem("cottomCloth", 0.7));
 		PlayerStats.armours.push(item);
 		
-		game.gotoMap({map: "test"});
+		game.gotoMap({map: "town"});
 		game.keyP[65] = 2;
 	}else if (game.keyP[66] == 1){
 		
