@@ -17,7 +17,7 @@ Item.prototype.checkPlayer = function(){
 };
 
 Item.prototype.draw = function(game){
-	if (this.mapManager.isVisible(this.position))
+	if (this.mapManager.isVisible(this.position) == 2)
 		game.drawTile(this.tile, this.position, this.mapManager.view);
 };
 

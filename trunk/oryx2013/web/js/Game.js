@@ -31,6 +31,7 @@ Game.prototype.loadImages = function(){
 	this.sprites["environment"] = this.eng.loadImage(cp + "img/environment.png?version=" + version, 19, 4);
 	this.sprites["hud"] = this.eng.loadImage(cp + "img/hud.png?version=" + version, 4, 1);
 	this.sprites["itemsWeapons"] = this.eng.loadImage(cp + "img/itemsWeapons.png?version=" + version, 19, 5);
+	this.sprites["misc"] = this.eng.loadImage(cp + "img/misc.png?version=" + version, 19, 7);
 };
 
 Game.prototype.drawLoading = function(){
@@ -368,6 +369,7 @@ Game.prototype.gotoMap = function(map){
 			if (this.maps[i].key == map.map){
 				this.map = this.maps[i];
 				this.map.player.act();
+				this.map.player.playerMoved = true;
 				break;
 			}
 		}

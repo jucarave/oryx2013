@@ -6,6 +6,8 @@ function Map(params){
 	this.view = new Position( 0, 0);
 	this.player = null;
 	
+	this.light = false;
+	
 	this.passTurn = 0;
 	
 	if (params.map){
@@ -15,14 +17,48 @@ function Map(params){
 }
 
 Map.prototype.loadMap = function(map){
-	if (map == "test"){
+	this.light = false;
+	if (map == "town"){
+		this.name = "Town Map";
+		this.key = map;
+		this.light = true;
+		
+		this.map = [
+			[ 4, 4, 4, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+			[ 4, 4, 4, 4, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 1, 1, 4, 4, 2, 7, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+			[ 4, 4, 4, 4, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 1, 4, 4, 4, 2, 8, 8, 8, 8, 8, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+			[ 4, 4, 4, 4, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 1, 4, 4, 4, 2, 7, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+			[ 4, 4, 4, 4, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 1, 4, 4, 4, 2, 7, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+			[ 4, 4, 4, 4, 2, 5, 5, 4, 4, 1, 4, 4, 4, 4, 4, 1, 4, 4, 4, 2, 7, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+			[ 4, 4, 4, 4, 2, 5, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4],
+			[ 4, 4, 4, 4, 2, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 2, 7, 7, 7, 7, 7, 8, 7, 2, 4, 4, 4, 4, 4, 4, 4],
+			[ 2, 2, 2, 2, 2, 2, 2, 2, 4, 1, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 2, 7, 7, 7, 7, 7, 8, 7, 2, 4, 4, 4, 4, 4, 4, 4],
+			[ 2, 2, 7, 7, 7, 7, 7, 2, 4, 1, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 2, 7, 7, 7, 7, 7, 8, 7, 2, 4, 4, 4, 4, 4, 4, 4],
+			[ 2, 2, 8, 8, 8, 8, 8, 2, 5, 1, 5, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 2, 7, 7, 7, 7, 7, 8, 7, 2, 4, 4, 4, 4, 6, 6, 6],
+			[ 2, 2, 7, 7, 7, 7, 7, 1, 1, 1, 1, 1, 1, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 2, 7, 7, 7, 7, 7, 8, 7, 2, 4, 4, 4, 4, 6, 6, 6],
+			[ 2, 2, 7, 7, 7, 7, 7, 2, 5, 5, 5, 5, 1, 4, 4, 1, 4, 4, 4, 4, 4, 4, 1, 4, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 4, 4, 6, 6, 6],
+			[ 2, 2, 7, 7, 7, 7, 7, 2, 5, 5, 5, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 6, 6, 6, 6, 2, 6, 6, 6, 6, 6],
+			[ 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 1, 4, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 2, 6, 6, 6, 6, 6],
+			[ 2, 2, 7, 8, 7, 7, 7, 2, 5, 5, 5, 5, 1, 4, 4, 4, 4, 4, 4, 4, 6, 1, 6, 6, 6, 4, 5, 5, 5, 2, 2, 2, 2, 2, 2, 4, 4, 6, 6, 6],
+			[ 2, 2, 7, 8, 7, 7, 7, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 6, 6, 6, 1, 4, 4, 4, 4, 4, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 6, 6, 6],
+			[ 2, 2, 7, 8, 7, 7, 7, 2, 5, 5, 5, 4, 4, 4, 4, 6, 6, 6, 6, 4, 4, 1, 4, 4, 4, 4, 4, 5, 5, 2, 8, 8, 8, 8, 2, 4, 4, 6, 6, 6],
+			[ 2, 2, 7, 8, 7, 7, 7, 2, 5, 5, 5, 5, 4, 6, 6, 6, 4, 4, 4, 4, 4, 1, 4, 4, 4,-1, 4, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
+			[ 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 6, 6, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
+			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 6, 6, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
+			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
+			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
+			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
+			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
+			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4]
+		];
+	}else if (map == "test"){
 		this.name = "Test map - Level 1";
 		this.key = map;
 		
 		this.map = [
 			[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 			[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1,-1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1,-3,-1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 			[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 			[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 			[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -88,8 +124,8 @@ Map.prototype.isVisible = function(position){
 	if (position.y >= this.map.length || position.x >= this.map[0].length) return;
 	var tile = this.map[position.y][position.x];
 	if (tile === 0) return false;
-	if (tile.wasVisible == true){
-		return true;
+	if (tile.wasVisible > 0){
+		return tile.wasVisible;
 	}
 	return false;
 };
@@ -112,15 +148,19 @@ Map.prototype.createStairs = function(tile, position, direction){
 		if (level != 1)
 			name += "_" + level;
 	}else{
+		level = 2;
 		if (direction == 'D')
 			name = this.key + "_2";
-		else
+		else{
 			name = "town";
+			level = 0;
+		}
 	}
 	
 	
 	var ins = new Stairs(tile, position, direction, name);
 	ins.mapManager = this;
+	ins.level = level;
 	
 	this.instances.push(ins);
 };
@@ -159,18 +199,21 @@ Map.prototype.parseMap = function(){
 				this.setPlayer(j, i);
 				tile = this.map[i][j + 1];
 			}else if (tile == -2){
-				this.createStairs(Tileset.stairs, new Position(j, i), 'D');
+				this.createStairs(Tileset.misc.stairsDown, new Position(j, i), 'D');
 				tile = this.map[i + 1][j];
 			}else if (tile == -3){
-				this.createStairs(Tileset.stairs, new Position(j, i), 'A');
+				this.createStairs(Tileset.misc.stairsUp, new Position(j, i), 'A');
 				tile = this.map[i + 1][j];
 			}
 			if (Tileset.environment.getByTileId(tile).isWall)
 				if (this.map[i + 1] && this.map[i + 1][j] == tile) tile += 1;
+				
+			var visible = 0;
+			if (this.light) visible = 2;
 			this.map[i][j] = {
 				tileId: tile,
 				tile: Tileset.environment.getByTileId(tile),
-				visible: 0,
+				visible: visible,
 				wasVisible: false
 			};
 		}
@@ -193,12 +236,17 @@ Map.prototype.drawMap = function(game){
 				if (tile === 0)  continue;
 				if (tile.visible == 0) continue;
 				
-				tile.wasVisible = false;
-				if (tile.visible == 1)
+				tile.wasVisible = 0;
+				if (this.light){
+					tile.wasVisible = 2;
+					tile.visible = 2;
+				}
+				if (tile.visible == 1){
 					game.drawTile(tile.tile, new Position(j - x, i - y), null, true);
-				else if (tile.visible == 2){
+					tile.wasVisible = 1;
+				}else if (tile.visible == 2){
 					game.drawTile(tile.tile, new Position(j - x, i - y), null, false);
-					tile.wasVisible = true;
+					tile.wasVisible = 2;
 				}
 				
 				tile.visible = 1;
