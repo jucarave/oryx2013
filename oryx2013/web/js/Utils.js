@@ -13,3 +13,12 @@ window.requestAnimationFrame = window.requestAnimationFrame ||
     window.mozRequestAnimationFrame ||
     window.oRequestAnimationFrame ||
     window.msRequestAnimationFrame;
+    
+Array.prototype.clone = function(){
+	var ret = [];
+	for (var i=0;i<this.length;i++){
+		ret[i] = this[i];
+	}
+	
+	return ret;
+};

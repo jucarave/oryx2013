@@ -12,9 +12,13 @@ Stairs.prototype.checkPlayer = function(game){
 	if (!this.mapManager.player.playerMoved) return;
 	
 	if (this.mapManager.player.position.equals(this.position)){
+		PlayerStats.stairs = this;
+		if (this.direction == 'E'){
+			Console.addMessage("You stepped into the dungeon entry", "rgb(255,255,0)");
+			return;
+		}
 		var dir = (this.direction == 'D')? "descend" : "ascend";
 		Console.addMessage("You stepped into a(n) " + dir +" stairs ", "rgb(255,255,255)");
-		PlayerStats.stairs = this;
 	}
 };
 
