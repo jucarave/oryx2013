@@ -130,19 +130,24 @@ Player.prototype.checkStairs = function(){
 	if (!PlayerStats.stairs) return;
 	if (game.keyP[13] == 1){
 		var dir = "ascend";
+		var rand = true;
+		var level = PlayerStats.stairs.level - 1;
 		if (PlayerStats.stairs.direction == 'D')
 			dir = "descend";
+			level = PlayerStats.stairs.level + 1;
 		if (PlayerStats.stairs.direction == 'E'){
 			Console.addMessage("You enter the dungeon!", "rgb(255,255,255)");
 			PlayerStats.level = 1;
+			level = 1;
 		}else if (PlayerStats.stairs.level == 0){
 			Console.addMessage("You enter the town!", "rgb(255,255,255)");
 			PlayerStats.level = 0;
+			rand = false;
 		}else{
 			Console.addMessage("You " + dir + " to level " + PlayerStats.stairs.level, "rgb(255,255,255)");
 			PlayerStats.level = PlayerStats.stairs.level;
 		}
-		game.gotoMap({map: PlayerStats.stairs.dungeonName});
+		game.gotoMap({map: PlayerStats.stairs.dungeonName, random: rand, level: level});
 		PlayerStats.stairs = null;
 		game.keyP[13] = 2;
 	}
