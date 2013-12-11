@@ -5,6 +5,7 @@ function Map(params){
 	this.instances = [];
 	this.view = new Position( 0, 0);
 	this.player = null;
+	this.level = 0;
 	
 	this.light = false;
 	
@@ -18,6 +19,7 @@ function Map(params){
 		this.name = "Dungeon Test - Level " + params.level;
 		this.key = params.map;
 		this.map = RDG.newMap(params.level);
+		this.level = params.level;
 	}else if (params.map){
 		this.loadMap(params.map);
 	}
@@ -32,6 +34,7 @@ Map.prototype.loadMap = function(map){
 		this.name = "Town Map";
 		this.key = map;
 		this.light = true;
+		this.level = 0;
 		
 		var a = [5, 10];
 		var b = [4, 10];
@@ -200,14 +203,14 @@ Map.prototype.parseMap = function(){
 			
 			this.map[i][j] = [];
 			for (var t=0;t<tile.length;t++){
-				if (Tileset.environment.getByTileId(tile[t]).isWall)
+				if (Tileset.dungeon.getByTileId(tile[t], this.level).isWall)
 					if (this.map[i + 1] && (this.map[i + 1][j] == tile[t] || this.map[i + 1][j][t] == tile[t])) tile[t] += 1;
 					
 				var visible = 0;
 				if (this.light) visible = 2;
 				this.map[i][j][t] = {
 					tileId: tile[t],
-					tile: Tileset.environment.getByTileId(tile[t]),
+					tile: Tileset.dungeon.getByTileId(tile[t], this.level),
 					visible: visible,
 					wasVisible: false
 				};
