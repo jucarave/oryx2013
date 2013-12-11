@@ -67,6 +67,40 @@ var Tileset = {
 		}
 	},
 	
+	dungeon: {
+		floor: {img: "environment", subImg: new Position(9, 0), tileId: 1, getColor: getColor},
+		wall: {img: "environment", subImg: new Position(0, 0), tileId: 2, getColor: getColor, solid: true, isWall: true},
+		sidewall: {img: "environment", subImg: new Position(7, 0), tileId: 3, getColor: getColor, solid: true, isWall: true},
+		
+		getColorByLevel: function(tile, level){
+			if (level <= 5){
+				if (tile.isWall){ return {r:50, g:80, b: 150}; }
+				else { return {r:33, g: 33, b: 33}; }
+			}else if (level <= 20){
+				if (tile.isWall){ return {r:45, g:80, b: 40}; }
+				else { return {r:33, g: 33, b: 33}; }
+			}else if (level <= 30){
+				if (tile.isWall){ return {r:45, g:80, b: 40}; }
+				else { return {r:33, g: 33, b: 33}; }
+			}
+		},
+		
+		getByTileId: function(tileId, level){
+			if (level == 0 || level == undefined) return Tileset.environment.getByTileId(tileId);
+			var ret;
+			for (env in Tileset.dungeon){
+				var tile = Tileset.dungeon[env];
+				if (tile.tileId == tileId){
+					ret = tile;
+					break;
+				}
+			}
+			
+			var c = this.getColorByLevel(ret, level);
+			return ret.getColor(c.r, c.g, c.b);
+		}
+	},
+	
 	hud: {
 		healthBack: {img: "hud", subImg: new Position(0, 0), getColor: getColor},
 		health: {img: "hud", subImg: new Position(1, 0), getColor: getColor},

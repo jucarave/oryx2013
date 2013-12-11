@@ -131,10 +131,9 @@ Player.prototype.checkStairs = function(){
 	if (game.keyP[13] == 1){
 		var dir = "ascend";
 		var rand = true;
-		var level = PlayerStats.stairs.level - 1;
+		var level = PlayerStats.stairs.level;
 		if (PlayerStats.stairs.direction == 'D')
 			dir = "descend";
-			level = PlayerStats.stairs.level + 1;
 		if (PlayerStats.stairs.direction == 'E'){
 			Console.addMessage("You enter the dungeon!", "rgb(255,255,255)");
 			PlayerStats.level = 1;
