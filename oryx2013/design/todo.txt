@@ -30,6 +30,9 @@
 * Main Screen                      *
 * Location                         *
 * Switch Location                  *
+* Death Screen                     *
+* Starvation                       *
+* Reload Stats                     *
 *                                  *
 ************************************
 
@@ -37,8 +40,6 @@
 * ACTIVITIES PENDING               *
 ************************************
 * Town                             *
-* Death Screen                     *
-* Starvation                       *
 * Random Dungeons                  *
 * Store system                     *
 * Weapons Data                     *

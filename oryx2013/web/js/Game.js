@@ -388,8 +388,6 @@ Game.prototype.gotoMap = function(map){
 Game.prototype.newGame = function(){
 	var g = this;
 	if (g.eng.imagesReady()){
-		/*game.loadMap();
-		g.map.loadInstances(g);*/
 		g.scene = new MainScreen();
 		g.gameLoop();
 	}else{

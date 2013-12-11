@@ -1,5 +1,5 @@
 <?php
-	$contextPath = "/oryx2013/web/";
+	$contextPath = "/oryx2013/";
 	$version = "0.1";
-	$exitPath = "/oryx2013/";
+	$exitPath = "/";
 ?>
