@@ -82,6 +82,7 @@ var Tileset = {
 		cottomCloth: {img: "itemsWeapons", subImg: new Position(0, 1), getColor: getColor},
 		
 		food: {img: "itemsWeapons", subImg: new Position(13, 1), getColor: getColor},
+		skull: {img: "itemsWeapons", subImg: new Position(3, 3), getColor: getColor},
 		
 		frame: {img: "itemsWeapons", subImg: new Position(4, 4), getColor: getColor}
 	},

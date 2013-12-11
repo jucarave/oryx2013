@@ -23,6 +23,11 @@ Player.prototype.consumeFood = function(){
 	this.stepCount++;
 	if (this.stepCount == 10){
 		PlayerStats.food--;
+		if (PlayerStats.food == 0){
+			PlayerStats.deathCause = 's';
+			game.map = null;
+			game.scene = new DeathScreen();
+		}
 		this.stepCount = 0;
 	}
 };
@@ -129,10 +134,14 @@ Player.prototype.checkStairs = function(){
 			dir = "descend";
 		if (PlayerStats.stairs.direction == 'E'){
 			Console.addMessage("You enter the dungeon!", "rgb(255,255,255)");
-		}else if (PlayerStats.stairs.level == 0)
+			PlayerStats.level = 1;
+		}else if (PlayerStats.stairs.level == 0){
 			Console.addMessage("You enter the town!", "rgb(255,255,255)");
-		else
+			PlayerStats.level = 0;
+		}else{
 			Console.addMessage("You " + dir + " to level " + PlayerStats.stairs.level, "rgb(255,255,255)");
+			PlayerStats.level = PlayerStats.stairs.level;
+		}
 		game.gotoMap({map: PlayerStats.stairs.dungeonName});
 		PlayerStats.stairs = null;
 		game.keyP[13] = 2;
@@ -148,6 +157,8 @@ Player.prototype.loop = function(game){
 	this.playerMoved = false;
 	
 	this.step(game);
+	if (!game.map) return;
+	
 	this.setView(game);
 	this.checkItems(game);
 	this.checkStairs();
@@ -160,14 +171,14 @@ Player.prototype.loop = function(game){
 };
 
 var PlayerStats = {
-	name: "kram",
-	class: "Fighter",
+	name: "",
+	class: "",
 	
-	health: 30,
-	mHealth: 30,
+	health: 0,
+	mHealth: 0,
 	
-	mana: 7,
-	mMana: 15,
+	mana: 0,
+	mMana: 0,
 	
 	weapons: [],
 	currentW: 0,
@@ -175,20 +186,23 @@ var PlayerStats = {
 	armours: [],
 	currentA: 0,
 	
-	food: 100,
+	food: 0,
 	
-	lvl: 1,
+	lvl: 0,
 	exp: 0,
-	str: 12,
-	def: 10,
-	spd: 12,
-	wsd: 8,
-	int: 10,
+	str: 0,
+	def: 0,
+	spd: 0,
+	wsd: 0,
+	int: 0,
 	
 	steppedItems: [],
 	stairs: null,
 	
 	weaponsMenu: false,
 	armourMenu: false,
-	pickItemsMenu: false
+	pickItemsMenu: false,
+	
+	deathCause: '',
+	level: 0
 };

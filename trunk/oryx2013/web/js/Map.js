@@ -10,6 +10,8 @@ function Map(params){
 	
 	this.passTurn = 0;
 	
+	this.signs = [];
+	
 	if (params.map){
 		this.loadMap(params.map);
 		this.parseMap();
@@ -18,6 +20,7 @@ function Map(params){
 
 Map.prototype.loadMap = function(map){
 	this.light = false;
+	this.signs = [];
 	if (map == "town"){
 		this.name = "Town Map";
 		this.key = map;
@@ -58,6 +61,14 @@ Map.prototype.loadMap = function(map){
 			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
 			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
 			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4]
+		];
+		
+		this.signs = [
+			{title: "P O T I O N S", pos: new Position(4, 8)},
+			{title: "F O O D", pos: new Position(4, 14)},
+			{title: "W E A P O N S", pos: new Position(22, 0)},
+			{title: "A R M O U R S", pos: new Position(28, 6)},
+			{title: "H O T E L", pos: new Position(31.5, 15)}
 		];
 	}else if (map == "test"){
 		this.name = "Test map - Level 1";
@@ -296,6 +307,24 @@ Map.prototype.drawMap = function(game){
 			}
 		}
 		
+		var ctx = game.eng.ctx;
+		for (var i=0,len=this.signs.length;i<len;i++){
+			var s = this.signs[i];
+			
+			var x = (s.pos.x + game.viewPos.x - this.view.x) * game.gridS.x + (game.gridS.x / 2);
+			var y = (s.pos.y + game.viewPos.y - this.view.y) * game.gridS.y;
+			
+			var w = (s.title.length * 12);
+			
+			ctx.fillStyle = "rgb(33,33,33)";
+			ctx.fillRect(x - w / 2, y, w, 20);
+			
+			ctx.fillStyle = "rgb(255,255,255)";
+			ctx.textAlign = "center";
+			ctx.fillText(s.title, x, y + 16);
+			ctx.textAlign = "left";
+		}
+		
 	}
 	
 	this.player.playerAction = false;
@@ -308,5 +337,6 @@ Map.prototype.drawMap = function(game){
 			game.keyP[32] = 2;
 	}
 	
+	if (game.map == null) return;
 	game.drawInterface();
 };

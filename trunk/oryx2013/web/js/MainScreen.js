@@ -6,6 +6,49 @@ function MainScreen(){
 		[0,0,3,0,2,0,3,0,3,0,3,0,3],
 		[0,0,2,2,0,0,2,2,2,0,2,0,2]
 	];
+	
+	this.setInitStats();
+};
+
+MainScreen.prototype.setInitStats = function(){
+	PlayerStats = {
+		name: "kram",
+		class: "Fighter",
+		
+		health: 30,
+		mHealth: 30,
+		
+		mana: 7,
+		mMana: 15,
+		
+		weapons: [],
+		currentW: 0,
+		
+		armours: [],
+		currentA: 0,
+		
+		food: 100,
+		
+		lvl: 1,
+		exp: 0,
+		str: 12,
+		def: 10,
+		spd: 12,
+		wsd: 8,
+		int: 10,
+		
+		steppedItems: [],
+		stairs: null,
+		
+		weaponsMenu: false,
+		armourMenu: false,
+		pickItemsMenu: false,
+		
+		deathCause: '',
+		level: 0
+	};
+	
+	game.maps = [];
 };
 
 MainScreen.prototype.drawTitle = function(ctx){
