@@ -22,3 +22,11 @@ Array.prototype.clone = function(){
 	
 	return ret;
 };
+
+Math.iRandom = function(a, b){
+	if (arguments.length == 1){
+		return Math.round(Math.random() * a);
+	}else if (arguments.length == 2){
+		return a + Math.round(Math.random() * (b - a));
+	}
+};

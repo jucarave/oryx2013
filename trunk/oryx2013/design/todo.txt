@@ -46,7 +46,6 @@
 * Armours Data                     *
 * Magic Data                       *
 * Items Data                       *
-* Start Menu                       *
 * Character Creation               *
 * Progress Saving                  *
 * Progress Restore                 *
