@@ -32,6 +32,7 @@ Game.prototype.loadImages = function(){
 	this.sprites["hud"] = this.eng.loadImage(cp + "img/hud.png?version=" + version, 4, 1);
 	this.sprites["itemsWeapons"] = this.eng.loadImage(cp + "img/itemsWeapons.png?version=" + version, 19, 5);
 	this.sprites["misc"] = this.eng.loadImage(cp + "img/misc.png?version=" + version, 19, 7);
+	this.sprites["enemies"] = this.eng.loadImage(cp + "img/enemies.png?version=" + version, 19, 8);
 };
 
 Game.prototype.drawLoading = function(){

@@ -3,6 +3,7 @@ function Map(params){
 	this.name = "";
 	this.tiles = [];
 	this.instances = [];
+	this.enemies = [];
 	this.view = new Position( 0, 0);
 	this.player = null;
 	this.level = 0;
@@ -20,6 +21,8 @@ function Map(params){
 		this.key = params.map;
 		this.map = RDG.newMap(params.level);
 		this.level = params.level;
+		
+		this.createEnemies();
 	}else if (params.map){
 		this.loadMap(params.map);
 	}
@@ -84,7 +87,7 @@ Map.prototype.loadMap = function(map){
 	
 };
 
-Map.prototype.isSolid = function(position){
+Map.prototype.isSolid = function(position, avoidEnemies){
 	if (position.y < 0 || position.x < 0) return true;
 	if (position.y >= this.map.length || position.x >= this.map[0].length) return true;
 	var tile = this.map[position.y][position.x];
@@ -92,6 +95,14 @@ Map.prototype.isSolid = function(position){
 		if (tile[i] === 0) return false;
 		if (tile[i].tile.solid){
 			return true;
+		}
+	}
+	
+	if (!avoidEnemies){
+		for (var i=0,len=this.enemies.length;i<len;i++){
+			if (this.enemies[i].position.equals(position)){
+				return true;
+			}
 		}
 	}
 	return false;
@@ -115,6 +126,40 @@ Map.prototype.setVisible = function(position, visible){
 	for (var i=0,len=tile.length;i<len;i++){
 		if (tile[i] === 0) return;
 		tile[i].visible = visible;
+	}
+};
+
+Map.prototype.createEnemies = function(){
+	var n = 5 + this.level + Math.iRandom(this.level, this.level * 2);
+	for (var i=0;i<n;i++){
+		var x, y;
+		
+		var counter = 0;
+		while (true){
+			if (counter == 1000) break;
+			x = Math.iRandom(this.map[0].length - 1);
+			y = Math.iRandom(this.map.length - 1);
+			
+			if (this.map[y][x] != 0){
+				var t = this.map[y][x];
+				if (t instanceof Array) t = t[0];
+				if (t <= 0) continue;
+				var tile = Tileset.dungeon.getByTileId(t, this.level);
+				if (tile.isFloor){
+					counter = 0;
+					break;
+				}
+			}
+			counter++;
+		}
+		
+		if (counter > 0) continue;
+		
+		var e = EnemyFactory.getRandomEnemy(this.level);
+		var enemy = new Enemy(e.tile, new Position(x, y), e);
+		enemy.mapManager = this;
+		this.instances.push(enemy);
+		this.enemies.push(enemy);
 	}
 };
 
@@ -203,8 +248,16 @@ Map.prototype.parseMap = function(){
 			
 			this.map[i][j] = [];
 			for (var t=0;t<tile.length;t++){
-				if (Tileset.dungeon.getByTileId(tile[t], this.level).isWall)
-					if (this.map[i + 1] && (this.map[i + 1][j] == tile[t] || this.map[i + 1][j][t] == tile[t])) tile[t] += 1;
+				if (Tileset.dungeon.getByTileId(tile[t], this.level).isWall && this.map[i + 1]){
+					var bt = this.map[i + 1][j];
+					if (bt instanceof Array) bt = this.map[i + 1][j][t];
+					
+					if (bt){
+						if (Tileset.dungeon.getByTileId(bt, this.level).isWall){
+							tile[t]++;
+						}
+					}
+				}
 					
 				var visible = 0;
 				if (this.light) visible = 2;
@@ -242,7 +295,8 @@ Map.prototype.drawMap = function(game){
 						tile[t].visible = 2;
 					}
 					if (tile[t].visible == 1){
-						game.drawTile(tile[t].tile, new Position(j - x, i - y), null, true);
+						var vis = (t==tlen-1);
+						game.drawTile(tile[t].tile, new Position(j - x, i - y), null, vis);
 						tile[t].wasVisible = 1;
 					}else if (tile[t].visible == 2){
 						game.drawTile(tile[t].tile, new Position(j - x, i - y), null, false);

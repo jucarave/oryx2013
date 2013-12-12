@@ -21,7 +21,8 @@ function getColor(r, g, b){
 		parent: this,
 		getColor: this.getColor,
 		solid: this.solid,
-		isWall: this.isWall
+		isWall: this.isWall,
+		isFloor: this.isFloor
 	};
 	
 	return tile;
@@ -68,20 +69,27 @@ var Tileset = {
 	},
 	
 	dungeon: {
-		floor: {img: "environment", subImg: new Position(9, 0), tileId: 1, getColor: getColor},
-		wall: {img: "environment", subImg: new Position(0, 0), tileId: 2, getColor: getColor, solid: true, isWall: true},
+		floor: {img: "environment", subImg: new Position(9, 0), tileId: 1, getColor: getColor, isFloor: true},
+		wall: {img: "environment", subImg: new Position(0, 1), tileId: 2, getColor: getColor, solid: true, isWall: true},
 		sidewall: {img: "environment", subImg: new Position(7, 0), tileId: 3, getColor: getColor, solid: true, isWall: true},
+		wall2: {img: "environment", subImg: new Position(3, 1), tileId: 4, getColor: getColor, solid: true, isWall: true},
+		
+		//garbage
+		bones: {img: "misc", subImg: new Position(1, 3), tileId: 5, getColor: getColor},
+		grass1: {img: "misc", subImg: new Position(1, 5), tileId: 6, getColor: getColor, color: {r:0,g:100,b:0}},
+		grass2: {img: "misc", subImg: new Position(2, 5), tileId: 7, getColor: getColor, color: {r:0,g:100,b:0}},
+		drops: {img: "environment", subImg: new Position(3, 3), tileId: 8, getColor: getColor, color: {r:0,g:0,b:200}},
+		web: {img: "misc", subImg: new Position(8, 2), tileId: 9, getColor: getColor},
 		
 		getColorByLevel: function(tile, level){
 			if (level <= 5){
-				if (tile.isWall){ return {r:50, g:80, b: 150}; }
-				else { return {r:33, g: 33, b: 33}; }
-			}else if (level <= 20){
+				if (tile.isWall){ return {r:50, g:80, b: 150}; } else
+				if (tile.isFloor){ return {r:95,g:110,b:130}; }
+			}else if (level <= 10){
+				if (tile.isWall){ return {r:45, g:80, b: 40}; } else
+				if (tile.isFloor){ return {r:95,g:140,b:110}; }
+			}else if (level <= 15){
 				if (tile.isWall){ return {r:45, g:80, b: 40}; }
-				else { return {r:33, g: 33, b: 33}; }
-			}else if (level <= 30){
-				if (tile.isWall){ return {r:45, g:80, b: 40}; }
-				else { return {r:33, g: 33, b: 33}; }
 			}
 		},
 		
@@ -96,8 +104,18 @@ var Tileset = {
 				}
 			}
 			
-			var c = this.getColorByLevel(ret, level);
-			return ret.getColor(c.r, c.g, c.b);
+			if (!ret) throw "Invalid tileId " + tileId;
+			
+			var c;
+			if (ret.color){
+				return ret.getColor(ret.color.r, ret.color.g, ret.color. b);
+			}
+			c = this.getColorByLevel(ret, level);
+			
+			if (c)
+				return ret.getColor(c.r, c.g, c.b);
+			else
+				return ret;
 		}
 	},
 	
@@ -111,6 +129,14 @@ var Tileset = {
 	itemsWeapons: {
 		//Weapons
 		sword: {img: "itemsWeapons", subImg: new Position(0, 0), getColor: getColor},
+		heavySword: {img: "itemsWeapons", subImg: new Position(1, 0), getColor: getColor},
+		dagger: {img: "itemsWeapons", subImg: new Position(4, 0), getColor: getColor},
+		woodStaff: {img: "itemsWeapons", subImg: new Position(5, 0), getColor: getColor},
+		gemStaff: {img: "itemsWeapons", subImg: new Position(6, 0), getColor: getColor},
+		battleAxe: {img: "itemsWeapons", subImg: new Position(2, 0), getColor: getColor},
+		heavyAxe: {img: "itemsWeapons", subImg: new Position(7, 0), getColor: getColor},
+		bow: {img: "itemsWeapons", subImg: new Position(17, 0), getColor: getColor},
+		crossBow: {img: "itemsWeapons", subImg: new Position(18, 0), getColor: getColor},
 		
 		//Armours
 		cottomCloth: {img: "itemsWeapons", subImg: new Position(0, 1), getColor: getColor},
@@ -125,5 +151,13 @@ var Tileset = {
 		stairsUp: {img: "misc", subImg: new Position(0, 1), getColor: getColor},
 		stairsDown: {img: "misc", subImg: new Position(1, 1), getColor: getColor},
 		stairsDungeon: {img: "misc", subImg: new Position(16, 2), getColor: getColor}	
+	},
+	
+	enemies: {
+		krab: {img: "enemies", subImg: new Position(0, 0), getColor: getColor, color: {r: 255, g: 0, b: 0}},
+		spider: {img: "enemies", subImg: new Position(2, 0), getColor: getColor, color: {r: 0, g: 0, b: 255}},
+		rat: {img: "enemies", subImg: new Position(4, 0), getColor: getColor, color: {r: 255, g: 200, b: 64}},
+		bat: {img: "enemies", subImg: new Position(6, 0), getColor: getColor, color: {r: 0, g: 0, b: 255}},
+		viper: {img: "enemies", subImg: new Position(8, 0), getColor: getColor, color: {r: 0, g: 255, b: 0}},
 	}
 };
