@@ -288,6 +288,10 @@ Game.prototype.drawInterface = function(){
 	ctx.fillText(ps.name + ", " + ps.class, x, y);
 	ctx.fillText(this.map.name, x, y + 16);
 	
+	var exDmg = 0, exDfs = 0;
+	if (ps.weapons[ps.currentW]) exDmg = ps.weapons[ps.currentW].item.dmg;
+	if (ps.armours[ps.currentA]) exDfs = ps.armours[ps.currentA].item.dfs;
+	
 	x = 100 + this.gridS.x;
 	y = ctx.height - this.gridS.y * 2 + 24;
 	
@@ -295,13 +299,12 @@ Game.prototype.drawInterface = function(){
 	ctx.fillText("exp: " + ps.exp, x, y + 20);
 	
 	x += 100;
-	ctx.fillText("str: " + ps.str, x, y);
-	ctx.fillText("def: " + ps.def, x, y + 20);
+	ctx.fillText("str: " + (ps.str + exDmg), x, y);
+	ctx.fillText("def: " + (ps.def + exDfs), x, y + 20);
 	
 	x += 100;
 	ctx.fillText("spd: " + ps.spd, x, y);
-	ctx.fillText("int: " + ps.int, x, y + 20);
-	ctx.fillText("wsd: " + ps.wsd, x, y + 40);
+	ctx.fillText("gold: " + ps.gold, x, y + 20);
 	
 	//Weapon
 	tile = Tileset.itemsWeapons.frame;
@@ -325,7 +328,8 @@ Game.prototype.drawInterface = function(){
 	if (PlayerStats.armours[PlayerStats.currentA]){
 		var armour = PlayerStats.armours[PlayerStats.currentA];
 		tile = armour.tile;
-		this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
+		var img = (this.sprites[tile.img])? this.sprites[tile.img] : tile.img;
+		this.eng.drawImage(img, x, y, tile.subImg);
 		
 		ctx.fillText(Math.round(armour.item.status * 100) + "%", x, y + this.gridS.y + 16);
 	}

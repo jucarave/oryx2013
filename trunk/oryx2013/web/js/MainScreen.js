@@ -31,11 +31,11 @@ MainScreen.prototype.setInitStats = function(){
 		
 		lvl: 1,
 		exp: 0,
-		str: 12,
-		def: 10,
-		spd: 12,
-		wsd: 8,
-		int: 10,
+		str: 5,
+		def: 3,
+		spd: 4,
+		
+		gold: 40,
 		
 		steppedItems: [],
 		stairs: null,
@@ -74,8 +74,13 @@ MainScreen.prototype.drawTitle = function(ctx){
 
 MainScreen.prototype.step = function(game){
 	if (game.keyP[65] == 1){
-		var item = new Item(Tileset.itemsWeapons.cottomCloth, new Position(0,0), ItemFactory.getItem("cottomCloth", 1));
+		var i = ItemFactory.getItem("cottomCloth", 1);
+		var item = new Item(i.tile, new Position(0,0), i);
 		PlayerStats.armours.push(item);
+		
+		i = ItemFactory.getItem("knife", 1);
+		item = new Item(i.tile, new Position(0,0), i);
+		PlayerStats.weapons.push(item);
 		
 		game.gotoMap({map: "town"});
 		game.keyP[65] = 2;

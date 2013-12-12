@@ -34,6 +34,7 @@
 * Starvation                       *
 * Reload Stats                     *
 * Basic Enemies                    *
+* Weapons Data                     *
 *                                  *
 ************************************
 
@@ -43,7 +44,6 @@
 * Town                             *
 * Random Dungeons                  *
 * Store system                     *
-* Weapons Data                     *
 * Armours Data                     *
 * Magic Data                       *
 * Items Data                       *
