@@ -100,7 +100,7 @@ Map.prototype.isSolid = function(position, avoidEnemies){
 	
 	if (!avoidEnemies){
 		for (var i=0,len=this.enemies.length;i<len;i++){
-			if (this.enemies[i].position.equals(position)){
+			if (this.enemies[i].inWorld && this.enemies[i].position.equals(position)){
 				return true;
 			}
 		}
@@ -129,6 +129,14 @@ Map.prototype.setVisible = function(position, visible){
 	}
 };
 
+Map.prototype.getEnemyAt = function(x, y){
+	for (var i=0;i<this.enemies.length;i++){
+		if (this.enemies[i].inWorld && this.enemies[i].position.equals(x, y))
+			return this.enemies[i];
+	}
+	return null;
+};
+
 Map.prototype.createEnemies = function(){
 	var n = 5 + this.level + Math.iRandom(this.level, this.level * 2);
 	for (var i=0;i<n;i++){
@@ -140,7 +148,7 @@ Map.prototype.createEnemies = function(){
 			x = Math.iRandom(this.map[0].length - 1);
 			y = Math.iRandom(this.map.length - 1);
 			
-			if (this.map[y][x] != 0){
+			if (this.map[y][x] != 0 && !this.getEnemyAt(x, y)){
 				var t = this.map[y][x];
 				if (t instanceof Array) t = t[0];
 				if (t <= 0) continue;

@@ -5,6 +5,7 @@ function Player(tile, position){
 	this.run = 0;
 	
 	this.stepCount = 0;
+	this.battle = 0;
 	
 	Character.call(this, tile, position);
 }
@@ -51,10 +52,75 @@ Player.prototype.tryMove = function(key, xTo, yTo){
 	return false;
 };
 
+Player.prototype.castAttack = function(x, y){
+	var enemy = this.mapManager.getEnemyAt(x, y);
+	if (!enemy){
+		Console.addMessage("There is nothing in there", "rgb(255,255,255)"); 
+		return; 
+	}
+	
+	if (enemy.enemy.spd > PlayerStats.spd && Math.iRandom(10) != 6){
+		Console.addMessage("Missed!", "rgb(255,255,255)");
+		return;
+	}
+	
+	var weapon = PlayerStats.weapons[PlayerStats.currentW];
+	var dmg = PlayerStats.str;
+	if (weapon) dmg += weapon.item.dmg;
+	dmg -= enemy.enemy.dfs;
+	
+	var dice = weapon.item.dice;
+	if (dice){
+		var d = parseInt(dice.substring(dice.indexOf("D") + 1, dice.length), 10);
+		if (Math.iRandom(10) == d){
+			var v = parseInt(dice.substring(0, dice.indexOf("D")));
+			dmg += v;
+		}
+	}
+	
+	enemy.hurt(dmg);
+};
+
+Player.prototype.attack = function(game){
+	if (this.battle < 0){
+		this.battle++;
+	}else if (this.battle == 1){
+		var dir = "";
+		var x = this.position.x;
+		var y = this.position.y;
+		if (game.keyP[37] == 1){ dir = "West"; game.keyP[37] = 2; x--; }else
+		if (game.keyP[38] == 1){ dir = "North"; game.keyP[38] = 2; y--; }else
+		if (game.keyP[39] == 1){ dir = "East"; game.keyP[39] = 2; x++; }else
+		if (game.keyP[40] == 1){ dir = "South"; game.keyP[40] = 2; y++; }
+		
+		if (dir != ""){
+			Console.removeLastMessage();
+			Console.addMessage("Attack where? " + dir, "rgb(255, 255, 255)", "attack");
+			this.battle = -5;
+			
+			this.castAttack(x, y);
+			this.playerAction = true;
+			this.playerMoved = true;
+			return true;
+		}
+	}else{
+		if (game.keyP[65] == 1){
+			Console.addMessage("Attack where? ", "rgb(255, 255, 255)", "attack");
+			this.battle = 1;
+			game.keyP[65] = 2;
+			return true;
+		}
+	}
+	return false;
+};
+
 Player.prototype.step = function(game){
 	if (PlayerStats.weaponsMenu) return;
 	if (PlayerStats.armourMenu) return;
 	if (PlayerStats.pickItemsMenu) return;
+	
+	if (this.attack(game)) return;
+	if (this.battle != 0) return;
 	
 	if (!this.tryMove(37,-1,0))
 	if (!this.tryMove(38,0,-1))
@@ -197,8 +263,8 @@ var PlayerStats = {
 	str: 0,
 	def: 0,
 	spd: 0,
-	wsd: 0,
-	int: 0,
+	
+	gold: 40,
 	
 	steppedItems: [],
 	stairs: null,

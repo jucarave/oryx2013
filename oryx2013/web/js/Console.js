@@ -36,6 +36,12 @@ var Console = {
 		}
 	},
 	
+	removeLastMessage: function(){
+		if (this.messages.length == 0) return;
+		
+		return this.messages.pop();
+	},
+	
 	getLastMessageType: function(){
 		if (this.messages.length == 0) return "";
 		

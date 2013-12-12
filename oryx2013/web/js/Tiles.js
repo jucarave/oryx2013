@@ -131,7 +131,7 @@ var Tileset = {
 		sword: {img: "itemsWeapons", subImg: new Position(0, 0), getColor: getColor},
 		heavySword: {img: "itemsWeapons", subImg: new Position(1, 0), getColor: getColor},
 		dagger: {img: "itemsWeapons", subImg: new Position(4, 0), getColor: getColor},
-		woodStaff: {img: "itemsWeapons", subImg: new Position(5, 0), getColor: getColor},
+		quarterStaff: {img: "itemsWeapons", subImg: new Position(5, 0), getColor: getColor},
 		gemStaff: {img: "itemsWeapons", subImg: new Position(6, 0), getColor: getColor},
 		battleAxe: {img: "itemsWeapons", subImg: new Position(2, 0), getColor: getColor},
 		heavyAxe: {img: "itemsWeapons", subImg: new Position(7, 0), getColor: getColor},
