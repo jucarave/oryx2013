@@ -33,7 +33,7 @@ MainScreen.prototype.setInitStats = function(){
 		exp: 0,
 		str: 5,
 		def: 3,
-		spd: 4,
+		spd: 6,
 		
 		gold: 40,
 		

@@ -4,7 +4,7 @@ var EnemyFactory = {
 		spider: {name: "spider", level: 1, hp: 9, str: 4, dfs: 3, spd: 3, exp: 3, tile: "spider"},
 		rat: {name: "rat", level: 1, hp: 12, str: 3, dfs: 3, spd: 6, exp: 5, tile: "rat"},
 		bat: {name: "bat", level: 1, hp: 9, str: 4, dfs: 3, spd: 5, exp: 3, tile: "bat"},
-		viper: {name: "viper", level: 1, hp: 15, str: 5, dfs: 7, spd: 5, exp: 8, tile: "viper"}
+		viper: {name: "viper", level: 1, hp: 15, str: 5, dfs: 6, spd: 5, exp: 8, tile: "viper"}
 	},
 	
 	getBucket: function(level){
