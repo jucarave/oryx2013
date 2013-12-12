@@ -33,6 +33,7 @@
 * Death Screen                     *
 * Starvation                       *
 * Reload Stats                     *
+* Basic Enemies                    *
 *                                  *
 ************************************
 
@@ -49,8 +50,8 @@
 * Character Creation               *
 * Progress Saving                  *
 * Progress Restore                 *
-* Basic Enemies                    *
 * Enemy Factory                    *
+* Enemies AI                       *
 * Enemies Data                     *
 * Attack Enemies                   *
 * Wear equipment                   *

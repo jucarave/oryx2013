@@ -5,9 +5,9 @@ var RDG = {
 	level: 0,
 	
 	newMap: function(level){
-		var numberOfRooms = level * 2 + Math.iRandom(3);
+		var numberOfRooms = level * 2 + Math.iRandom(2);
 		var minSize = 5;
-		var maxSize = 15;
+		var maxSize = 10;
 		
 		this.level = level;
 		this.rooms = [];
@@ -16,6 +16,11 @@ var RDG = {
 		
 		var width = 60;
 		var height = 60;
+		
+		if (level < 6){
+			width = 30;
+			height = 30;
+		}
 		
 		var fail = 0;
 		for (var i=0;i<numberOfRooms;i++){
@@ -60,8 +65,8 @@ var RDG = {
 		this.buildWalls();
 		this.setPlayer();
 		this.setExit();
+		this.setGarbage();
 		
-		mapToText(this.map);
 		return this.map;
 	},
 	
@@ -237,14 +242,17 @@ var RDG = {
 			for (var x=1;x<this.map[y].length-1;x++){
 				var tile = this.map[y][x];
 				if (tile != 0){ continue; }
+				var tileN = (Math.iRandom(5) == 3)? 4 : 2;
 				
 				var lt = this.map[y][x-1];
 				var rt = this.map[y][x+1];
 				var tt = this.map[y-1][x];
 				var bt = this.map[y+1][x];
 				
+				if (bt != 1){ tileN = 2; }
+				
 				if (lt == 1 || rt == 1 || tt == 1 || bt == 1){
-					this.map[y][x] = 2;
+					this.map[y][x] = tileN;
 					continue;
 				}
 				
@@ -254,7 +262,7 @@ var RDG = {
 				var bt = this.map[y+1][x+1];
 				
 				if (lt == 1 || rt == 1 || tt == 1 || bt == 1){
-					this.map[y][x] = 2;
+					this.map[y][x] = tileN;
 					continue;
 				}
 			}
@@ -282,6 +290,32 @@ var RDG = {
 		}
 		
 		return {w: maxW.x + maxW.w + 5, h: maxH.y + maxH.h + 5};
+	},
+	
+	setGarbage: function(){
+		var n = this.rooms.length + Math.iRandom(this.rooms.length * 3);
+		
+		var room;
+		for (var i=0;i<n;i++){
+			while (!room){
+				room = this.rooms[Math.iRandom(0, this.rooms.length)];
+			}
+			
+			var x = Math.iRandom(room.x, room.x + room.w - 1);
+			var y = Math.iRandom(room.y, room.y + room.h - 1);
+			
+			var tile = this.map[y][x];
+			if (tile <= 0) continue;
+			
+			var nTile = Math.iRandom(5, 9);
+			if (this.map[y][x] instanceof Array){
+				this.map[y][x].push(nTile);
+			}else{
+				this.map[y][x] = [this.map[y][x], nTile];
+			}
+			
+			room = null;
+		}
 	}
 };
 

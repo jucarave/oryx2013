@@ -44,7 +44,7 @@ var FOV = {
 			
 			while (node.life > 0){
 				this.map.setVisible(node.position, 2);
-				if (this.map.isSolid(node.position)){
+				if (this.map.isSolid(node.position, true)){
 					node.life = 0;
 				}
 				
