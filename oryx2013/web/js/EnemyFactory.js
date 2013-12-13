@@ -1,10 +1,10 @@
 var EnemyFactory = {
 	enemies: {
-		krab: {name: "krab", level: 1, hp: 8, str: 3, dfs: 5, spd: 3, exp: 4, tile: "krab"},
-		spider: {name: "spider", level: 1, hp: 9, str: 4, dfs: 3, spd: 3, exp: 3, tile: "spider"},
-		rat: {name: "rat", level: 1, hp: 12, str: 3, dfs: 3, spd: 6, exp: 5, tile: "rat"},
-		bat: {name: "bat", level: 1, hp: 9, str: 4, dfs: 3, spd: 5, exp: 3, tile: "bat"},
-		viper: {name: "viper", level: 1, hp: 15, str: 5, dfs: 6, spd: 5, exp: 8, tile: "viper"}
+		krab: {name: "krab", level: 1, hp: 8, str: 3, dfs: 5, spd: 3, exp: 4, money: 4, tile: "krab"},
+		spider: {name: "spider", level: 1, hp: 9, str: 4, dfs: 3, spd: 3, exp: 3, money: 4, tile: "spider"},
+		rat: {name: "rat", level: 1, hp: 12, str: 3, dfs: 3, spd: 6, exp: 5, money: 6, tile: "rat"},
+		bat: {name: "bat", level: 1, hp: 9, str: 4, dfs: 3, spd: 5, exp: 3, money: 5, tile: "bat"},
+		viper: {name: "viper", level: 1, hp: 15, str: 5, dfs: 6, spd: 5, exp: 8, money: 8, tile: "viper"}
 	},
 	
 	getBucket: function(level){
@@ -36,7 +36,8 @@ var EnemyFactory = {
 			str: enemy.str,
 			dfs: enemy.dfs,
 			exp: enemy.exp,
-			spd: enemy.spd
+			spd: enemy.spd,
+			money: enemy.money
 		};
 		
 		return ret;

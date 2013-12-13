@@ -16,6 +16,17 @@ var ItemFactory = {
 	//Armours
 	cottomCloth: {dfs: 2, dice:"2D4", isArmour: true, tile: "cottomCloth" },
 	
+	getMoney: function(amount){
+		var ret = {
+			tile: Tileset.itemsWeapons.money,
+			amount: amount,
+			isMoney: true,
+			name: amount + " gold coins"
+		};
+		
+		return ret;
+	},
+	
 	getItem: function(name, status){
 		var item = ItemFactory[name];
 		var nitem = {};

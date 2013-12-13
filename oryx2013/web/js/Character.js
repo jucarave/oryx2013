@@ -13,8 +13,9 @@ Character.prototype.moveTo = function(x, y){
 	return true;
 };
 
-Character.prototype.draw = function(game){
-	game.drawTile(this.tile, this.position, this.mapManager.view);
+Character.prototype.draw = function(game, tile){
+	if (!tile) tile = this.tile;
+	game.drawTile(tile, this.position, this.mapManager.view);
 };
 
 Character.prototype.loop = function(game){

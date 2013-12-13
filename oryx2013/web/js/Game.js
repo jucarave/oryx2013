@@ -112,7 +112,8 @@ Game.prototype.drawPickupItemsMenu = function(){
 		this.eng.drawImage(game.sprites[tile.img], xx, y, tile.subImg);
 		
 		var itile = items[i].tile;
-		this.eng.drawImage(game.sprites[itile.img], xx, y, itile.subImg);
+		var img = (game.sprites[itile.img])? game.sprites[itile.img] : itile.img;
+		this.eng.drawImage(img, xx, y, itile.subImg);
 		
 		if (this.selectedOpt == i)
 			this.eng.drawImage(tile.getColor(255,255,0).img, xx, y, tile.subImg);
