@@ -170,8 +170,15 @@ Player.prototype.pickItem = function(item){
 		}
 		armours.push(item);
 		if (armours.length == 1){ PlayerStats.currentA = 0; }
+	}else if (item.item.isMoney){
+		PlayerStats.gold += item.item.amount;
 	}
-	Console.addMessage("You pick up a(n) " + ItemFactory.getItemQuality(item.item.status) + " " + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
+	
+	if (item.item.isMoney){
+		Console.addMessage("You pick " + item.item.name, "rgb(255,255,255)");
+	}else{
+		Console.addMessage("You pick up a(n) " + ItemFactory.getItemQuality(item.item.status) + " " + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
+	}
 };
 
 Player.prototype.checkItems = function(game){

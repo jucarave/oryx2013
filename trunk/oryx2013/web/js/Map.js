@@ -14,6 +14,8 @@ function Map(params){
 	
 	this.signs = [];
 	
+	this.animateInstances = [];
+	
 	if (params.random){
 		this.light = false;
 		this.signs = [];
@@ -127,6 +129,15 @@ Map.prototype.setVisible = function(position, visible){
 		if (tile[i] === 0) return;
 		tile[i].visible = visible;
 	}
+};
+
+Map.prototype.addAnimationInstance = function(instance){
+	for (var i=0;i<this.animateInstances.length;i++){
+		if (this.animateInstances[i].position.equals(instance.position))
+			return;
+	}
+	
+	this.animateInstances.push(instance);
 };
 
 Map.prototype.getEnemyAt = function(x, y){
@@ -280,6 +291,34 @@ Map.prototype.parseMap = function(){
 	}
 };
 
+Map.prototype.drawFloor = function(x, y, visible){
+	var xx = this.view.x;
+	var yy = this.view.y;
+	
+	var tile = this.map[y][x];
+	for (var t=0,tlen=tile.length;t<tlen;t++){
+		if (tile[t] === 0)  continue;
+		if (tile[t].visible == 0) continue;
+		
+		tile[t].wasVisible = 0;
+		if (this.light){
+			tile[t].wasVisible = 2;
+			tile[t].visible = 2;
+		}
+		
+		if (tile[t].visible == 2 || visible){
+			game.drawTile(tile[t].tile, new Position(x - xx, y - yy), null, false);
+			tile[t].wasVisible = 2;
+		}else if (tile[t].visible == 1){
+			var vis = (t==tlen-1);
+			game.drawTile(tile[t].tile, new Position(x - xx, y - yy), null, vis);
+			tile[t].wasVisible = 1;
+		}
+		
+		tile[t].visible = 1;
+	}
+};
+
 Map.prototype.drawMap = function(game){
 	var x = this.view.x;
 	var y = this.view.y;
@@ -292,27 +331,7 @@ Map.prototype.drawMap = function(game){
 		
 		for (var i=y,len=y+game.viewS.y;i<len;i++){
 			for (var j=x,jlen=x+game.viewS.x;j<jlen;j++){
-				var tile = this.map[i][j];
-				for (var t=0,tlen=tile.length;t<tlen;t++){
-					if (tile[t] === 0)  continue;
-					if (tile[t].visible == 0) continue;
-					
-					tile[t].wasVisible = 0;
-					if (this.light){
-						tile[t].wasVisible = 2;
-						tile[t].visible = 2;
-					}
-					if (tile[t].visible == 1){
-						var vis = (t==tlen-1);
-						game.drawTile(tile[t].tile, new Position(j - x, i - y), null, vis);
-						tile[t].wasVisible = 1;
-					}else if (tile[t].visible == 2){
-						game.drawTile(tile[t].tile, new Position(j - x, i - y), null, false);
-						tile[t].wasVisible = 2;
-					}
-					
-					tile[t].visible = 1;
-				}
+				this.drawFloor(j,i);
 			}
 		}
 		
@@ -348,6 +367,15 @@ Map.prototype.drawMap = function(game){
 	
 	this.player.playerAction = false;
 	this.player.loop(game);
+	
+	for (var i=0;i<this.animateInstances.length;i++){
+		if (!this.animateInstances[i].keepAnimation){
+			this.animateInstances.splice(i,1);
+			i--;
+			continue;
+		}
+		this.animateInstances[i].animatedLoop(game);
+	}
 	
 	if (this.passTurn == 500 || game.keyP[32] == 1){
 		Console.addMessage("Pass", "rgb(130,160,90)");
