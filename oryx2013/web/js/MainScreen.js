@@ -1,10 +1,10 @@
 function MainScreen(){
 	this.title = [
-		[0,0,3,3,0,0,3,2,3,0,3,2,3],
-		[0,0,3,0,3,0,3,0,3,0,3,0,2],
-		[0,0,3,0,3,0,3,0,3,0,3,2,0],
-		[0,0,3,0,2,0,3,0,3,0,3,0,3],
-		[0,0,2,2,0,0,2,2,2,0,2,0,2]
+		[0,2,3,2,0,3,0,3,0,3,0,0,0,3,0,0],
+		[0,0,3,0,0,3,0,3,0,3,0,0,0,3,0,0],
+		[0,0,3,0,0,3,0,3,0,3,0,0,0,3,0,0],
+		[0,0,3,0,0,3,0,3,0,3,0,0,0,3,0,0],
+		[0,0,2,0,0,2,2,2,0,2,2,2,0,2,2,2]
 	];
 	
 	this.setInitStats();
@@ -13,7 +13,7 @@ function MainScreen(){
 MainScreen.prototype.setInitStats = function(){
 	PlayerStats = {
 		name: "kram",
-		class: "Fighter",
+		class: HeroClasses.fighter,
 		
 		health: 30,
 		mHealth: 30,
@@ -35,7 +35,7 @@ MainScreen.prototype.setInitStats = function(){
 		def: 3,
 		spd: 6,
 		
-		gold: 40,
+		gold: 50,
 		
 		steppedItems: [],
 		stairs: null,
@@ -53,7 +53,7 @@ MainScreen.prototype.setInitStats = function(){
 
 MainScreen.prototype.drawTitle = function(ctx){
 	var x, y, pos;
-	x = 1;
+	x = 0;
 	y = 0;
 	pos = new Position(x, y);
 	for (var i=0,len=this.title.length;i<len;i++){
@@ -67,7 +67,7 @@ MainScreen.prototype.drawTitle = function(ctx){
 			game.drawTile(tile, pos);
 			
 		}
-		x = 1;
+		x = 0;
 		y++;
 	}
 };
@@ -87,7 +87,7 @@ MainScreen.prototype.step = function(game){
 	}else if (game.keyP[66] == 1){
 		
 		game.keyP[65] = 2;
-	}else if (game.keyP[67] == 1){
+	}else if (game.keyP[68] == 1){
 		location.href = exitPath;
 		game.keyP[67] = 2;
 	}
@@ -105,7 +105,8 @@ MainScreen.prototype.draw = function(game){
 	ctx.textAlign = "center";
 	ctx.fillText("a) To start a new adventure", ctx.width / 2, 380);
 	ctx.fillText("b) To continue the adventure", ctx.width / 2, 400);
-	ctx.fillText("c) To exit", ctx.width / 2, 420);
+	ctx.fillText("c) To instructions", ctx.width / 2, 420);
+	ctx.fillText("d) To exit", ctx.width / 2, 440);
 	
 	ctx.fillText("DOR, Developed by Camilo Ramírez (Jucarave) 2013", ctx.width / 2, ctx.height - 20);
 	

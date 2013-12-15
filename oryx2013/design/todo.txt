@@ -35,28 +35,29 @@
 * Reload Stats                     *
 * Basic Enemies                    *
 * Weapons Data                     *
+* Random Dungeons                  *
+* Enemy Factory                    *
 * Gold coins                       *
+* Town                             *
+* Random Dungeons                  *
+* Store system                     *
+* Armours Data                     *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* Town                             *
-* Random Dungeons                  *
-* Store system                     *
-* Armours Data                     *
-* Magic Data                       *
-* Items Data                       *
 * Character Creation               *
+* Use of Magic                     *
+* Items Data                       *
 * Progress Saving                  *
 * Progress Restore                 *
 * Enemy Factory                    *
 * Enemies AI                       *
 * Enemies Data                     *
-* Attack Enemies                   *
+* Attack                           *
 * Wear equipment                   *
-* Use of Magic                     *
 * Story Events                     *
 * Sprite fonts                     *
 * Level scheme                     *

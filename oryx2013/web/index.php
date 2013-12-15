@@ -24,6 +24,8 @@
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/RDG.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Enemy.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/EnemyFactory.js?version=<?php echo $version; ?>"></script>
+		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Seller.js?version=<?php echo $version; ?>"></script>
+		<script type="text/javascript" src="<?php echo $contextPath; ?>js/SellerFactory.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript">
 			var cp = "<?php echo $contextPath; ?>";
 			var version = "<?php echo $version; ?>";

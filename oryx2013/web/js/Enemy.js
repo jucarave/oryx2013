@@ -10,6 +10,15 @@ function Enemy(tile, position, enemy){
 Enemy.prototype = Object.create(Character.prototype);
 Enemy.prototype.constructor = Enemy;
 
+Enemy.prototype.randomMovement = function(){
+	var xTo = Math.iRandom(-1, 1);
+	var yTo = (xTo == 0)? Math.iRandom(-1, 1) : 0;
+	
+	if (xTo == 0 && yTo == 0) return;
+	
+	this.moveTo(xTo, yTo);
+};
+
 Enemy.prototype.dropLoot = function(){
 	var ret = "";
 	PlayerStats.exp += this.enemy.exp;
@@ -61,6 +70,11 @@ Enemy.prototype.draw = function(game, tile){
 		}
 		Character.prototype.draw.call(this, game, tile);
 	}
+};
+
+Enemy.prototype.loop = function(game){
+	this.randomMovement();
+	Character.prototype.loop.call(this,  game);
 };
 
 Enemy.prototype.animatedLoop = function(game){

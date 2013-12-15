@@ -30,7 +30,10 @@ function getColor(r, g, b){
 	
 var Tileset = {
 	heroes: {
-		warrior1: {img: "heroes", subImg: new Position(0, 0), getColor: getColor}
+		warrior1: {img: "heroes", subImg: new Position(0, 0), getColor: getColor},
+		
+		seller: {img: "heroes", subImg: new Position(5, 0), getColor: getColor},
+		sellerWizard: {img: "heroes", subImg: new Position(8, 0), getColor: getColor},
 	},
 	
 	environment: {
@@ -51,6 +54,7 @@ var Tileset = {
 		candle: {img: "misc", subImg: new Position(10, 2), tileId: 15, getColor: getColor, solid: true, color: {r:198,g:198,b:0}},
 		grave: {img: "misc", subImg: new Position(12, 2), tileId: 16, getColor: getColor, solid: true, color: {r:198,g:198,b:198}},
 		grave2: {img: "misc", subImg: new Position(15, 2), tileId: 17, getColor: getColor, solid: true, color: {r:198,g:198,b:198}},
+		bed: {img: "misc", subImg: new Position(2, 1), tileId: 18, getColor: getColor, solid: true}	,
 		
 		getByTileId: function(tileId){
 			for (env in Tileset.environment){
@@ -140,6 +144,7 @@ var Tileset = {
 		
 		//Armours
 		cottomCloth: {img: "itemsWeapons", subImg: new Position(0, 1), getColor: getColor},
+		helmet: {img: "itemsWeapons", subImg: new Position(1, 1), getColor: getColor},
 		
 		food: {img: "itemsWeapons", subImg: new Position(13, 1), getColor: getColor},
 		skull: {img: "itemsWeapons", subImg: new Position(3, 3), getColor: getColor},

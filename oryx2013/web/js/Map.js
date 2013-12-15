@@ -8,6 +8,9 @@ function Map(params){
 	this.player = null;
 	this.level = 0;
 	
+	this.store = false;
+	this.inTransact = null;
+	
 	this.light = false;
 	
 	this.passTurn = 0;
@@ -36,7 +39,7 @@ Map.prototype.loadMap = function(map){
 	this.light = false;
 	this.signs = [];
 	if (map == "town"){
-		this.name = "Town Map";
+		this.name = "TULL";
 		this.key = map;
 		this.light = true;
 		this.level = 0;
@@ -48,6 +51,7 @@ Map.prototype.loadMap = function(map){
 		var e = [1, 15];
 		var f = [5, 16];
 		var g = [5, 17];
+		var h = [7, 18];
 		
 		this.map = [
 			[ 4, 4, 4, 4, 2, d, a, a, a, a,14, e,-4, e,14, a, a, a, d, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
@@ -71,20 +75,22 @@ Map.prototype.loadMap = function(map){
 			[ 2, 2, 7, 8, 7, 7, 7, 2, 5, 5, 5, 5, 4, 6, 6, 6, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
 			[ 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 6, 6, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
 			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 6, 6, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
-			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
-			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
-			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
-			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 2, 7, 7, 7, 7, 2, 4, 4, 4, 4, 4],
+			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 2, 2, 7, 7, 2, 2, 4, 4, 4, 4, 4],
+			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 2, h, 7, 7, h, 2, 4, 4, 4, 4, 4],
+			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 2, 2, 7, 7, 2, 2, 4, 4, 4, 4, 4],
+			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 2, h, 7, 7, h, 2, 4, 4, 4, 4, 4],
 			[ 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4]
 		];
 		
 		this.signs = [
-			{title: "P O T I O N S", pos: new Position(4, 8)},
+			{title: "M A G I C", pos: new Position(4, 8)},
 			{title: "F O O D", pos: new Position(4, 14)},
 			{title: "W E A P O N S", pos: new Position(22, 0)},
 			{title: "A R M O U R S", pos: new Position(28, 6)},
 			{title: "H O T E L", pos: new Position(31.5, 15)}
 		];
+		
+		this.loadVendors();
 	}
 	
 };
@@ -107,6 +113,11 @@ Map.prototype.isSolid = function(position, avoidEnemies){
 			}
 		}
 	}
+	
+	if (!avoidEnemies && this.player.position.equals(position)){
+		return true;
+	}
+	
 	return false;
 };
 
@@ -138,6 +149,14 @@ Map.prototype.addAnimationInstance = function(instance){
 	}
 	
 	this.animateInstances.push(instance);
+};
+
+Map.prototype.getSellerAt = function(x, y){
+	for (var i=0;i<this.instances.length;i++){
+		if (this.instances[i].isSeller && this.instances[i].inWorld && this.instances[i].position.equals(x, y))
+			return this.instances[i];
+	}
+	return null;
 };
 
 Map.prototype.getEnemyAt = function(x, y){
@@ -225,7 +244,21 @@ Map.prototype.newItem = function(tile, position, item){
 };
 
 Map.prototype.setPlayer = function(x, y){
-	this.player = new Player(Tileset.heroes.warrior1.getColor(150, 0,0), new Position(x, y));
+	this.player = new Player(Tileset.heroes.warrior1, new Position(x, y));
+};
+
+Map.prototype.createVendors = function(tile, position, seller){
+	var ven = new Seller(tile, position, seller);
+	ven.mapManager = this;
+	this.instances.push(ven);
+};
+
+Map.prototype.loadVendors = function(){
+	this.createVendors(Tileset.heroes.seller.getColor(0, 0, 200), new Position(22, 1), SellerFactory.weapons);
+	this.createVendors(Tileset.heroes.seller.getColor(255, 255, 0), new Position(31, 9), SellerFactory.armour);
+	this.createVendors(Tileset.heroes.sellerWizard.getColor(100, 0, 100), new Position(4, 9), SellerFactory.weapons);
+	this.createVendors(Tileset.heroes.seller.getColor(122, 122, 255), new Position(2, 16), SellerFactory.food);
+	this.createVendors(Tileset.heroes.seller.getColor(255, 0, 0), new Position(31, 16), SellerFactory.hotel);
 };
 
 Map.prototype.loadInstances = function(game){
@@ -291,11 +324,140 @@ Map.prototype.parseMap = function(){
 	}
 };
 
+Map.prototype.inHotel = function(game){
+	if (game.keyP[89] == 1){
+		game.keyP[89] = 2;
+		if (PlayerStats.gold < 50){
+			Console.addMessage("You can't afford it", "rgb(255,255,0)");
+			this.store = null;
+			return;
+		}
+		
+		Console.addMessage("The room is ready, rest well.", "rgb(255,255,255)");
+		PlayerStats.gold -= 50;
+		PlayerStats.health = PlayerStats.mHealth;
+		PlayerStats.mana = PlayerStats.mMana;
+		this.player.position.set(33, 24);
+		this.player.playerAction = true;
+		this.player.playerMoved = true;
+		this.player.setView(game);
+		this.store = null;
+	}else if (game.keyP[78] == 1){
+		Console.addMessage("Have a nice day then.", "rgb(255,255,255)");
+		this.store = null;
+		game.keyP[78] = 2;
+	}
+};
+
+Map.prototype.drawStore = function(game){
+	if (!this.store) return;
+	
+	if (this.store[0] == "hotel"){
+		this.inHotel(game); 
+		return; 
+	}
+	
+	var ctx = game.eng.ctx;
+	var h = (this.store.length + 2) * 20 + 16;
+	var x = ctx.width / 2 - 250;
+	var y = ctx.height / 2 - h / 2;
+	
+	ctx.fillStyle = "rgb(33,33,33)";
+	ctx.fillRect(x, y, 500, h);
+	
+	ctx.strokeStyle = "rgb(255,255,255)";
+	ctx.strokeRect(x, y, 500, h);
+	
+	ctx.fillStyle = "rgb(255,255,255)";
+	ctx.fillText("Select the option of the item you want to buy.", x + 8, y + 20);
+	
+	var chr = 65;
+	y += 60;
+	for (var i=0,len=this.store.length;i<len;i++){
+		if ((typeof this.store[i]) == "string") this.store[i] = ItemFactory.getItem(this.store[i], 1);
+		var lt = String.fromCharCode(chr).toLowerCase();
+		var name = ItemFactory.getItemName(this.store[i]);
+		
+		ctx.fillText(lt + ") " + name, x + 8, y + (i * 20));
+		ctx.fillText("$" + this.store[i].price, x + 300, y + (i * 20));
+		
+		if (game.keyP[chr] == 1 && !this.inTransact){
+			this.inTransact = this.store[i];
+			if (PlayerStats.gold < this.inTransact.price){
+				Console.addMessage("You can't afford it", "rgb(255,255,0)");
+				this.inTransact = null;
+			}else{
+				Console.addMessage("Do you want to buy the " + name + "? Y/N", "rgb(255,255,0)");
+			}
+			game.keyP[chr] = 2;
+		}
+		
+		chr++;
+	}
+	
+	if (this.inTransact){
+		if (game.keyP[89] == 1){
+			var name = ItemFactory.getItemName(this.inTransact);
+			if (this.inTransact.isWeapon){
+				if (PlayerStats.weapons.length == 7){
+					Console.addMessage("You can't carry more weapons", "rgb(255,255,255)");
+					this.inTransact = null;
+					return;
+				}
+				if (PlayerStats.class.id != this.inTransact.class.id){
+					Console.addMessage("This weapon is reserved only for " + this.inTransact.class.name + "s", "rgb(255,255,255)");
+					this.inTransact = null;
+					return;
+				}
+				PlayerStats.gold -= this.inTransact.price;
+				Console.addMessage("You bought a(n) " + name, "rgb(255,255,255)");
+				var it = new Item(this.inTransact.tile, new Position(-1, 0), this.inTransact);
+				it.inWorld = false;
+				PlayerStats.weapons.push(it);
+				this.inTransact = null;
+			}else if (this.inTransact.isArmour){
+				if (PlayerStats.armours.length == 7){
+					Console.addMessage("You can't carry more armours", "rgb(255,255,255)");
+					this.inTransact = null;
+					return;
+				}
+				PlayerStats.gold -= this.inTransact.price;
+				Console.addMessage("You bought a(n) " + name, "rgb(255,255,255)");
+				var it = new Item(this.inTransact.tile, new Position(-1, 0), this.inTransact);
+				it.inWorld = false;
+				PlayerStats.armours.push(it);
+				this.inTransact = null;
+			}else if (this.inTransact.isFood){
+				if (PlayerStats.food == 9999){
+					Console.addMessage("You can't carry more food", "rgb(255,255,255)");
+					this.inTransact = null;
+					return;
+				}
+				PlayerStats.gold -= this.inTransact.price;
+				Console.addMessage("You bought a(n) " + name, "rgb(255,255,255)");
+				PlayerStats.food = Math.min(PlayerStats.food + this.inTransact.amount, 9999);
+				this.inTransact = null;
+			}
+			game.keyP[89] = 2;
+		}else if (game.keyP[78] == 1){
+			this.inTransact = null;
+			game.keyP[78] = 2;
+		}
+	}else if (game.keyP[27] == 1){
+		Console.addMessage("Have a nice day", "rgb(255,255,255)");
+		this.inTransact = null;
+		this.store = null;
+		this.player.playerAction = true;
+		game.keyP[27] = 2;
+	}
+};
+
 Map.prototype.drawFloor = function(x, y, visible){
 	var xx = this.view.x;
 	var yy = this.view.y;
 	
 	var tile = this.map[y][x];
+	if (!tile){ console.log(x + "_" + y); }
 	for (var t=0,tlen=tile.length;t<tlen;t++){
 		if (tile[t] === 0)  continue;
 		if (tile[t].visible == 0) continue;
@@ -323,7 +485,8 @@ Map.prototype.drawMap = function(game){
 	var x = this.view.x;
 	var y = this.view.y;
 	
-	this.passTurn++;
+	if (!this.store)
+		this.passTurn++;
 	
 	if (this.player.playerAction){
 		this.passTurn = 0;
@@ -383,6 +546,8 @@ Map.prototype.drawMap = function(game){
 		if (game.keyP[32] == 1)
 			game.keyP[32] = 2;
 	}
+	
+	this.drawStore(game);
 	
 	if (game.map == null) return;
 	game.drawInterface();

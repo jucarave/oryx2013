@@ -5,11 +5,12 @@ function Character(tile, position){
 }
 
 Character.prototype.moveTo = function(x, y){
-	this.position.sum(x, y);
-	if (this.mapManager.isSolid(this.position)){
-		this.position.sum(-x, -y);
+	var npos = this.position.clone();
+	npos.sum(x, y);
+	if (this.mapManager.isSolid(npos)){
 		return false;
 	}
+	this.position = npos;
 	return true;
 };
 
