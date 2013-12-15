@@ -1,20 +1,34 @@
 var ItemFactory = {
 	//Weapons
-	sword: {dmg: 5, dice:"2D4", isWeapon: true, tile: "sword", class: HeroClasses.fighter},
-	heavySword: {dmg: 9, dice:"1D2", isWeapon: true, tile: "heavySword", class: HeroClasses.fighter},
-	greatSword: {dmg: 15, dice:"5D4", isWeapon: true, tile: "heavySword", class: HeroClasses.fighter, color: {r:0,g:0,b:255}},
-	knife: {dmg: 5, dice:"1D3", isWeapon: true, tile: "dagger"},
-	dagger: {dmg: 8, dice:"2D4", isWeapon: true, tile: "dagger", color: {r:255,g:201,b:14}},
-	quarterStaff: {dmg: 10, dice:"2D4", isWeapon: true, tile: "quarterStaff", class: HeroClasses.wizzard, color: {r:132,g:82,b:55}},
-	gemStaff: {dmg: 15, dice:"2D4", isWeapon: true, tile: "gemStaff", class: HeroClasses.wizzard, color: {r:255,g:201,b:14}},
-	battleAxe: {dmg: 8, dice:"2D4", isWeapon: true, tile: "battleAxe"},
-	heavyAxe: {dmg: 13, dice:"2D4", isWeapon: true, tile: "heavyAxe", class: HeroClasses.fighter},
-	bow: {dmg: 8, dice:"3D6", isWeapon: true, tile: "bow", class: HeroClasses.archer},
-	longBow: {dmg: 15, dice:"4D8", isWeapon: true, tile: "longBow", class: HeroClasses.archer, color: {r:255,g:201,b:14}},
-	crossBow: {dmg: 19, dice:"6D9", isWeapon: true, tile: "crossBow", class: HeroClasses.archer},
+	sword: {dmg: 10, dice:"2D4", isWeapon: true, tile: "sword", class: HeroClasses.fighter, price: 45},
+	heavySword: {dmg: 15, dice:"1D2", isWeapon: true, tile: "heavySword", class: HeroClasses.fighter, price: 65},
+	greatSword: {dmg: 25, dice:"5D4", isWeapon: true, tile: "heavySword", class: HeroClasses.fighter, color: {r:0,g:0,b:255}},
+	knife: {dmg: 5, dice:"1D3", isWeapon: true, tile: "dagger", price: 20},
+	dagger: {dmg: 8, dice:"2D4", isWeapon: true, tile: "dagger", color: {r:255,g:201,b:14}, price: 33},
+	quarterStaff: {dmg: 13, dice:"2D4", isWeapon: true, tile: "quarterStaff", class: HeroClasses.wizard, color: {r:132,g:82,b:55}, price: 38},
+	gemStaff: {dmg: 28, dice:"2D4", isWeapon: true, tile: "gemStaff", class: HeroClasses.wizard, color: {r:255,g:201,b:14}, price: 50},
+	battleAxe: {dmg: 12, dice:"2D4", isWeapon: true, tile: "battleAxe", price: 38},
+	heavyAxe: {dmg: 20, dice:"2D4", isWeapon: true, tile: "heavyAxe", class: HeroClasses.fighter, price: 48},
+	bow: {dmg: 12, dice:"3D6", isWeapon: true, tile: "bow", class: HeroClasses.archer, price: 35},
+	longBow: {dmg: 26, dice:"4D8", isWeapon: true, tile: "bow", class: HeroClasses.archer, color: {r:255,g:201,b:14}, price: 60},
+	crossBow: {dmg: 34, dice:"6D9", isWeapon: true, tile: "crossBow", class: HeroClasses.archer},
 	
 	//Armours
 	cottomCloth: {dfs: 2, dice:"2D4", isArmour: true, tile: "cottomCloth" },
+	leatherArmour: {dfs: 9, dice:"1D3", isArmour: true, tile: "cottomCloth", price: 30, color: {r:188,g:134,b:84} },
+	robe: {dfs: 5, dice:"1D3", isArmour: true, tile: "cottomCloth", price: 40, color: {r:68,g:116,b:187} },
+	plateArmour: {dfs: 15, dice:"3D7", isArmour: true, tile: "helmet", price: 60 },
+	mailArmour: {dfs: 20, dice:"3D7", isArmour: true, tile: "helmet", price: 100, color: {r:147,g:181,b:153} },
+	scaleArmour: {dfs: 30, dice:"3D4", isArmour: true, tile: "helmet", price: 150, color: {r:65,g:143,b:184} },
+	reflectArmour: {dfs: 50, dice:"5D9", isArmour: true, tile: "helmet"},
+	
+	//Food
+	pack10: {amount: 10, isFood: true, tile: "food", rName: "pack of 10 rations", price: 10 },
+	pack20: {amount: 20, isFood: true, tile: "food", rName: "pack of 20 rations", price: 20 },
+	pack50: {amount: 50, isFood: true, tile: "food", rName: "pack of 50 rations", price: 50 },
+	pack100: {amount: 100, isFood: true, tile: "food", rName: "pack of 100 rations", price: 100 },
+	pack300: {amount: 100, isFood: true, tile: "food", rName: "pack of 300 rations", price: 300 },
+	pack500: {amount: 500, isFood: true, tile: "food", rName: "pack of 500 rations", price: 500 },
 	
 	getMoney: function(amount){
 		var ret = {

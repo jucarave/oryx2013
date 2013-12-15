@@ -37,6 +37,7 @@ Player.prototype.tryMove = function(key, xTo, yTo){
 	if (game.keyP[key]){ 
 		if (this.run == 0 || this.run > 20){
 			if (this.moveTo(xTo, yTo)){
+				PlayerStats.stairs = null;
 				this.consumeFood();
 				this.consoleMovement(xTo, yTo);
 				this.playerMoved = true;
@@ -114,13 +115,44 @@ Player.prototype.attack = function(game){
 	return false;
 };
 
+Player.prototype.transact = function(game){
+	if (game.keyP[84] != 1) return;
+	
+	game.keyP[84] = 2;
+	var seller = this.mapManager.getSellerAt(this.position.x, this.position.y - 2);
+	if (seller){
+		seller.greet();
+		return;
+	}
+	
+	seller = this.mapManager.getSellerAt(this.position.x + 2, this.position.y);
+	if (seller){
+		seller.greet();
+		return;
+	}
+	
+	seller = this.mapManager.getSellerAt(this.position.x, this.position.y + 2);
+	if (seller){
+		seller.greet();
+		return;
+	}
+	
+	seller = this.mapManager.getSellerAt(this.position.x - 2, this.position.y);
+	if (seller){
+		seller.greet();
+		return;
+	}
+};
+
 Player.prototype.step = function(game){
 	if (PlayerStats.weaponsMenu) return;
 	if (PlayerStats.armourMenu) return;
 	if (PlayerStats.pickItemsMenu) return;
+	if (this.mapManager.store) return;
 	
 	if (this.attack(game)) return;
 	if (this.battle != 0) return;
+	this.transact(game);
 	
 	if (!this.tryMove(37,-1,0))
 	if (!this.tryMove(38,0,-1))

@@ -169,14 +169,15 @@ Game.prototype.drawPlayerMenu = function(bucket, current, x){
 		this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 		if (bucket[i]){
 			var item = bucket[i];
-			var wtile = item.tile;
-			this.eng.drawImage(this.sprites[wtile.img], x, y, wtile.subImg);
+			var wtile = (this.sprites[item.tile.img])? this.sprites[item.tile.img] : item.tile.img;
+			this.eng.drawImage(wtile, x, y, item.tile.subImg);
 			
 			if (this.selectedOpt == i && this.keyP[68] == 1){
 				item.position.set(this.map.player.position);
 				item.inWorld = true;
 				this.map.instances.push(item);
 				bucket.splice(i,1);
+				PlayerStats[current] = Math.max(0, PlayerStats[current] - 1);
 				i--;
 				this.map.player.act();
 				this.keyP[68] = 2;
@@ -286,7 +287,7 @@ Game.prototype.drawInterface = function(){
 	
 	var ps = PlayerStats;
 	ctx.fillStyle = "rgb(255,255,255)";
-	ctx.fillText(ps.name + ", " + ps.class, x, y);
+	ctx.fillText(ps.name + ", " + ps.class.name, x, y);
 	ctx.fillText(this.map.name, x, y + 16);
 	
 	var exDmg = 0, exDfs = 0;
@@ -316,14 +317,15 @@ Game.prototype.drawInterface = function(){
 	if (PlayerStats.weapons[PlayerStats.currentW]){
 		var weapon = PlayerStats.weapons[PlayerStats.currentW];
 		tile = weapon.tile;
-		this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
+		var img = (this.sprites[tile.img])? this.sprites[tile.img] : tile.img;
+		this.eng.drawImage(img, x, y, tile.subImg);
 		
 		ctx.fillText(Math.round(weapon.item.status * 100) + "%", x, y + this.gridS.y + 16);
 	}
 	
 	//Armour
 	tile = Tileset.itemsWeapons.frame;
-	x += 40;
+	x += 55;
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 	
 	if (PlayerStats.armours[PlayerStats.currentA]){
@@ -337,7 +339,7 @@ Game.prototype.drawInterface = function(){
 	
 	//Food
 	tile = Tileset.itemsWeapons.frame;
-	x += 40;
+	x += 55;
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 	
 	tile = Tileset.itemsWeapons.food.getColor(170, 120, 70);
@@ -346,14 +348,9 @@ Game.prototype.drawInterface = function(){
 	ctx.fillStyle = "rgb(170, 120, 70)";
 	ctx.fillText(PlayerStats.food, x, y + this.gridS.y + 16);
 	
-	//Magic
-	tile = Tileset.itemsWeapons.frame;
-	x += 40;
-	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
-	
 	//Items
 	tile = Tileset.itemsWeapons.frame;
-	x += 40;
+	x += 55;
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 	
 	this.drawWeaponsMenu();

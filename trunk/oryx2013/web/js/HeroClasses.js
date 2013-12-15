@@ -1,5 +1,5 @@
 var HeroClasses = {
 	fighter: {id: 0, name: "Fighter"},
-	wizzard: {id: 1, name: "Wizzard"},
+	wizard: {id: 1, name: "Wizard"},
 	archer: {id: 2, name: "Archer"},
 };
