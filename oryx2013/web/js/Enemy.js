@@ -4,11 +4,55 @@ function Enemy(tile, position, enemy){
 	this.discovered = false;
 	this.blink = 8;
 	this.keepAnimation = false;
+	
+	this.followPlayer = 0;
+	this.playerPath = null;
+	
 	Character.call(this, tile, position);
 }
 
 Enemy.prototype = Object.create(Character.prototype);
 Enemy.prototype.constructor = Enemy;
+
+Enemy.prototype.attackPlayer = function(){
+	var player = this.mapManager.player;
+	var dice = Math.iRandom(10);
+	
+	if (PlayerStats.spd > this.enemy.spd + 10 && dice != 6 && dice != 3){
+		return;
+	}
+	
+	var dmg = this.enemy.str;
+	dmg -= PlayerStats.def;
+	
+	player.hurt(this.enemy, dmg);
+};
+
+Enemy.prototype.followMovement = function(){
+	var player = this.mapManager.player;
+	var xdif = Math.abs(this.position.x - player.position.x);
+	var ydif = Math.abs(this.position.y - player.position.y);
+	if ((xdif == 1 && ydif == 0) || (xdif == 0 && ydif == 1)){
+		this.attackPlayer();
+		return;
+	}
+	
+	if (!this.playerPath || player.playerMoved){
+		this.playerPath = PathFinder.getPath(this.position, player.position, this.mapManager);
+		this.playerPath.pop();
+	}
+	
+	if (this.playerPath.length > 0){
+		var dice = Math.iRandom(10);
+		if (dice == 4 || dice == 8) return;
+		var node = this.playerPath[0];
+		var xTo = node.x - this.position.x;
+		var yTo = node.y - this.position.y;
+		
+		this.moveTo(xTo, yTo);
+		this.playerPath.splice(0, 1);
+	}
+};
 
 Enemy.prototype.randomMovement = function(){
 	var xTo = Math.iRandom(-1, 1);
@@ -21,7 +65,7 @@ Enemy.prototype.randomMovement = function(){
 
 Enemy.prototype.dropLoot = function(){
 	var ret = "";
-	PlayerStats.exp += this.enemy.exp;
+	this.mapManager.player.addExperience(this.enemy.exp);
 	
 	ret += "> You earn " + this.enemy.exp + " points of experience";
 	
@@ -65,6 +109,7 @@ Enemy.prototype.hurt = function(dmg){
 Enemy.prototype.draw = function(game, tile){
 	if (!tile) tile = this.tile;
 	if (this.mapManager.isVisible(this.position) == 2){
+		this.followPlayer = 5;
 		if (!this.discovered){
 			Console.addMessage("You saw a " + this.enemy.name, "rgb(255,0,0)");
 			this.discovered = true;
@@ -74,7 +119,14 @@ Enemy.prototype.draw = function(game, tile){
 };
 
 Enemy.prototype.loop = function(game){
-	this.randomMovement();
+	if (this.followPlayer > 0){
+		this.followMovement();
+		if (this.mapManager.isVisible(this.position) != 2){
+			this.followPlayer--;
+		}
+	}else{
+		this.randomMovement();
+	}
 	Character.prototype.loop.call(this,  game);
 };
 

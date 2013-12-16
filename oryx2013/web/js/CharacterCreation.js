@@ -228,11 +228,11 @@ CharacterCreation.prototype.gotoGame = function(){
 		name: this.name,
 		class: HeroClasses.fromId(this.class),
 		
-		health: 20,
-		mHealth: 20,
+		health: 80,
+		mHealth: 80,
 		
-		mana: 5,
-		mMana: 5,
+		mana: 20,
+		mMana: 20,
 		
 		weapons: [],
 		currentW: 0,

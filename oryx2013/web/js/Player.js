@@ -53,6 +53,19 @@ Player.prototype.tryMove = function(key, xTo, yTo){
 	return false;
 };
 
+Player.prototype.hurt = function(enemy, dmg){
+	if (dmg <= 0) return;
+	
+	PlayerStats.health -= dmg;
+	Console.addMessage(" > The " + enemy.name + " hit " + dmg + " points to you", "rgb(255,0,0)");
+	
+	if (PlayerStats.health <= 0){
+		PlayerStats.deathCause = enemy.name;
+		game.map = null;
+		game.scene = new DeathScreen();
+	}
+};
+
 Player.prototype.castAttack = function(x, y){
 	var enemy = this.mapManager.getEnemyAt(x, y);
 	if (!enemy){
@@ -60,14 +73,21 @@ Player.prototype.castAttack = function(x, y){
 		return; 
 	}
 	
-	if (enemy.enemy.spd > PlayerStats.spd && Math.iRandom(10) != 6){
+	var dice = Math.iRandom(10);
+	if (enemy.enemy.spd > PlayerStats.spd + 10 && dice != 6 && dice != 3){
 		Console.addMessage("Missed!", "rgb(255,255,255)");
 		return;
 	}
 	
 	var weapon = PlayerStats.weapons[PlayerStats.currentW];
+	weapon.item.status -= weapon.item.wear / 100;
+	if (weapon.item.status < 0){
+		weapon.item.status = 0;
+		Console.addMessage("The weapon is damaged!", "rgb(255,255,0)");
+		return;
+	}
 	var dmg = PlayerStats.str;
-	if (weapon) dmg += weapon.item.dmg;
+	if (weapon) dmg += Math.round(weapon.item.dmg * weapon.item.status);
 	dmg -= enemy.enemy.dfs;
 	
 	var dice = weapon.item.dice;
@@ -165,6 +185,45 @@ Player.prototype.transact = function(game){
 	if (seller){
 		seller.greet();
 		return;
+	}
+};
+
+Player.prototype.addExperience = function(exp){
+	PlayerStats.exp += exp;
+	var level = 38 * (PlayerStats.lvl - 1);
+	var requiredExp = level + Math.round(Math.pow(level / 10, 2));
+	if (PlayerStats.lvl == 1) requiredExp = 38;
+	
+	if (PlayerStats.exp >= requiredExp){
+		var cl = PlayerStats.class;
+		PlayerStats.lvl += 1;
+		var str, dfs, spd, luk;
+		if (cl.id == HeroClasses.archer.id || cl.id == HeroClasses.fighter.id)
+			str = Math.iRandom(5);
+		else
+			str = Math.iRandom(3);
+			
+		if (cl.id == HeroClasses.fighter.id)
+			dfs = Math.iRandom(5);
+		else
+			dfs = Math.iRandom(3);
+			
+		if (cl.id == HeroClasses.archer.id || cl.id == HeroClasses.wizard.id)
+			spd = Math.iRandom(5);
+		else
+			spd = Math.iRandom(3);
+			
+		if (cl.id == HeroClasses.wizard.id)
+			luk = Math.iRandom(5);
+		else
+			luk = Math.iRandom(3);
+			
+		PlayerStats.str += str;
+		PlayerStats.dfs += dfs;
+		PlayerStats.spd += spd;
+		PlayerStats.luk += luk;
+		
+		Console.addMessage("New level: " + PlayerStats.level + " -> str+" + str + " -> dfs+" + dfs + " -> spd+" + spd + " -> luck+" + luk, "rgb(255,255,255)");
 	}
 };
 
