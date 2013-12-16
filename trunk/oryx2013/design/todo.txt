@@ -1,8 +1,8 @@
 ************************************
-*              DOR                 *
+*             TULL                 *
 ************************************
 *                                  *
-* Title: DOR                       *
+* Title: TULL                      *
 * Author: Camilo Ramírez (Jucarave)*
 * Version: 0.1                     *
 * Start Date: 01/12/2013           *
@@ -44,19 +44,19 @@
 * Armours Data                     *
 * Character Creation               *
 * Attack                           *
+* Level scheme                     *
+* Wear weapons                     *
+* Enemies AI                       *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* Level scheme                     *
-* Wear equipment                   *
-* Use of Items                     *
-* Items Data                       *
-* Enemies AI                       *
 * Enemies Data                     *
 * Repoblate Dungeons               *
+* Use of Items                     *
+* Items Data                       *
 * Progress Saving                  *
 * Progress Restore                 *
 * Sprite fonts                     *
