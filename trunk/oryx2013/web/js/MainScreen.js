@@ -11,43 +11,6 @@ function MainScreen(){
 };
 
 MainScreen.prototype.setInitStats = function(){
-	PlayerStats = {
-		name: "kram",
-		class: HeroClasses.fighter,
-		
-		health: 30,
-		mHealth: 30,
-		
-		mana: 7,
-		mMana: 15,
-		
-		weapons: [],
-		currentW: 0,
-		
-		armours: [],
-		currentA: 0,
-		
-		food: 100,
-		
-		lvl: 1,
-		exp: 0,
-		str: 5,
-		def: 3,
-		spd: 6,
-		
-		gold: 50,
-		
-		steppedItems: [],
-		stairs: null,
-		
-		weaponsMenu: false,
-		armourMenu: false,
-		pickItemsMenu: false,
-		
-		deathCause: '',
-		level: 0
-	};
-	
 	game.maps = [];
 };
 
@@ -74,15 +37,7 @@ MainScreen.prototype.drawTitle = function(ctx){
 
 MainScreen.prototype.step = function(game){
 	if (game.keyP[65] == 1){
-		var i = ItemFactory.getItem("cottomCloth", 1);
-		var item = new Item(i.tile, new Position(0,0), i);
-		PlayerStats.armours.push(item);
-		
-		i = ItemFactory.getItem("knife", 1);
-		item = new Item(i.tile, new Position(0,0), i);
-		PlayerStats.weapons.push(item);
-		
-		game.gotoMap({map: "town"});
+		game.scene = new CharacterCreation();
 		game.keyP[65] = 2;
 	}else if (game.keyP[66] == 1){
 		

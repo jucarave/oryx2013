@@ -82,13 +82,32 @@ Player.prototype.castAttack = function(x, y){
 	enemy.hurt(dmg);
 };
 
+Player.prototype.shootMissile = function(x, y, arrow){
+	if (PlayerStats.class.id != HeroClasses.archer.id && arrow)
+		throw "You are not supossed to be here";
+	if (PlayerStats.class.id != HeroClasses.wizard.id && !arrow)
+		throw "You are not supossed to be here";
+		
+	var tile = Tileset.effects.magic;
+	if (arrow){
+		if (x > 0) tile = Tileset.effects.arrowRight; else
+		if (x < 0) tile = Tileset.effects.arrowLeft; else
+		if (y > 0) tile = Tileset.effects.arrowDown; else
+		if (y < 0) tile = Tileset.effects.arrowUp;
+	}
+	
+	var arrow = new PowerEffect(tile, new Position(this.position.x + x, this.position.y + y), new Position(x, y));
+	arrow.mapManager = this.mapManager;
+	this.mapManager.animateInstances.push(arrow);
+};
+
 Player.prototype.attack = function(game){
 	if (this.battle < 0){
 		this.battle++;
 	}else if (this.battle == 1){
 		var dir = "";
-		var x = this.position.x;
-		var y = this.position.y;
+		var x = 0;
+		var y = 0;
 		if (game.keyP[37] == 1){ dir = "West"; game.keyP[37] = 2; x--; }else
 		if (game.keyP[38] == 1){ dir = "North"; game.keyP[38] = 2; y--; }else
 		if (game.keyP[39] == 1){ dir = "East"; game.keyP[39] = 2; x++; }else
@@ -99,7 +118,12 @@ Player.prototype.attack = function(game){
 			Console.addMessage("Attack where? " + dir, "rgb(255, 255, 255)", "attack");
 			this.battle = -5;
 			
-			this.castAttack(x, y);
+			if (PlayerStats.weapons[PlayerStats.currentW].item.isStaff){
+				this.shootMissile(x, y);
+			}else if (PlayerStats.weapons[PlayerStats.currentW].item.isBow){
+				this.shootMissile(x, y, true);
+			}else
+				this.castAttack(this.position.x + x, this.position.y + y);
 			this.playerAction = true;
 			this.playerMoved = true;
 			return true;
@@ -272,7 +296,7 @@ Player.prototype.loop = function(game){
 	this.checkItems(game);
 	this.checkStairs();
 	
-	if (this.playerAction && !this.mapManager.light){
+	if ((this.playerAction || this.mapManager.repaint) && !this.mapManager.light){
 		FOV.getFOV(this.position, this.mapManager, this.fovDistance);
 	}
 	
@@ -301,6 +325,7 @@ var PlayerStats = {
 	exp: 0,
 	str: 0,
 	def: 0,
+	luk: 0,
 	spd: 0,
 	
 	gold: 40,

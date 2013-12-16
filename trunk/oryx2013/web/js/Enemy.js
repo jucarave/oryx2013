@@ -26,7 +26,8 @@ Enemy.prototype.dropLoot = function(){
 	ret += "> You earn " + this.enemy.exp + " points of experience";
 	
 	var money = Math.iRandom(this.enemy.money);
-	if (money > 0){
+	var luck = Math.iRandom(100) < PlayerStats.luk;
+	if (money > 0 && luck){
 		var it = ItemFactory.getMoney(money);
 		var item = new Item(it.tile.getColor(255,255,0), new Position(this.position.x, this.position.y), it);
 		item.mapManager = this.mapManager;
