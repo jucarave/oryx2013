@@ -5,13 +5,13 @@ var ItemFactory = {
 	greatSword: {dmg: 25, dice:"5D4", isWeapon: true, tile: "heavySword", class: HeroClasses.fighter, color: {r:0,g:0,b:255}},
 	knife: {dmg: 5, dice:"1D3", isWeapon: true, tile: "dagger", price: 20},
 	dagger: {dmg: 8, dice:"2D4", isWeapon: true, tile: "dagger", color: {r:255,g:201,b:14}, price: 33},
-	quarterStaff: {dmg: 13, dice:"2D4", isWeapon: true, tile: "quarterStaff", class: HeroClasses.wizard, color: {r:132,g:82,b:55}, price: 38},
-	gemStaff: {dmg: 28, dice:"2D4", isWeapon: true, tile: "gemStaff", class: HeroClasses.wizard, color: {r:255,g:201,b:14}, price: 50},
+	quarterStaff: {dmg: 13, dice:"2D4", isWeapon: true, tile: "quarterStaff", class: HeroClasses.wizard, isStaff: true, color: {r:132,g:82,b:55}, price: 38},
+	gemStaff: {dmg: 28, dice:"2D4", isWeapon: true, tile: "gemStaff", class: HeroClasses.wizard, isStaff: true, color: {r:255,g:201,b:14}, price: 50},
 	battleAxe: {dmg: 12, dice:"2D4", isWeapon: true, tile: "battleAxe", price: 38},
 	heavyAxe: {dmg: 20, dice:"2D4", isWeapon: true, tile: "heavyAxe", class: HeroClasses.fighter, price: 48},
-	bow: {dmg: 12, dice:"3D6", isWeapon: true, tile: "bow", class: HeroClasses.archer, price: 35},
-	longBow: {dmg: 26, dice:"4D8", isWeapon: true, tile: "bow", class: HeroClasses.archer, color: {r:255,g:201,b:14}, price: 60},
-	crossBow: {dmg: 34, dice:"6D9", isWeapon: true, tile: "crossBow", class: HeroClasses.archer},
+	bow: {dmg: 12, dice:"3D6", isWeapon: true, tile: "bow", class: HeroClasses.archer, price: 35, isBow: true},
+	longBow: {dmg: 26, dice:"4D8", isWeapon: true, tile: "bow", class: HeroClasses.archer, isBow: true, color: {r:255,g:201,b:14}, price: 60},
+	crossBow: {dmg: 34, dice:"6D9", isWeapon: true, tile: "crossBow", class: HeroClasses.archer, isBow: true},
 	
 	//Armours
 	cottomCloth: {dfs: 2, dice:"2D4", isArmour: true, tile: "cottomCloth" },

@@ -30,7 +30,9 @@ function getColor(r, g, b){
 	
 var Tileset = {
 	heroes: {
-		warrior1: {img: "heroes", subImg: new Position(0, 0), getColor: getColor},
+		warrior: {img: "heroes", subImg: new Position(0, 0), getColor: getColor},
+		archer: {img: "heroes", subImg: new Position(0, 1), getColor: getColor},
+		wizard: {img: "heroes", subImg: new Position(4, 0), getColor: getColor},
 		
 		seller: {img: "heroes", subImg: new Position(5, 0), getColor: getColor},
 		sellerWizard: {img: "heroes", subImg: new Position(8, 0), getColor: getColor},
@@ -165,5 +167,20 @@ var Tileset = {
 		rat: {img: "enemies", subImg: new Position(4, 0), getColor: getColor, color: {r: 255, g: 200, b: 64}},
 		bat: {img: "enemies", subImg: new Position(6, 0), getColor: getColor, color: {r: 0, g: 0, b: 255}},
 		viper: {img: "enemies", subImg: new Position(8, 0), getColor: getColor, color: {r: 0, g: 255, b: 0}},
+	},
+	
+	classes: {
+		fighter: {img: "classes", subImg: new Position(0, 0), getColor: getColor},
+		archer: {img: "classes", subImg: new Position(1, 0), getColor: getColor},
+		wizard: {img: "classes", subImg: new Position(2, 0), getColor: getColor},
+	},
+	
+	effects: {
+		arrowUp: {img: "effects", subImg: new Position(5, 1), getColor: getColor},
+		arrowDown: {img: "effects", subImg: new Position(6, 1), getColor: getColor},
+		arrowLeft: {img: "effects", subImg: new Position(7, 1), getColor: getColor},
+		arrowRight: {img: "effects", subImg: new Position(8, 1), getColor: getColor},
+		
+		magic: {img: "effects", subImg: new Position(0, 0), getColor: getColor},
 	}
 };

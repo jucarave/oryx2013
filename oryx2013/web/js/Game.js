@@ -24,6 +24,7 @@ function Game(container){
 	this.scene = null;
 	
 	this.keyP = new Array(255);
+	this.lastK = -1;
 }
 
 Game.prototype.loadImages = function(){
@@ -33,6 +34,8 @@ Game.prototype.loadImages = function(){
 	this.sprites["itemsWeapons"] = this.eng.loadImage(cp + "img/itemsWeapons.png?version=" + version, 19, 5);
 	this.sprites["misc"] = this.eng.loadImage(cp + "img/misc.png?version=" + version, 19, 7);
 	this.sprites["enemies"] = this.eng.loadImage(cp + "img/enemies.png?version=" + version, 19, 8);
+	this.sprites["classes"] = this.eng.loadImage(cp + "img/classes.png?version=" + version, 3, 1);
+	this.sprites["effects"] = this.eng.loadImage(cp + "img/effects.png?version=" + version, 19, 3);
 };
 
 Game.prototype.drawLoading = function(){
@@ -306,7 +309,8 @@ Game.prototype.drawInterface = function(){
 	
 	x += 100;
 	ctx.fillText("spd: " + ps.spd, x, y);
-	ctx.fillText("gold: " + ps.gold, x, y + 20);
+	ctx.fillText("luck: " + ps.luk, x, y + 20);
+	ctx.fillText("gold: " + ps.gold, x, y + 40);
 	
 	//Weapon
 	tile = Tileset.itemsWeapons.frame;
@@ -426,11 +430,22 @@ Utils.addEvent(window, "load", function(){
 		if (game.keyP[e.keyCode] == 2) return;
 		
 		game.keyP[e.keyCode] = 1;
+		game.lastK = e.keyCode;
+		
+		if(e.keyCode == 46 || e.keyCode == 8){
+	        e.stopPropagation();
+	        e.preventDefault();
+	    }
 	});
 	
 	Utils.addEvent(document, "keyup", function(e){
 		if (window.event) e = window.event;
 		
 		game.keyP[e.keyCode] = 0;
+		
+		if(e.keyCode == 46 || e.keyCode == 8){
+	        e.stopPropagation();
+	        e.preventDefault();
+	    }
 	});
 });

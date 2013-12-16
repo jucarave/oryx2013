@@ -19,6 +19,8 @@ function Map(params){
 	
 	this.animateInstances = [];
 	
+	this.repaint = false;
+	
 	if (params.random){
 		this.light = false;
 		this.signs = [];
@@ -244,7 +246,7 @@ Map.prototype.newItem = function(tile, position, item){
 };
 
 Map.prototype.setPlayer = function(x, y){
-	this.player = new Player(Tileset.heroes.warrior1, new Position(x, y));
+	this.player = new Player(PlayerStats.class.tile, new Position(x, y));
 };
 
 Map.prototype.createVendors = function(tile, position, seller){
@@ -457,10 +459,13 @@ Map.prototype.drawFloor = function(x, y, visible){
 	var yy = this.view.y;
 	
 	var tile = this.map[y][x];
-	if (!tile){ console.log(x + "_" + y); }
+	if (!tile && tile !== 0){ console.log(x + "_" + y); }
 	for (var t=0,tlen=tile.length;t<tlen;t++){
 		if (tile[t] === 0)  continue;
 		if (tile[t].visible == 0) continue;
+		
+		var light = false;
+		if (visible && tile[t].wasVisible == 2) light = true;
 		
 		tile[t].wasVisible = 0;
 		if (this.light){
@@ -468,7 +473,7 @@ Map.prototype.drawFloor = function(x, y, visible){
 			tile[t].visible = 2;
 		}
 		
-		if (tile[t].visible == 2 || visible){
+		if (tile[t].visible == 2 || (light)){
 			game.drawTile(tile[t].tile, new Position(x - xx, y - yy), null, false);
 			tile[t].wasVisible = 2;
 		}else if (tile[t].visible == 1){
@@ -488,7 +493,7 @@ Map.prototype.drawMap = function(game){
 	if (!this.store)
 		this.passTurn++;
 	
-	if (this.player.playerAction){
+	if (this.player.playerAction || this.repaint){
 		this.passTurn = 0;
 		game.clearScreen();
 		
@@ -504,7 +509,10 @@ Map.prototype.drawMap = function(game){
 				this.instances.splice(i,1);
 				i--;
 			}else{
-				ins.loop(game);
+				if (this.repaint)
+					ins.draw(game);
+				else
+					ins.loop(game);
 			}
 		}
 		
@@ -512,17 +520,17 @@ Map.prototype.drawMap = function(game){
 		for (var i=0,len=this.signs.length;i<len;i++){
 			var s = this.signs[i];
 			
-			var x = (s.pos.x + game.viewPos.x - this.view.x) * game.gridS.x + (game.gridS.x / 2);
-			var y = (s.pos.y + game.viewPos.y - this.view.y) * game.gridS.y;
+			var xx = (s.pos.x + game.viewPos.x - this.view.x) * game.gridS.x + (game.gridS.x / 2);
+			var yy = (s.pos.y + game.viewPos.y - this.view.y) * game.gridS.y;
 			
 			var w = (s.title.length * 12);
 			
 			ctx.fillStyle = "rgb(33,33,33)";
-			ctx.fillRect(x - w / 2, y, w, 20);
+			ctx.fillRect(xx - w / 2, yy, w, 20);
 			
 			ctx.fillStyle = "rgb(255,255,255)";
 			ctx.textAlign = "center";
-			ctx.fillText(s.title, x, y + 16);
+			ctx.fillText(s.title, xx, yy + 16);
 			ctx.textAlign = "left";
 		}
 		
@@ -530,6 +538,8 @@ Map.prototype.drawMap = function(game){
 	
 	this.player.playerAction = false;
 	this.player.loop(game);
+	
+	this.repaint = false;
 	
 	for (var i=0;i<this.animateInstances.length;i++){
 		if (!this.animateInstances[i].keepAnimation){

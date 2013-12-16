@@ -42,24 +42,25 @@
 * Random Dungeons                  *
 * Store system                     *
 * Armours Data                     *
+* Character Creation               *
+* Attack                           *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* Character Creation               *
-* Use of Magic                     *
+* Level scheme                     *
+* Wear equipment                   *
+* Use of Items                     *
 * Items Data                       *
-* Progress Saving                  *
-* Progress Restore                 *
-* Enemy Factory                    *
 * Enemies AI                       *
 * Enemies Data                     *
-* Attack                           *
-* Wear equipment                   *
-* Story Events                     *
+* Repoblate Dungeons               *
+* Progress Saving                  *
+* Progress Restore                 *
 * Sprite fonts                     *
-* Level scheme                     *
+* Story Events                     *
+* Instructions screen              *
 *                                  *
 ************************************
