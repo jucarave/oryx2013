@@ -10,9 +10,33 @@ function MainScreen(){
 	this.setInitStats();
 };
 
+MainScreen.prototype.setRandomPotions = function(){
+	var ef = EffectFactory;
+	var iF = ItemFactory;
+	var effectsS = [ef.hpPotionS, ef.poisonS, ef.antidoteS, ef.attributeS];
+	var effectsL = [ef.hpPotionL, ef.poisonL, ef.antidoteL, ef.attributeL];
+	var containersS = [iF.redSmallPotion, iF.blueSmallPotion, iF.greenSmallPotion, iF.purpleSmallPotion];
+	var containersL = [iF.redLargePotion, iF.blueLargePotion, iF.greenLargePotion, iF.purpleLargePotion];
+	
+	var j = 0;
+	while (effectsS.length > 0){
+		var effect = Math.iRandom(effectsS.length - 1);
+		
+		effectsS[effect].used = false;
+		containersS[j].effect = effectsS[effect];
+		containersL[j].effect = effectsL[effect];
+		
+		j++;
+		effectsS.splice(effect, 1);
+		effectsL.splice(effect, 1);
+	}
+};
+
 MainScreen.prototype.setInitStats = function(){
 	game.maps = [];
 	Console.messages = [];
+	
+	this.setRandomPotions();
 };
 
 MainScreen.prototype.drawTitle = function(ctx){

@@ -31,6 +31,12 @@ Player.prototype.consumeFood = function(){
 		}
 		this.stepCount = 0;
 	}
+	
+	PlayerStats.dungeonStep++;
+	if (this.dungeonStep == 50){
+		game.repoblateDungeons(0.2);
+		PlayerStats.dungeonStep = 0;
+	}
 };
 
 Player.prototype.tryMove = function(key, xTo, yTo){
@@ -64,6 +70,18 @@ Player.prototype.hurt = function(enemy, dmg){
 		game.map = null;
 		game.scene = new DeathScreen();
 	}
+	
+	var armour = PlayerStats.armours[PlayerStats.currentA];
+	if (armour){
+		armour.item.status -= armour.item.wear / 100;
+		if (armour.item.status <= 0){
+			armour.item.status = 0;
+			if (!armour.damaged){
+				Console.addMessage("Your armour got damaged!", "rgb(255,255,0)");
+				armour.damaged = true;
+			}
+		}
+	}
 };
 
 Player.prototype.castAttack = function(x, y){
@@ -80,6 +98,12 @@ Player.prototype.castAttack = function(x, y){
 	}
 	
 	var weapon = PlayerStats.weapons[PlayerStats.currentW];
+	if (!weapon){
+		Console.addMessage("You have no weapon", "rgb(255,255,0)");
+		return;
+	}
+	
+	
 	weapon.item.status -= weapon.item.wear / 100;
 	if (weapon.item.status < 0){
 		weapon.item.status = 0;
@@ -227,15 +251,30 @@ Player.prototype.addExperience = function(exp){
 	}
 };
 
+Player.prototype.useItem = function(game){
+	if (game.keyP[85] == 1){
+		var item = PlayerStats.items[PlayerStats.currentI];
+		if (item){
+			if (item.item.effect.cast()){
+				PlayerStats.items.splice(PlayerStats.currentI, 1);
+				PlayerStats.currentI = Math.max(PlayerStats.currentI - 1, 0);
+			}
+		}
+		game.keyP[85] = 2;
+	}
+};
+
 Player.prototype.step = function(game){
 	if (PlayerStats.weaponsMenu) return;
 	if (PlayerStats.armourMenu) return;
 	if (PlayerStats.pickItemsMenu) return;
+	if (PlayerStats.itemsMenu) return;
 	if (this.mapManager.store) return;
 	
 	if (this.attack(game)) return;
 	if (this.battle != 0) return;
 	this.transact(game);
+	this.useItem(game);
 	
 	if (!this.tryMove(37,-1,0))
 	if (!this.tryMove(38,0,-1))
@@ -249,6 +288,9 @@ Player.prototype.step = function(game){
 	}else if (game.keyP[87] == 1){
 		PlayerStats.armourMenu = true;
 		game.keyP[87] = 2;
+	}else if (game.keyP[69] == 1){
+		PlayerStats.itemsMenu = true;
+		game.keyP[69] = 2;
 	}
 };
 
@@ -271,6 +313,7 @@ Player.prototype.pickItem = function(item){
 	var items = PlayerStats.steppedItems;
 	var weapons = PlayerStats.weapons;
 	var armours = PlayerStats.armours;
+	var items = PlayerStats.items;
 	if (item.item.isWeapon){
 		if (weapons.length == 7){
 			Console.addMessage("You can't carry more weapons!", "rgb(255,0,0)");
@@ -287,10 +330,19 @@ Player.prototype.pickItem = function(item){
 		if (armours.length == 1){ PlayerStats.currentA = 0; }
 	}else if (item.item.isMoney){
 		PlayerStats.gold += item.item.amount;
+	}else if (item.item.isItem){
+		if (items.length == 7){
+			Console.addMessage("You can't carry more items!", "rgb(255,0,0)");
+			return;
+		}
+		items.push(item);
+		if (items.length == 1){ PlayerStats.currentI = 0; }
 	}
 	
 	if (item.item.isMoney){
 		Console.addMessage("You pick " + item.item.name, "rgb(255,255,255)");
+	}else if (item.item.isItem){
+		Console.addMessage("You pick up a(n) " + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
 	}else{
 		Console.addMessage("You pick up a(n) " + ItemFactory.getItemQuality(item.item.status) + " " + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
 	}
@@ -378,6 +430,9 @@ var PlayerStats = {
 	armours: [],
 	currentA: 0,
 	
+	items: [],
+	currentI: 0,
+	
 	food: 0,
 	
 	lvl: 0,
@@ -389,13 +444,17 @@ var PlayerStats = {
 	
 	gold: 40,
 	
+	poison: 0,
+	
 	steppedItems: [],
 	stairs: null,
 	
 	weaponsMenu: false,
 	armourMenu: false,
+	itemsMenu: false,
 	pickItemsMenu: false,
 	
 	deathCause: '',
-	level: 0
+	level: 0,
+	dungeonStep: 0
 };

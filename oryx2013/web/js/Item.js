@@ -14,6 +14,9 @@ Item.prototype.checkPlayer = function(){
 		if (this.item.isMoney){
 			desc = this.item.name;
 			Console.addMessage(desc, "rgb(255,255,255)", "stepped");
+		}else if (this.item.isItem){
+			desc = ItemFactory.getItemName(this.item);
+			Console.addMessage("You stepped into a(n) " + desc, "rgb(255,255,255)", "stepped");
 		}else{
 			desc = ItemFactory.getItemQuality(this.item.status) + " " + ItemFactory.getItemName(this.item);
 			Console.addMessage("You stepped into a(n) " + desc, "rgb(255,255,255)", "stepped");

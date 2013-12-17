@@ -189,6 +189,15 @@ Game.prototype.drawPlayerMenu = function(bucket, current, x){
 				PlayerStats.steppedItems.push(item);
 				continue;
 			}
+			
+			if (item.item.effect && this.keyP[73] == 1){
+				if (item.item.effect.used){
+					Console.addMessage(item.item.effect.desc, "rgb(255,255,255)");
+				}else{
+					Console.addMessage("Unknow effect", "rgb(255,255,255)");
+				}
+				this.keyP[73] = 2;
+			}
 		}
 		
 		if (this.selectedOpt == i){
@@ -201,6 +210,19 @@ Game.prototype.drawPlayerMenu = function(bucket, current, x){
 		}
 	
 		y += this.gridS.y + 4;
+	}
+};
+
+Game.prototype.drawItemsMenu = function(){
+	if (!PlayerStats.itemsMenu) return;
+	
+	var ctx = this.eng.ctx;
+	x = ctx.width - this.gridS.x * 6 + 94;
+	this.drawPlayerMenu(PlayerStats.items, "currentI", x);
+	
+	if (this.navigateMenu(69)){
+		PlayerStats.itemsMenu = false;
+		this.map.player.act();
 	}
 };
 
@@ -221,7 +243,7 @@ Game.prototype.drawArmourMenu = function(){
 	if (!PlayerStats.armourMenu) return;
 	
 	var ctx = this.eng.ctx;
-	x = ctx.width - this.gridS.x * 6 + 24;
+	x = ctx.width - this.gridS.x * 6 + 39;
 	this.drawPlayerMenu(PlayerStats.armours, "currentA", x);
 	
 	if (this.navigateMenu(87)){
@@ -306,9 +328,10 @@ Game.prototype.drawInterface = function(){
 	x += 100;
 	ctx.fillText("str: " + (ps.str + exDmg), x, y);
 	ctx.fillText("def: " + (ps.def + exDfs), x, y + 20);
+	ctx.fillText("spd: " + ps.spd, x, y + 40);
 	
 	x += 100;
-	ctx.fillText("spd: " + ps.spd, x, y);
+	ctx.fillText("food: " + ps.food, x, y);
 	ctx.fillText("luck: " + ps.luk, x, y + 20);
 	ctx.fillText("gold: " + ps.gold, x, y + 40);
 	
@@ -341,24 +364,26 @@ Game.prototype.drawInterface = function(){
 		ctx.fillText(Math.round(armour.item.status * 100) + "%", x, y + this.gridS.y + 16);
 	}
 	
-	//Food
+	//Items
 	tile = Tileset.itemsWeapons.frame;
 	x += 55;
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 	
-	tile = Tileset.itemsWeapons.food.getColor(170, 120, 70);
-	this.eng.drawImage(tile.img, x, y, tile.subImg);
+	if (PlayerStats.items[PlayerStats.currentI]){
+		var item = PlayerStats.items[PlayerStats.currentI];
+		tile = item.tile;
+		var img = (this.sprites[tile.img])? this.sprites[tile.img] : tile.img;
+		this.eng.drawImage(img, x, y, tile.subImg);
+	}
 	
-	ctx.fillStyle = "rgb(170, 120, 70)";
-	ctx.fillText(PlayerStats.food, x, y + this.gridS.y + 16);
-	
-	//Items
+	//Magic
 	tile = Tileset.itemsWeapons.frame;
 	x += 55;
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 	
 	this.drawWeaponsMenu();
 	this.drawArmourMenu();
+	this.drawItemsMenu();
 	this.drawPickupItemsMenu();
 };
 
@@ -366,6 +391,14 @@ Game.prototype.clearScreen = function(){
 	var ctx = this.eng.ctx;
 	ctx.fillStyle = "rgb(0,0,0)";
 	ctx.fillRect(this.viewPos.x*this.gridS.x,this.viewPos.y*this.gridS.y, this.viewS.x*this.gridS.x,this.viewS.y*this.gridS.y);
+};
+
+Game.prototype.repoblateDungeons = function(percentage){
+	for (var i=0;i<this.maps.length;i++){
+		if (this.maps[i].key == this.map.map) continue;
+		if (this.maps[i].total == 0) continue;
+		this.maps[i].createEnemies(percentage);
+	}
 };
 
 Game.prototype.gotoMap = function(map){

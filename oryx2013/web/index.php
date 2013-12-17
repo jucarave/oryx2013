@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
 		<title>Oryx roguelike 2013</title>
-		
+
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Engine.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Utils.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Game.js?version=<?php echo $version; ?>"></script>
@@ -17,6 +17,7 @@
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/FOV.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Item.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Console.js?version=<?php echo $version; ?>"></script>
+		<script type="text/javascript" src="<?php echo $contextPath; ?>js/EffectFactory.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/ItemFactory.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/MainScreen.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/DeathScreen.js?version=<?php echo $version; ?>"></script>

@@ -148,6 +148,13 @@ var Tileset = {
 		cottomCloth: {img: "itemsWeapons", subImg: new Position(0, 1), getColor: getColor},
 		helmet: {img: "itemsWeapons", subImg: new Position(1, 1), getColor: getColor},
 		
+		//Items
+		potionS: {img: "itemsWeapons", subImg: new Position(1, 2), getColor: getColor},
+		potionL: {img: "itemsWeapons", subImg: new Position(3, 2), getColor: getColor},
+		mapOrb: {img: "itemsWeapons", subImg: new Position(15, 2), getColor: getColor},
+		shovel: {img: "itemsWeapons", subImg: new Position(15, 3), getColor: getColor},
+		time: {img: "itemsWeapons", subImg: new Position(17, 1), getColor: getColor},
+		
 		food: {img: "itemsWeapons", subImg: new Position(13, 1), getColor: getColor},
 		skull: {img: "itemsWeapons", subImg: new Position(3, 3), getColor: getColor},
 		money: {img: "itemsWeapons", subImg: new Position(18, 2), getColor: getColor},
