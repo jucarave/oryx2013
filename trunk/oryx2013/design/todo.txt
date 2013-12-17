@@ -47,16 +47,20 @@
 * Level scheme                     *
 * Wear weapons                     *
 * Enemies AI                       *
+* Repoblate Dungeons               *
+* Wear armours                     *
+* Items Data                       *
+* Pick Items                       *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* Enemies Data                     *
-* Repoblate Dungeons               *
 * Use of Items                     *
-* Items Data                       *
+* Enemies Data                     *
+* Use of Magic                     *
+* Magic Data                       *
 * Progress Saving                  *
 * Progress Restore                 *
 * Sprite fonts                     *

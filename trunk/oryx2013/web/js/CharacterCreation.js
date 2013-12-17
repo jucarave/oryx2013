@@ -26,7 +26,7 @@ CharacterCreation.prototype.processName = function(game){
 	
 	ctx.textAlign = "left";
 	ctx.fillText("ENTER YOUR NAME: " + this.name, 16, 60);
-	ctx.fillText("(ONLY LETTERS AND SPACES, 15 CHARACTERS MAX)", 16, 80);
+	ctx.fillText("(ONLY LETTERS AND SPACES, 12 CHARACTERS MAX)", 16, 80);
 	ctx.fillText("PRESS ENTER WHEN YOU FINISH OR ESC TO RETURN TO THE MAIN MENU", 16, 100);
 	
 	if (game.lastK != -1){
@@ -41,8 +41,8 @@ CharacterCreation.prototype.processName = function(game){
 		game.lastK = -1;
 	}
 	
-	if (this.name.length > 15){
-		this.name = this.name.substring(0,15);
+	if (this.name.length > 12){
+		this.name = this.name.substring(0,12);
 	}
 	
 	if (game.keyP[13] == 1){
@@ -218,6 +218,7 @@ CharacterCreation.prototype.processConfirm = function(game){
 	}else if (game.keyP[78] == 1){
 		this.process = 0;
 		game.keyP[78] = 2;
+		game.lastK = -1;
 	}
 };
 
@@ -240,6 +241,9 @@ CharacterCreation.prototype.gotoGame = function(){
 		armours: [],
 		currentA: 0,
 		
+		items: [],
+		currentI: 0,
+		
 		food: 100,
 		
 		lvl: 1,
@@ -251,12 +255,15 @@ CharacterCreation.prototype.gotoGame = function(){
 		
 		gold: 50,
 		
+		poison: 0,
+		
 		steppedItems: [],
 		stairs: null,
 		
 		weaponsMenu: false,
 		armourMenu: false,
 		pickItemsMenu: false,
+		itemsMenu: false,
 		
 		deathCause: '',
 		level: 0

@@ -7,6 +7,7 @@ function Map(params){
 	this.view = new Position( 0, 0);
 	this.player = null;
 	this.level = 0;
+	this.total = 0;
 	
 	this.store = false;
 	this.inTransact = null;
@@ -29,6 +30,7 @@ function Map(params){
 		this.map = RDG.newMap(params.level);
 		this.level = params.level;
 		
+		this.createItems();
 		this.createEnemies();
 	}else if (params.map){
 		this.loadMap(params.map);
@@ -169,9 +171,64 @@ Map.prototype.getEnemyAt = function(x, y){
 	return null;
 };
 
-Map.prototype.createEnemies = function(){
-	var n = 5 + this.level + Math.iRandom(this.level, this.level * 2);
+Map.prototype.cleanEnemies = function(){
+	for (var i=0;i<this.enemies.length;i++){
+		if (this.enemies[i].enemy.hp <= 0){
+			this.enemies.splice(i, 1);
+			i--;
+		}
+	}
+};
+
+Map.prototype.createItems = function(){
+	var n = 3 + this.level + Math.iRandom(this.level, this.level * 2);
+	
 	for (var i=0;i<n;i++){
+		var dice = Math.iRandom(10);
+		if (dice == 4 || dice == 8) continue;
+		
+		var x, y, counter = 1;
+		
+		while (counter > 0){
+			if (counter == 1000) break;
+			x = Math.iRandom(this.map[0].length - 1);
+			y = Math.iRandom(this.map.length - 1);
+			
+			if (this.map[y][x] != 0){
+				var t = this.map[y][x];
+				if (t instanceof Array) t = t[0];
+				if (t <= 0) continue;
+				var tileId = (t.tileId)? t.tileId : t;
+				var tile = Tileset.dungeon.getByTileId(tileId, this.level);
+				if (tile.isFloor){
+					counter = 0;
+				}
+			}
+		}
+		
+		if (counter > 0) continue;
+		
+		var i = ItemFactory.getRandomItem();
+		if (i == null) continue;
+		
+		var item = new Item(i.tile, new Position(x, y), i);
+		item.mapManager = this;
+		this.instances.push(item);
+	}
+};
+
+Map.prototype.createEnemies = function(percent){
+	this.cleanEnemies();
+	var n = this.total;
+	if (this.total == 0){
+		n = 5 + this.level + Math.iRandom(this.level, this.level * 2);
+		this.total = n;
+	}else{
+		n = Math.round(n * percent);
+	}
+	
+	for (var i=0;i<n;i++){
+		if (this.enemies.length >= n) return;
 		var x, y;
 		
 		var counter = 0;
@@ -184,7 +241,8 @@ Map.prototype.createEnemies = function(){
 				var t = this.map[y][x];
 				if (t instanceof Array) t = t[0];
 				if (t <= 0) continue;
-				var tile = Tileset.dungeon.getByTileId(t, this.level);
+				var tileId = (t.tileId)? t.tileId : t;
+				var tile = Tileset.dungeon.getByTileId(tileId, this.level);
 				if (tile.isFloor){
 					counter = 0;
 					break;
@@ -344,6 +402,7 @@ Map.prototype.inHotel = function(game){
 		this.player.playerMoved = true;
 		this.player.setView(game);
 		this.store = null;
+		game.repoblateDungeons(1);
 	}else if (game.keyP[78] == 1){
 		Console.addMessage("Have a nice day then.", "rgb(255,255,255)");
 		this.store = null;
