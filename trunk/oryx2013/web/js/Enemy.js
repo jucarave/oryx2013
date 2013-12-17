@@ -70,8 +70,7 @@ Enemy.prototype.dropLoot = function(){
 	ret += "> You earn " + this.enemy.exp + " points of experience";
 	
 	var money = Math.iRandom(this.enemy.money);
-	var luck = Math.iRandom(100) < PlayerStats.luk;
-	if (money > 0 && luck){
+	if (money > 0){
 		var it = ItemFactory.getMoney(money);
 		var item = new Item(it.tile.getColor(255,255,0), new Position(this.position.x, this.position.y), it);
 		item.mapManager = this.mapManager;
@@ -134,7 +133,8 @@ Enemy.prototype.animatedLoop = function(game){
 	if (this.mapManager.isVisible(this.position) != 2) return;
 	
 	if (this.blink > 3 && this.blink < 8){
-		this.draw(game, this.tile.parent.getColor(0,0,0));
+		var par = (this.tile.parent)? this.tile.parent : this.tile;
+		this.draw(game, par.getColor(0,0,0));
 		this.mapManager.drawFloor(this.position.x, this.position.y, true);
 	}
 	this.blink--;

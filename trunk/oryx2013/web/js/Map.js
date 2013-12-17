@@ -329,14 +329,14 @@ Map.prototype.parseMap = function(){
 Map.prototype.inHotel = function(game){
 	if (game.keyP[89] == 1){
 		game.keyP[89] = 2;
-		if (PlayerStats.gold < 50){
+		if (PlayerStats.gold < 25){
 			Console.addMessage("You can't afford it", "rgb(255,255,0)");
 			this.store = null;
 			return;
 		}
 		
 		Console.addMessage("The room is ready, rest well.", "rgb(255,255,255)");
-		PlayerStats.gold -= 50;
+		PlayerStats.gold -= 25;
 		PlayerStats.health = PlayerStats.mHealth;
 		PlayerStats.mana = PlayerStats.mMana;
 		this.player.position.set(33, 24);

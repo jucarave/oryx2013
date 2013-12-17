@@ -39,7 +39,7 @@ var SellerFactory = {
 	},
 	
 	hotel: {
-		greet: "Do you want to spend the night here for 50? Y/N",
+		greet: "Do you want to spend the night here for 25? Y/N",
 		store: ["hotel"]
 	}
 };
