@@ -54,7 +54,7 @@ Player.prototype.tryMove = function(key, xTo, yTo){
 };
 
 Player.prototype.hurt = function(enemy, dmg){
-	if (dmg <= 0) return;
+	if (dmg <= 0) dmg = 1 + Math.iRandom(2);
 	
 	PlayerStats.health -= dmg;
 	Console.addMessage(" > The " + enemy.name + " hit " + dmg + " points to you", "rgb(255,0,0)");
@@ -190,9 +190,9 @@ Player.prototype.transact = function(game){
 
 Player.prototype.addExperience = function(exp){
 	PlayerStats.exp += exp;
-	var level = 38 * (PlayerStats.lvl - 1);
+	var level = 60 * (PlayerStats.lvl - 1);
 	var requiredExp = level + Math.round(Math.pow(level / 10, 2));
-	if (PlayerStats.lvl == 1) requiredExp = 38;
+	if (PlayerStats.lvl == 1) requiredExp = 60;
 	
 	if (PlayerStats.exp >= requiredExp){
 		var cl = PlayerStats.class;
@@ -223,7 +223,7 @@ Player.prototype.addExperience = function(exp){
 		PlayerStats.spd += spd;
 		PlayerStats.luk += luk;
 		
-		Console.addMessage("New level: " + PlayerStats.level + " -> str+" + str + " -> dfs+" + dfs + " -> spd+" + spd + " -> luck+" + luk, "rgb(255,255,255)");
+		Console.addMessage("New level: " + PlayerStats.lvl + " -> str+" + str + " -> dfs+" + dfs + " -> spd+" + spd + " -> luck+" + luk, "rgb(255,255,255)");
 	}
 };
 

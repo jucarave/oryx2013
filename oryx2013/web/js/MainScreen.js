@@ -12,6 +12,7 @@ function MainScreen(){
 
 MainScreen.prototype.setInitStats = function(){
 	game.maps = [];
+	Console.messages = [];
 };
 
 MainScreen.prototype.drawTitle = function(ctx){

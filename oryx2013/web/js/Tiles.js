@@ -162,11 +162,22 @@ var Tileset = {
 	},
 	
 	enemies: {
+		//Level 1
 		krab: {img: "enemies", subImg: new Position(0, 0), getColor: getColor, color: {r: 255, g: 0, b: 0}},
 		spider: {img: "enemies", subImg: new Position(2, 0), getColor: getColor, color: {r: 0, g: 0, b: 255}},
 		rat: {img: "enemies", subImg: new Position(4, 0), getColor: getColor, color: {r: 255, g: 200, b: 64}},
 		bat: {img: "enemies", subImg: new Position(6, 0), getColor: getColor, color: {r: 0, g: 0, b: 255}},
+		//Level 2
 		viper: {img: "enemies", subImg: new Position(8, 0), getColor: getColor, color: {r: 0, g: 255, b: 0}},
+		wasp: {img: "enemies", subImg: new Position(11, 1), getColor: getColor, color: {r: 0, g: 0, b: 255}},
+		bear: {img: "enemies", subImg: new Position(13, 1), getColor: getColor},
+		thief: {img: "enemies", subImg: new Position(11, 2), getColor: getColor, color: {r: 255, g: 0, b: 255}},
+		//Level 3
+		warriorBear: {img: "enemies", subImg: new Position(14, 1), getColor: getColor, color: {r: 255, g: 0, b: 0}},
+		spectre: {img: "enemies", subImg: new Position(8, 2), getColor: getColor},
+		humanRat: {img: "enemies", subImg: new Position(0, 3), getColor: getColor, color: {r: 255, g: 200, b: 64}},
+		skeleton: {img: "enemies", subImg: new Position(0, 4), getColor: getColor},
+		
 	},
 	
 	classes: {

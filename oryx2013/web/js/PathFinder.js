@@ -82,8 +82,6 @@ var PathFinder = {
 			this.nodes.splice(0,1);
 		}
 		
-		console.log(this.total);
-		
 		if (path != null){
 			path = this.makePath(path);
 			this.total = 0;
