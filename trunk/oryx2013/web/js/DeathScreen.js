@@ -43,6 +43,13 @@ DeathScreen.prototype.draw = function(game){
 			ctx.fillText("manage to advance to the level " + PlayerStats.level, ctx.width / 2, 220);
 			ctx.fillText("but you starved to death", ctx.width / 2, 240);
 		}
+	}else if (PlayerStats.deathCause == 'p'){
+		if (PlayerStats.level == 0){
+			ctx.fillText("died of a poisoned injury in the middle of the town", ctx.width / 2, 220);
+		}else{
+			ctx.fillText("manage to advance to the level " + PlayerStats.level, ctx.width / 2, 220);
+			ctx.fillText("but you died of a poisoned injury", ctx.width / 2, 240);
+		}
 	}else{
 		ctx.fillText("were slayed by a " + PlayerStats.deathCause + " on the level " + PlayerStats.level, ctx.width / 2, 220);
 		ctx.fillText("of the dungeon ", ctx.width / 2, 240);

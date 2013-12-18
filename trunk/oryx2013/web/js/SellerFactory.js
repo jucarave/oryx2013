@@ -41,5 +41,18 @@ var SellerFactory = {
 	hotel: {
 		greet: "Do you want to spend the night here for 25? Y/N",
 		store: ["hotel"]
+	},
+	
+	magic: {
+		greet: "A good magic spell can save your life.",
+		store: [
+			"fireball",
+			"bersek",
+			"portal",
+			"sleep",
+			"display",
+			"blink",
+			"life",
+		]
 	}
 };

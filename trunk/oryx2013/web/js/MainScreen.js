@@ -88,7 +88,8 @@ MainScreen.prototype.draw = function(game){
 	ctx.fillText("c) To instructions", ctx.width / 2, 420);
 	ctx.fillText("d) To exit", ctx.width / 2, 440);
 	
-	ctx.fillText("DOR, Developed by Camilo Ramírez (Jucarave) 2013", ctx.width / 2, ctx.height - 20);
+	ctx.fillText("TULL, Developed by Camilo Ramírez (Jucarave) 2013", ctx.width / 2, ctx.height - 30);
+	ctx.fillText("For the trials of oryx 2013", ctx.width / 2, ctx.height - 10);
 	
 	ctx.textAlign = "left";
 };

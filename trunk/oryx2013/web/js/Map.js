@@ -329,7 +329,7 @@ Map.prototype.createVendors = function(tile, position, seller){
 Map.prototype.loadVendors = function(){
 	this.createVendors(Tileset.heroes.seller.getColor(0, 0, 200), new Position(22, 1), SellerFactory.weapons);
 	this.createVendors(Tileset.heroes.seller.getColor(255, 255, 0), new Position(31, 9), SellerFactory.armour);
-	this.createVendors(Tileset.heroes.sellerWizard.getColor(100, 0, 100), new Position(4, 9), SellerFactory.weapons);
+	this.createVendors(Tileset.heroes.sellerWizard.getColor(100, 0, 100), new Position(4, 9), SellerFactory.magic);
 	this.createVendors(Tileset.heroes.seller.getColor(122, 122, 255), new Position(2, 16), SellerFactory.food);
 	this.createVendors(Tileset.heroes.seller.getColor(255, 0, 0), new Position(31, 16), SellerFactory.hotel);
 };
@@ -511,6 +511,20 @@ Map.prototype.drawStore = function(game){
 				Console.addMessage("You bought a(n) " + name, "rgb(255,255,255)");
 				PlayerStats.food = Math.min(PlayerStats.food + this.inTransact.amount, 9999);
 				this.inTransact = null;
+			}else if (this.inTransact.isMagic){
+				for (var i=0;i<PlayerStats.spells.length;i++){
+					if (PlayerStats.spells[i].item.name == this.inTransact.name){
+						Console.addMessage("You already have this spell", "rgb(255,255,0)");
+						this.inTransact = null;
+						return;
+					}
+				}
+				PlayerStats.gold -= this.inTransact.price;
+				Console.addMessage("You bought the " + name + " spell", "rgb(255,255,255)");
+				var it = new Item(this.inTransact.tile, new Position(-1, 0), this.inTransact);
+				it.inWorld = false;
+				PlayerStats.spells.push(it);
+				this.inTransact = null;
 			}
 			game.keyP[89] = 2;
 		}else if (game.keyP[78] == 1){
@@ -581,7 +595,7 @@ Map.prototype.drawMap = function(game){
 				this.instances.splice(i,1);
 				i--;
 			}else{
-				if (this.repaint)
+				if (this.repaint && !ins.prior)
 					ins.draw(game);
 				else
 					ins.loop(game);
@@ -608,9 +622,6 @@ Map.prototype.drawMap = function(game){
 		
 	}
 	
-	this.player.playerAction = false;
-	this.player.loop(game);
-	
 	this.repaint = false;
 	
 	for (var i=0;i<this.animateInstances.length;i++){
@@ -621,6 +632,9 @@ Map.prototype.drawMap = function(game){
 		}
 		this.animateInstances[i].animatedLoop(game);
 	}
+	
+	this.player.playerAction = false;
+	this.player.loop(game);
 	
 	if (this.passTurn == 500 || game.keyP[32] == 1){
 		Console.addMessage("Pass", "rgb(130,160,90)");

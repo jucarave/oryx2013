@@ -18,6 +18,7 @@
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Item.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Console.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/EffectFactory.js?version=<?php echo $version; ?>"></script>
+		<script type="text/javascript" src="<?php echo $contextPath; ?>js/MagicFactory.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/ItemFactory.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/MainScreen.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/DeathScreen.js?version=<?php echo $version; ?>"></script>

@@ -36,6 +36,7 @@ Game.prototype.loadImages = function(){
 	this.sprites["enemies"] = this.eng.loadImage(cp + "img/enemies.png?version=" + version, 19, 8);
 	this.sprites["classes"] = this.eng.loadImage(cp + "img/classes.png?version=" + version, 3, 1);
 	this.sprites["effects"] = this.eng.loadImage(cp + "img/effects.png?version=" + version, 19, 3);
+	this.sprites["magic"] = this.eng.loadImage(cp + "img/magic.png?version=" + version, 7, 1);
 };
 
 Game.prototype.drawLoading = function(){
@@ -162,7 +163,7 @@ Game.prototype.navigateMenu = function(quitK){
 	return false;
 };
 
-Game.prototype.drawPlayerMenu = function(bucket, current, x){
+Game.prototype.drawPlayerMenu = function(bucket, current, x, canDrop){
 	var ctx = this.eng.ctx;
 
 	tile = Tileset.itemsWeapons.frame;
@@ -175,7 +176,7 @@ Game.prototype.drawPlayerMenu = function(bucket, current, x){
 			var wtile = (this.sprites[item.tile.img])? this.sprites[item.tile.img] : item.tile.img;
 			this.eng.drawImage(wtile, x, y, item.tile.subImg);
 			
-			if (this.selectedOpt == i && this.keyP[68] == 1){
+			if (this.selectedOpt == i && this.keyP[68] == 1 && canDrop){
 				item.position.set(this.map.player.position);
 				item.inWorld = true;
 				this.map.instances.push(item);
@@ -213,12 +214,25 @@ Game.prototype.drawPlayerMenu = function(bucket, current, x){
 	}
 };
 
+Game.prototype.drawSpellsMenu = function(){
+	if (!PlayerStats.spellsMenu) return;
+	
+	var ctx = this.eng.ctx;
+	x = ctx.width - this.gridS.x * 6 + 149;
+	this.drawPlayerMenu(PlayerStats.spells, "currentS", x, false);
+	
+	if (this.navigateMenu(82)){
+		PlayerStats.spellsMenu = false;
+		this.map.player.act();
+	}
+};
+
 Game.prototype.drawItemsMenu = function(){
 	if (!PlayerStats.itemsMenu) return;
 	
 	var ctx = this.eng.ctx;
 	x = ctx.width - this.gridS.x * 6 + 94;
-	this.drawPlayerMenu(PlayerStats.items, "currentI", x);
+	this.drawPlayerMenu(PlayerStats.items, "currentI", x, true);
 	
 	if (this.navigateMenu(69)){
 		PlayerStats.itemsMenu = false;
@@ -231,7 +245,7 @@ Game.prototype.drawWeaponsMenu = function(){
 	
 	var ctx = this.eng.ctx;
 	x = ctx.width - this.gridS.x * 6 - 16;
-	this.drawPlayerMenu(PlayerStats.weapons, "currentW", x);
+	this.drawPlayerMenu(PlayerStats.weapons, "currentW", x, true);
 	
 	if (this.navigateMenu(81)){
 		PlayerStats.weaponsMenu = false;
@@ -244,7 +258,7 @@ Game.prototype.drawArmourMenu = function(){
 	
 	var ctx = this.eng.ctx;
 	x = ctx.width - this.gridS.x * 6 + 39;
-	this.drawPlayerMenu(PlayerStats.armours, "currentA", x);
+	this.drawPlayerMenu(PlayerStats.armours, "currentA", x, true);
 	
 	if (this.navigateMenu(87)){
 		PlayerStats.armourMenu = false;
@@ -318,6 +332,7 @@ Game.prototype.drawInterface = function(){
 	var exDmg = 0, exDfs = 0;
 	if (ps.weapons[ps.currentW]) exDmg = ps.weapons[ps.currentW].item.dmg;
 	if (ps.armours[ps.currentA]) exDfs = ps.armours[ps.currentA].item.dfs;
+	exDmg += (PlayerStats.bersekT > 0)? 20 : 0;
 	
 	x = 100 + this.gridS.x;
 	y = ctx.height - this.gridS.y * 2 + 24;
@@ -326,7 +341,9 @@ Game.prototype.drawInterface = function(){
 	ctx.fillText("exp: " + ps.exp, x, y + 20);
 	
 	x += 100;
+	ctx.fillStyle = (PlayerStats.bersekT > 0)? "rgb(255,0,0)" : "rgb(255,255,255)";
 	ctx.fillText("str: " + (ps.str + exDmg), x, y);
+	ctx.fillStyle = "rgb(255,255,255)";
 	ctx.fillText("def: " + (ps.def + exDfs), x, y + 20);
 	ctx.fillText("spd: " + ps.spd, x, y + 40);
 	
@@ -381,15 +398,23 @@ Game.prototype.drawInterface = function(){
 	x += 55;
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 	
+	if (PlayerStats.spells[PlayerStats.currentS]){
+		var item = PlayerStats.spells[PlayerStats.currentS];
+		tile = item.tile;
+		var img = (this.sprites[tile.img])? this.sprites[tile.img] : tile.img;
+		this.eng.drawImage(img, x, y, tile.subImg);
+	}
+	
 	this.drawWeaponsMenu();
 	this.drawArmourMenu();
 	this.drawItemsMenu();
+	this.drawSpellsMenu();
 	this.drawPickupItemsMenu();
 };
 
-Game.prototype.clearScreen = function(){
+Game.prototype.clearScreen = function(color){
 	var ctx = this.eng.ctx;
-	ctx.fillStyle = "rgb(0,0,0)";
+	ctx.fillStyle = (color)? color : "rgb(0,0,0)";
 	ctx.fillRect(this.viewPos.x*this.gridS.x,this.viewPos.y*this.gridS.y, this.viewS.x*this.gridS.x,this.viewS.y*this.gridS.y);
 };
 
