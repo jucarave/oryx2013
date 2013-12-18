@@ -21,6 +21,7 @@ function Map(params){
 	this.animateInstances = [];
 	
 	this.repaint = false;
+	this.reveal = false;
 	
 	if (params.random){
 		this.light = false;
@@ -261,6 +262,17 @@ Map.prototype.createEnemies = function(percent){
 	}
 };
 
+Map.prototype.getDescendStairs = function(){
+	for (var i=0;i<this.instances.length;i++){
+		if (this.instances[i].isStairs){
+			if (this.instances[i].direction == 'D' && !this.instances[i].isHole)
+				return this.instances[i];
+		}
+	}
+	
+	return null;
+};
+
 Map.prototype.createStairs = function(tile, position, direction){
 	var name, level;
 	if (this.key.indexOf("_") != -1){
@@ -292,6 +304,7 @@ Map.prototype.createStairs = function(tile, position, direction){
 	ins.level = level;
 	
 	this.instances.push(ins);
+	return ins;
 };
 
 Map.prototype.newItem = function(tile, position, item){
@@ -521,7 +534,7 @@ Map.prototype.drawFloor = function(x, y, visible){
 	if (!tile && tile !== 0){ console.log(x + "_" + y); }
 	for (var t=0,tlen=tile.length;t<tlen;t++){
 		if (tile[t] === 0)  continue;
-		if (tile[t].visible == 0) continue;
+		if (tile[t].visible == 0 && !this.reveal) continue;
 		
 		var light = false;
 		if (visible && tile[t].wasVisible == 2) light = true;
@@ -535,7 +548,7 @@ Map.prototype.drawFloor = function(x, y, visible){
 		if (tile[t].visible == 2 || (light)){
 			game.drawTile(tile[t].tile, new Position(x - xx, y - yy), null, false);
 			tile[t].wasVisible = 2;
-		}else if (tile[t].visible == 1){
+		}else if (tile[t].visible == 1 || this.reveal){
 			var vis = (t==tlen-1);
 			game.drawTile(tile[t].tile, new Position(x - xx, y - yy), null, vis);
 			tile[t].wasVisible = 1;
