@@ -46,6 +46,26 @@ Player.prototype.consumeFood = function(){
 	}
 };
 
+Player.prototype.poisonBlink = function(){
+	if (PlayerStats.poison > 0){
+		PlayerStats.health -= PlayerStats.poison;
+		game.clearScreen("rgb(255,200,255)");
+		if (PlayerStats.health <= 0){
+			PlayerStats.deathCause = 'p';
+			game.map = null;
+			game.scene = new DeathScreen();
+		}
+	}
+};
+
+Player.prototype.magicEffects = function(){
+	if (PlayerStats.bersekT > 0){ 
+		PlayerStats.bersekT--;
+		if (PlayerStats.bersekT == 0)
+			Console.addMessage("Bersek effect is over", "rgb(255,255,0)");
+	}
+};
+
 Player.prototype.tryMove = function(key, xTo, yTo){
 	if (game.keyP[key]){ 
 		if (this.run == 0 || this.run > 20){
@@ -54,6 +74,8 @@ Player.prototype.tryMove = function(key, xTo, yTo){
 				this.consumeFood();
 				this.consoleMovement(xTo, yTo);
 				this.playerMoved = true;
+				this.poisonBlink();
+				this.magicEffects();
 				PlayerStats.steppedItems = [];
 			}
 			this.playerAction = true;
@@ -92,6 +114,10 @@ Player.prototype.hurt = function(enemy, dmg){
 };
 
 Player.prototype.castAttack = function(x, y){
+	this.playerMoved = true;
+	this.playerAction = true;
+	this.magicEffects();
+	
 	var enemy = this.mapManager.getEnemyAt(x, y);
 	if (!enemy){
 		Console.addMessage("There is nothing in there", "rgb(255,255,255)"); 
@@ -119,6 +145,7 @@ Player.prototype.castAttack = function(x, y){
 	}
 	var dmg = PlayerStats.str;
 	if (weapon) dmg += Math.round(weapon.item.dmg * weapon.item.status);
+	if (PlayerStats.bersekT > 0) dmg += 20;
 	dmg -= enemy.enemy.dfs;
 	
 	var dice = weapon.item.dice;
@@ -131,6 +158,7 @@ Player.prototype.castAttack = function(x, y){
 	}
 	
 	enemy.hurt(dmg);
+	enemy.prior = true;
 };
 
 Player.prototype.shootMissile = function(x, y, arrow){
@@ -271,17 +299,29 @@ Player.prototype.useItem = function(game){
 	}
 };
 
+Player.prototype.castMagic = function(game){
+	if (game.keyP[77] == 1){
+		var magic = PlayerStats.spells[PlayerStats.currentS];
+		if (magic){
+			magic.item.cast();
+		}
+		game.keyP[77] = 2;
+	}
+};
+
 Player.prototype.step = function(game){
 	if (PlayerStats.weaponsMenu) return;
 	if (PlayerStats.armourMenu) return;
 	if (PlayerStats.pickItemsMenu) return;
 	if (PlayerStats.itemsMenu) return;
+	if (PlayerStats.spellsMenu) return;
 	if (this.mapManager.store) return;
 	
 	if (this.attack(game)) return;
 	if (this.battle != 0) return;
 	this.transact(game);
 	this.useItem(game);
+	this.castMagic(game);
 	
 	if (!this.tryMove(37,-1,0))
 	if (!this.tryMove(38,0,-1))
@@ -298,6 +338,9 @@ Player.prototype.step = function(game){
 	}else if (game.keyP[69] == 1){
 		PlayerStats.itemsMenu = true;
 		game.keyP[69] = 2;
+	}else if (game.keyP[82] == 1){
+		PlayerStats.spellsMenu = true;
+		game.keyP[82] = 2;
 	}
 };
 
@@ -400,6 +443,7 @@ Player.prototype.checkStairs = function(){
 		}
 		
 		game.gotoMap({map: PlayerStats.stairs.dungeonName, random: rand, level: level});
+		PlayerStats.displayEnemies = false;
 		PlayerStats.stairs = null;
 		game.keyP[13] = 2;
 	}
@@ -447,6 +491,9 @@ var PlayerStats = {
 	items: [],
 	currentI: 0,
 	
+	spells: [],
+	currentS: 0,
+	
 	food: 0,
 	
 	lvl: 0,
@@ -460,6 +507,8 @@ var PlayerStats = {
 	
 	poison: 0,
 	slowerT: 0,
+	bersekT: 0,
+	displayEnemies: false,
 	
 	steppedItems: [],
 	stairs: null,
@@ -467,6 +516,7 @@ var PlayerStats = {
 	weaponsMenu: false,
 	armourMenu: false,
 	itemsMenu: false,
+	spellsMenu: false,
 	pickItemsMenu: false,
 	
 	deathCause: '',

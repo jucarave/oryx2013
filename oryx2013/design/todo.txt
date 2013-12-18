@@ -52,14 +52,14 @@
 * Items Data                       *
 * Pick Items                       *
 * Use of Items                     *
+* Poison Effect                    *
+* Use of Magic                     *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* Poison Effect                    *
-* Use of Magic                     *
 * Magic Data                       *
 * Enemies Data                     *
 * Story Events                     *

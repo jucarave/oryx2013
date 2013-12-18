@@ -243,6 +243,9 @@ CharacterCreation.prototype.gotoGame = function(){
 		
 		items: [],
 		currentI: 0,
+	
+		spells: [],
+		currentS: 0,
 		
 		food: 100,
 		
@@ -257,12 +260,15 @@ CharacterCreation.prototype.gotoGame = function(){
 		
 		poison: 0,
 		slowerT: 0,
+		bersekT: 0,
+		displayEnemies: false,
 		
 		steppedItems: [],
 		stairs: null,
 		
 		weaponsMenu: false,
 		armourMenu: false,
+		spellsMenu: false,
 		pickItemsMenu: false,
 		itemsMenu: false,
 		

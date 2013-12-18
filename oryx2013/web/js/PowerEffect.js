@@ -4,6 +4,7 @@ function PowerEffect(tile, position, dir){
 	this.dir = dir;
 	this.inWorld = true;
 	this.keepAnimation = true;
+	this.repaint = true;
 	
 	Character.call(this, tile, position);
 }
@@ -29,8 +30,7 @@ PowerEffect.prototype.step = function(game){
 	//this.draw(game, this.tile.getColor(0,0,0));
 	//this.mapManager.drawFloor(this.position.x, this.position.y, true);
 	this.position.sum(this.dir);
-	if (this.mapManager.isVisible(this.position) == 2)
-		this.mapManager.repaint = true;
+	this.mapManager.repaint = true;
 	
 	return true;
 };

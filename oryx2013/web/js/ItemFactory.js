@@ -43,6 +43,15 @@ var ItemFactory = {
 	pack300: {amount: 100, isFood: true, tile: "food", rName: "pack of 300 rations", price: 300 },
 	pack500: {amount: 500, isFood: true, tile: "food", rName: "pack of 500 rations", price: 500 },
 	
+	//Magic
+	fireball: {isMagic: true, tile: "fireball", color: {r:255,g:201,b:14}, cast: MagicFactory.fireball, price: 70 },
+	bersek: {isMagic: true, tile: "bersek", color: {r:255,g:0,b:0}, cast: MagicFactory.bersek, price: 100 },
+	portal: {isMagic: true, tile: "portal", color: {r:97,g:70,b:168}, cast: MagicFactory.portal, price: 500 },
+	sleep: {isMagic: true, tile: "sleep", color: {r:75,g:150,b:163}, cast: MagicFactory.sleep, price: 150 },
+	display: {isMagic: true, tile: "display", cast: MagicFactory.display, price: 220 },
+	blink: {isMagic: true, tile: "blink", color: {r:29,g:220,b:18}, cast: MagicFactory.blink, price: 300 },
+	life: {isMagic: true, tile: "life", color: {r:255,g:0,b:0}, cast: MagicFactory.life, price: 400 },
+	
 	getMoney: function(amount){
 		var ret = {
 			tile: Tileset.itemsWeapons.money,
@@ -63,7 +72,11 @@ var ItemFactory = {
 		
 		nitem.name = name;
 		nitem.status = status;
-		nitem.tile = Tileset.itemsWeapons[nitem.tile];
+		if (nitem.isMagic){
+			nitem.tile = Tileset.magic[nitem.tile];
+		}else{
+			nitem.tile = Tileset.itemsWeapons[nitem.tile];
+		}
 		
 		if (nitem.color){
 			nitem.tile = nitem.tile.getColor(nitem.color.r,nitem.color.g,nitem.color.b);

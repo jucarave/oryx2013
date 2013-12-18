@@ -201,5 +201,15 @@ var Tileset = {
 		arrowRight: {img: "effects", subImg: new Position(8, 1), getColor: getColor},
 		
 		magic: {img: "effects", subImg: new Position(0, 0), getColor: getColor},
+	},
+	
+	magic: {
+		fireball: {img: "magic", subImg: new Position(0, 0), getColor: getColor},
+		bersek: {img: "magic", subImg: new Position(1, 0), getColor: getColor},
+		portal: {img: "magic", subImg: new Position(2, 0), getColor: getColor},
+		sleep: {img: "magic", subImg: new Position(3, 0), getColor: getColor},
+		display: {img: "magic", subImg: new Position(4, 0), getColor: getColor},
+		blink: {img: "magic", subImg: new Position(5, 0), getColor: getColor},
+		life: {img: "magic", subImg: new Position(6, 0), getColor: getColor},
 	}
 };

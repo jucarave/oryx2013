@@ -7,6 +7,7 @@ function Enemy(tile, position, enemy){
 	
 	this.followPlayer = 0;
 	this.playerPath = null;
+	this.prior = false;
 	
 	Character.call(this, tile, position);
 }
@@ -114,10 +115,13 @@ Enemy.prototype.draw = function(game, tile){
 			this.discovered = true;
 		}
 		Character.prototype.draw.call(this, game, tile);
+	}else if (PlayerStats.displayEnemies){
+		Character.prototype.draw.call(this, game, tile);
 	}
 };
 
 Enemy.prototype.loop = function(game){
+	this.prior = false;
 	if (this.followPlayer > 0){
 		this.followMovement();
 		if (this.mapManager.isVisible(this.position) != 2){
