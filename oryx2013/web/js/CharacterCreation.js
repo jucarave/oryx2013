@@ -256,6 +256,7 @@ CharacterCreation.prototype.gotoGame = function(){
 		gold: 50,
 		
 		poison: 0,
+		slowerT: 0,
 		
 		steppedItems: [],
 		stairs: null,

@@ -51,20 +51,21 @@
 * Wear armours                     *
 * Items Data                       *
 * Pick Items                       *
+* Use of Items                     *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* Use of Items                     *
-* Enemies Data                     *
+* Poison Effect                    *
 * Use of Magic                     *
 * Magic Data                       *
+* Enemies Data                     *
+* Story Events                     *
+* Instructions screen              *
 * Progress Saving                  *
 * Progress Restore                 *
 * Sprite fonts                     *
-* Story Events                     *
-* Instructions screen              *
 *                                  *
 ************************************

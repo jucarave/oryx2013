@@ -408,8 +408,6 @@ Game.prototype.gotoMap = function(map){
 		for (var i=0;i<this.maps.length;i++){
 			if (this.maps[i].key == map.map){
 				this.map = this.maps[i];
-				this.map.player.act();
-				this.map.player.playerMoved = true;
 				break;
 			}
 		}
@@ -423,6 +421,11 @@ Game.prototype.gotoMap = function(map){
 		this.maps.push(this.map);
 		this.map.loadInstances(this);
 	}
+	
+	this.map.player.act();
+	this.map.player.playerAction = true;
+	this.map.player.playerMoved = true;
+	this.map.repaint = true;
 };
 
 Game.prototype.newGame = function(){

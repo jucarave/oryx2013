@@ -22,7 +22,14 @@ Player.prototype.consoleMovement = function(xTo, yTo){
 
 Player.prototype.consumeFood = function(){
 	this.stepCount++;
-	if (this.stepCount == 10){
+	if (PlayerStats.slowerT > 0){ 
+		PlayerStats.slowerT--;
+		if (PlayerStats.slowerT == 0){
+			Console.addMessage("The slower time effect has finished", "rgb(255,255,255)");
+			this.stepCount = 0;
+		} 
+	}
+	if ((this.stepCount == 10 && PlayerStats.slowerT == 0) || (this.stepCount == 50 && PlayerStats.slowerT > 0)){
 		PlayerStats.food--;
 		if (PlayerStats.food == 0){
 			PlayerStats.deathCause = 's';
@@ -386,6 +393,12 @@ Player.prototype.checkStairs = function(){
 			Console.addMessage("You " + dir + " to level " + PlayerStats.stairs.level, "rgb(255,255,255)");
 			PlayerStats.level = PlayerStats.stairs.level;
 		}
+		
+		if (PlayerStats.stairs.isHole){
+			var stairs = this.mapManager.getDescendStairs();
+			this.position = stairs.position.clone();
+		}
+		
 		game.gotoMap({map: PlayerStats.stairs.dungeonName, random: rand, level: level});
 		PlayerStats.stairs = null;
 		game.keyP[13] = 2;
@@ -394,6 +407,7 @@ Player.prototype.checkStairs = function(){
 
 Player.prototype.act = function(){
 	this.playerAction = true;
+	this.setView(game);
 	FOV.getFOV(this.position, this.mapManager, this.fovDistance);
 };
 
@@ -445,6 +459,7 @@ var PlayerStats = {
 	gold: 40,
 	
 	poison: 0,
+	slowerT: 0,
 	
 	steppedItems: [],
 	stairs: null,
