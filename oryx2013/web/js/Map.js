@@ -225,7 +225,7 @@ Map.prototype.createEnemies = function(percent){
 		n = 5 + this.level + Math.iRandom(this.level, this.level * 2);
 		this.total = n;
 	}else{
-		n = Math.round(n * percent);
+		n = Math.ceil(this.total * percent);
 	}
 	
 	for (var i=0;i<n;i++){

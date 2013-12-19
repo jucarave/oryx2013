@@ -265,6 +265,7 @@ CharacterCreation.prototype.gotoGame = function(){
 		blinking: false,
 		sleepSp: false,
 		portal: null,
+		dungeonStep: 0,
 		
 		steppedItems: [],
 		stairs: null,
