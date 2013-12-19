@@ -65,7 +65,7 @@ MainScreen.prototype.step = function(game){
 		game.scene = new CharacterCreation();
 		game.keyP[65] = 2;
 	}else if (game.keyP[66] == 1){
-		
+		game.scene = new Instructions();
 		game.keyP[65] = 2;
 	}else if (game.keyP[68] == 1){
 		location.href = exitPath;
@@ -84,9 +84,9 @@ MainScreen.prototype.draw = function(game){
 	ctx.fillStyle = "rgb(255,255,255)";
 	ctx.textAlign = "center";
 	ctx.fillText("a) To start a new adventure", ctx.width / 2, 380);
-	ctx.fillText("b) To continue the adventure", ctx.width / 2, 400);
-	ctx.fillText("c) To instructions", ctx.width / 2, 420);
-	ctx.fillText("d) To exit", ctx.width / 2, 440);
+	//ctx.fillText("b) To continue the adventure", ctx.width / 2, 400);
+	ctx.fillText("b) To see the instructions", ctx.width / 2, 400);
+	ctx.fillText("c) To exit the game", ctx.width / 2, 420);
 	
 	ctx.fillText("TULL, Developed by Camilo Ramírez (Jucarave) 2013", ctx.width / 2, ctx.height - 30);
 	ctx.fillText("For the trials of oryx 2013", ctx.width / 2, ctx.height - 10);

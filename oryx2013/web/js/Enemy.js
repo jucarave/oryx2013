@@ -9,6 +9,8 @@ function Enemy(tile, position, enemy){
 	this.playerPath = null;
 	this.prior = false;
 	
+	this.sleep = 0;
+	
 	Character.call(this, tile, position);
 }
 
@@ -114,6 +116,19 @@ Enemy.prototype.draw = function(game, tile){
 			Console.addMessage("You saw a " + this.enemy.name, "rgb(255,0,0)");
 			this.discovered = true;
 		}
+		
+		if (PlayerStats.sleepSp && this.sleep == 0){
+			var dice = Math.iRandom(10);
+			if (dice == 3 || dice == 6 || dice == 9){
+				this.sleep = 10;
+			}
+		}
+		
+		if (this.sleep > 0){
+			this.sleep--;
+			tile = (this.tile.parent)? this.tile.parent.getColor(75, 150, 163) : this.tile.getColor(75, 150, 163);
+		}
+		
 		Character.prototype.draw.call(this, game, tile);
 	}else if (PlayerStats.displayEnemies){
 		Character.prototype.draw.call(this, game, tile);
@@ -121,6 +136,11 @@ Enemy.prototype.draw = function(game, tile){
 };
 
 Enemy.prototype.loop = function(game){
+	if (this.sleep > 0){
+		Character.prototype.loop.call(this,  game);
+		return;
+	}
+	
 	this.prior = false;
 	if (this.followPlayer > 0){
 		this.followMovement();

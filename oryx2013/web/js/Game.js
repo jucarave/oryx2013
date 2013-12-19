@@ -37,6 +37,7 @@ Game.prototype.loadImages = function(){
 	this.sprites["classes"] = this.eng.loadImage(cp + "img/classes.png?version=" + version, 3, 1);
 	this.sprites["effects"] = this.eng.loadImage(cp + "img/effects.png?version=" + version, 19, 3);
 	this.sprites["magic"] = this.eng.loadImage(cp + "img/magic.png?version=" + version, 7, 1);
+	this.sprites["keyboard"] = this.eng.loadImage(cp + "img/keyboard.png?version=" + version, 1, 1);
 };
 
 Game.prototype.drawLoading = function(){
@@ -51,6 +52,15 @@ Game.prototype.drawLoading = function(){
 	
 	ctx.fillRect(ctx.width / 2 - 147, ctx.height / 2 - 2, 294 * per, 4);
 	ctx.strokeRect(ctx.width / 2 - 150, ctx.height / 2 - 4, 300, 8);
+};
+
+Game.prototype.getTown = function(){
+	for (var i=0;i<this.maps.length;i++){
+		if (this.maps[i].key == "town")
+			return this.maps[i];
+	}
+	
+	return null;
 };
 
 Game.prototype.drawTile = function(tile, position, view, darker){

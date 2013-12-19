@@ -31,6 +31,7 @@
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/CharacterCreation.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/PowerEffect.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/PathFinder.js?version=<?php echo $version; ?>"></script>
+		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Instructions.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript">
 			var cp = "<?php echo $contextPath; ?>";
 			var version = "<?php echo $version; ?>";

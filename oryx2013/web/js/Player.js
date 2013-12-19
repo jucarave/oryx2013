@@ -77,6 +77,16 @@ Player.prototype.tryMove = function(key, xTo, yTo){
 				this.poisonBlink();
 				this.magicEffects();
 				PlayerStats.steppedItems = [];
+				
+				if (PlayerStats.portal){
+					if (PlayerStats.portal.townPos.equals(this.position) || PlayerStats.portal.pos.equals(this.position)){
+						if (this.mapManager.key == "town"){
+							Console.addMessage("This portal leads to " + PlayerStats.portal.map.name, "rgb(255,255,0)");
+						}else{
+							Console.addMessage("This portal leads to the town", "rgb(255,255,0)");
+						}
+					}
+				}
 			}
 			this.playerAction = true;
 			game.keyP[key] = 2;
@@ -309,6 +319,24 @@ Player.prototype.castMagic = function(game){
 	}
 };
 
+Player.prototype.checkBlink = function(game){
+	if (PlayerStats.blinking){
+		if (game.keyP[37] == 1){ MagicFactory.blink(-1, 0); game.keyP[37] = 2; }else
+		if (game.keyP[38] == 1){ MagicFactory.blink( 0,-1); game.keyP[38] = 2; }else
+		if (game.keyP[39] == 1){ MagicFactory.blink( 1, 0); game.keyP[39] = 2; }else
+		if (game.keyP[40] == 1){ MagicFactory.blink( 0, 1); game.keyP[40] = 2; }else
+		if (game.keyP[27] == 1){
+			Console.addMessage("Blink canceled!", "rgb(255,255,0)"); 
+			PlayerStats.blinking = false; 
+			game.keyP[27] = 2; 
+		}
+		
+		return true;
+	}
+	
+	return false;
+};
+
 Player.prototype.step = function(game){
 	if (PlayerStats.weaponsMenu) return;
 	if (PlayerStats.armourMenu) return;
@@ -317,6 +345,7 @@ Player.prototype.step = function(game){
 	if (PlayerStats.spellsMenu) return;
 	if (this.mapManager.store) return;
 	
+	if (this.checkBlink(game)) return;
 	if (this.attack(game)) return;
 	if (this.battle != 0) return;
 	this.transact(game);
@@ -449,6 +478,42 @@ Player.prototype.checkStairs = function(){
 	}
 };
 
+Player.prototype.checkPortal = function(game){
+	if (!PlayerStats.portal) return;
+	
+	var tile = Tileset.misc.portal;
+	if (this.mapManager.key == "town"){
+		game.drawTile(tile, PlayerStats.portal.townPos, this.mapManager.view);
+		
+		if (this.position.equals(PlayerStats.portal.townPos) && game.keyP[13] == 1){
+			var pos = this.mapManager.getDescendStairs().position;
+			this.position.set(pos.x, pos.y);
+			var player = PlayerStats.portal.map.player;
+			player.position = PlayerStats.portal.pos.clone(); 
+			
+			game.gotoMap({map: PlayerStats.portal.map.key, random: true, level: PlayerStats.portal.map.level});
+			game.keyP[13] = 2;
+			
+			PlayerStats.portal = null;
+		}
+	}else{
+		if (this.mapManager.key != PlayerStats.portal.map.key) return;
+		
+		if (this.mapManager.isVisible(PlayerStats.portal.pos) == 2)
+			game.drawTile(tile, PlayerStats.portal.pos, this.mapManager.view);
+		
+		if (this.position.equals(PlayerStats.portal.pos) && game.keyP[13] == 1){
+			var pos = this.mapManager.getAscendStairs().position;
+			this.position.set(pos.x + 1, pos.y);
+			var player = game.getTown().player;
+			player.position = PlayerStats.portal.townPos.clone(); 
+			
+			game.gotoMap({map: "town", random: false, level: 0});
+			game.keyP[13] = 2;
+		}
+	}
+};
+
 Player.prototype.act = function(){
 	this.playerAction = true;
 	this.setView(game);
@@ -456,6 +521,7 @@ Player.prototype.act = function(){
 };
 
 Player.prototype.loop = function(game){
+	PlayerStats.sleepSp = false;
 	this.playerMoved = false;
 	
 	this.step(game);
@@ -464,6 +530,7 @@ Player.prototype.loop = function(game){
 	this.setView(game);
 	this.checkItems(game);
 	this.checkStairs();
+	this.checkPortal(game);
 	
 	if ((this.playerAction || this.mapManager.repaint) && !this.mapManager.light){
 		FOV.getFOV(this.position, this.mapManager, this.fovDistance);
@@ -509,6 +576,9 @@ var PlayerStats = {
 	slowerT: 0,
 	bersekT: 0,
 	displayEnemies: false,
+	blinking: false,
+	sleepSp: false,
+	portal: null,
 	
 	steppedItems: [],
 	stairs: null,

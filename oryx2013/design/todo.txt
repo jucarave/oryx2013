@@ -54,16 +54,26 @@
 * Use of Items                     *
 * Poison Effect                    *
 * Use of Magic                     *
+* Magic Data                       *
+* Instructions screen              *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* Magic Data                       *
 * Enemies Data                     *
-* Story Events                     *
-* Instructions screen              *
+* Start cinematic                  *
+* Last boss scenario               *
+* Ending cinematic                 *
+* Sound effects                    *
+* Music                            *
+*                                  *
+************************************
+
+************************************
+* POSSIBLE ACTIVITIES              *
+************************************
 * Progress Saving                  *
 * Progress Restore                 *
 * Sprite fonts                     *
