@@ -262,6 +262,9 @@ CharacterCreation.prototype.gotoGame = function(){
 		slowerT: 0,
 		bersekT: 0,
 		displayEnemies: false,
+		blinking: false,
+		sleepSp: false,
+		portal: null,
 		
 		steppedItems: [],
 		stairs: null,

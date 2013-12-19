@@ -265,7 +265,18 @@ Map.prototype.createEnemies = function(percent){
 Map.prototype.getDescendStairs = function(){
 	for (var i=0;i<this.instances.length;i++){
 		if (this.instances[i].isStairs){
-			if (this.instances[i].direction == 'D' && !this.instances[i].isHole)
+			if (this.instances[i].direction != 'A' && !this.instances[i].isHole)
+				return this.instances[i];
+		}
+	}
+	
+	return null;
+};
+
+Map.prototype.getAscendStairs = function(){
+	for (var i=0;i<this.instances.length;i++){
+		if (this.instances[i].isStairs){
+			if (this.instances[i].direction == 'A')
 				return this.instances[i];
 		}
 	}

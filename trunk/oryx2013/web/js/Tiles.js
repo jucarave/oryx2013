@@ -166,7 +166,8 @@ var Tileset = {
 		stairsUp: {img: "misc", subImg: new Position(0, 1), getColor: getColor},
 		stairsDown: {img: "misc", subImg: new Position(1, 1), getColor: getColor},
 		stairsDungeon: {img: "misc", subImg: new Position(16, 2), getColor: getColor},
-		hole: {img: "misc", subImg: new Position(13, 1), getColor: getColor}		
+		hole: {img: "misc", subImg: new Position(13, 1), getColor: getColor},
+		portal: {img: "misc", subImg: new Position(16, 4), getColor: getColor}
 	},
 	
 	enemies: {
