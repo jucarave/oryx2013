@@ -40,7 +40,7 @@ Player.prototype.consumeFood = function(){
 	}
 	
 	PlayerStats.dungeonStep++;
-	if (this.dungeonStep == 50){
+	if (PlayerStats.dungeonStep == 50){
 		game.repoblateDungeons(0.2);
 		PlayerStats.dungeonStep = 0;
 	}
