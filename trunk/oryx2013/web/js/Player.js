@@ -257,6 +257,17 @@ Player.prototype.transact = function(game){
 	}
 };
 
+Player.prototype.levelUp = function(level){
+	level -= PlayerStats.lvl;
+	for (var i=0;i<level;i++){
+		var lvl = 60 * (PlayerStats.lvl + i - 1);
+		var requiredExp = lvl + Math.round(Math.pow(lvl / 10, 2));
+		
+		PlayerStats.exp = 0;
+		this.addExperience(requiredExp);
+	}
+};
+
 Player.prototype.addExperience = function(exp){
 	PlayerStats.exp += exp;
 	var level = 60 * (PlayerStats.lvl - 1);

@@ -186,7 +186,11 @@ var Tileset = {
 		spectre: {img: "enemies", subImg: new Position(8, 2), getColor: getColor},
 		humanRat: {img: "enemies", subImg: new Position(0, 3), getColor: getColor, color: {r: 255, g: 200, b: 64}},
 		skeleton: {img: "enemies", subImg: new Position(0, 4), getColor: getColor},
-		
+		//Level 4
+		skeletonWarrior: {img: "enemies", subImg: new Position(1, 4), getColor: getColor, color: {r: 181, g: 230, b: 29}},
+		littleDemon: {img: "enemies", subImg: new Position(3, 3), getColor: getColor, color: {r: 215, g: 17, b: 27}},
+		gelatinousCube: {img: "enemies", subImg: new Position(2, 7), getColor: getColor, color: {r: 181, g: 230, b: 29}},
+		spore: {img: "enemies", subImg: new Position(18, 3), getColor: getColor, color: {r: 163, g: 73, b: 164}},
 	},
 	
 	classes: {
