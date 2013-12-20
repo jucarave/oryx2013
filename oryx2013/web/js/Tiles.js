@@ -212,5 +212,14 @@ var Tileset = {
 		display: {img: "magic", subImg: new Position(4, 0), getColor: getColor},
 		blink: {img: "magic", subImg: new Position(5, 0), getColor: getColor},
 		life: {img: "magic", subImg: new Position(6, 0), getColor: getColor},
+	},
+	
+	cinema: {
+		cave: {img: "cinema", subImg: new Position(0, 0), getColor: getColor},
+		dungeon: {img: "cinema", subImg: new Position(0, 1), getColor: getColor},
+		city: {img: "cinema", subImg: new Position(0, 2), getColor: getColor},
+		cementery: {img: "cinema", subImg: new Position(1, 0), getColor: getColor},
+		cementery2: {img: "cinema", subImg: new Position(1, 1), getColor: getColor},
+		desert: {img: "cinema", subImg: new Position(1, 2), getColor: getColor}
 	}
 };

@@ -292,7 +292,7 @@ Player.prototype.addExperience = function(exp){
 		PlayerStats.spd += spd;
 		PlayerStats.luk += luk;
 		
-		Console.addMessage("New level: " + PlayerStats.lvl + " -> str+" + str + " -> dfs+" + dfs + " -> spd+" + spd + " -> luck+" + luk, "rgb(255,255,255)");
+		Console.addMessage("New level: " + PlayerStats.lvl + " -> str+" + str + " -> dfs+" + dfs + " -> spd+" + spd + " -> luck+" + luk, "rgb(255,0,255)");
 	}
 };
 

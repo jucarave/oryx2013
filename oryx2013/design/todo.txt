@@ -56,6 +56,8 @@
 * Use of Magic                     *
 * Magic Data                       *
 * Instructions screen              *
+* Start cinematic                  *
+* Ending cinematic                 *
 *                                  *
 ************************************
 
@@ -63,9 +65,7 @@
 * ACTIVITIES PENDING               *
 ************************************
 * Enemies Data                     *
-* Start cinematic                  *
 * Last boss scenario               *
-* Ending cinematic                 *
 * Sound effects                    *
 * Music                            *
 *                                  *
