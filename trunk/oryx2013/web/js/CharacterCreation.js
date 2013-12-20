@@ -288,7 +288,7 @@ CharacterCreation.prototype.gotoGame = function(){
 	item = new Item(i.tile, new Position(0,0), i);
 	PlayerStats.weapons.push(item);
 	
-	game.gotoMap({map: "town"});
+	game.scene = new StartScene();
 };
 
 CharacterCreation.prototype.loop = function(game){

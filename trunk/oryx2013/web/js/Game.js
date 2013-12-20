@@ -38,6 +38,7 @@ Game.prototype.loadImages = function(){
 	this.sprites["effects"] = this.eng.loadImage(cp + "img/effects.png?version=" + version, 19, 3);
 	this.sprites["magic"] = this.eng.loadImage(cp + "img/magic.png?version=" + version, 7, 1);
 	this.sprites["keyboard"] = this.eng.loadImage(cp + "img/keyboard.png?version=" + version, 1, 1);
+	this.sprites["cinema"] = this.eng.loadImage(cp + "img/cinema.png?version=" + version, 2, 3);
 };
 
 Game.prototype.drawLoading = function(){
