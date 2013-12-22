@@ -24,15 +24,19 @@ function Map(params){
 	this.reveal = false;
 	
 	if (params.random){
+		var lev = (params.level == 20)? 1 : params.level;
+		
 		this.light = false;
 		this.signs = [];
 		this.name = "Dungeon Test - Level " + params.level;
 		this.key = params.map;
-		this.map = RDG.newMap(params.level);
+		this.map = RDG.newMap(lev);
 		this.level = params.level;
 		
 		this.createItems();
-		this.createEnemies();
+		if (params.level < 20)
+			this.createEnemies();
+		this.createBoss();
 	}else if (params.map){
 		this.loadMap(params.map);
 	}
@@ -185,9 +189,6 @@ Map.prototype.createItems = function(){
 	var n = 3 + this.level + Math.iRandom(this.level, this.level * 2);
 	
 	for (var i=0;i<n;i++){
-		var dice = Math.iRandom(10);
-		if (dice == 4 || dice == 8) continue;
-		
 		var x, y, counter = 1;
 		
 		while (counter > 0){
@@ -216,6 +217,39 @@ Map.prototype.createItems = function(){
 		item.mapManager = this;
 		this.instances.push(item);
 	}
+};
+
+Map.prototype.createBoss = function(){
+	var boss = EnemyFactory.getBoss(this.level);
+	if (!boss) return;
+	
+	var x, y;
+	var counter = 0;
+	while (true){
+		if (counter == 1000) break;
+		x = Math.iRandom(this.map[0].length - 1);
+		y = Math.iRandom(this.map.length - 1);
+		
+		if (this.map[y][x] != 0 && !this.getEnemyAt(x, y)){
+			var t = this.map[y][x];
+			if (t instanceof Array) t = t[0];
+			if (t <= 0) continue;
+			var tileId = (t.tileId)? t.tileId : t;
+			var tile = Tileset.dungeon.getByTileId(tileId, this.level);
+			if (tile.isFloor){
+				counter = 0;
+				break;
+			}
+		}
+		counter++;
+	}
+	
+	if (counter > 0) return;
+	
+	var enemy = new Enemy(boss.tile, new Position(x, y), boss);
+	enemy.mapManager = this;
+	this.instances.push(enemy);
+	this.enemies.push(enemy);
 };
 
 Map.prototype.createEnemies = function(percent){
@@ -309,6 +343,8 @@ Map.prototype.createStairs = function(tile, position, direction){
 		}
 	}
 	
+	
+	if (this.level == 20 && direction == "D") return;
 	
 	var ins = new Stairs(tile, position, direction, name);
 	ins.mapManager = this;
@@ -421,6 +457,7 @@ Map.prototype.inHotel = function(game){
 		PlayerStats.gold -= 25;
 		PlayerStats.health = PlayerStats.mHealth;
 		PlayerStats.mana = PlayerStats.mMana;
+		PlayerStats.poison = 0;
 		this.player.position.set(33, 24);
 		this.player.playerAction = true;
 		this.player.playerMoved = true;
@@ -496,7 +533,8 @@ Map.prototype.drawStore = function(game){
 				}
 				PlayerStats.gold -= this.inTransact.price;
 				Console.addMessage("You bought a(n) " + name, "rgb(255,255,255)");
-				var it = new Item(this.inTransact.tile, new Position(-1, 0), this.inTransact);
+				var nItem = ItemFactory.getItem(this.inTransact.name, 1);
+				var it = new Item(this.inTransact.tile, new Position(-1, 0), nItem);
 				it.inWorld = false;
 				PlayerStats.weapons.push(it);
 				this.inTransact = null;

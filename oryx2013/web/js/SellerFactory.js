@@ -11,7 +11,9 @@ var SellerFactory = {
 			"heavySword",
 			"gemStaff",
 			"longBow",
-			"heavyAxe"
+			"heavyAxe",
+			"greatSword",
+			"crossBow"
 		]
 	},
 	
@@ -35,6 +37,7 @@ var SellerFactory = {
 			"plateArmour",
 			"mailArmour",
 			"scaleArmour",
+			"reflectArmour"
 		]
 	},
 	

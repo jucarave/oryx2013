@@ -58,13 +58,13 @@
 * Instructions screen              *
 * Start cinematic                  *
 * Ending cinematic                 *
+* Enemies Data                     *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* Enemies Data                     *
 * Last boss scenario               *
 * Sound effects                    *
 * Music                            *

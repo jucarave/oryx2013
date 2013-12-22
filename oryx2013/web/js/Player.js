@@ -298,6 +298,15 @@ Player.prototype.addExperience = function(exp){
 		else
 			luk = Math.iRandom(3);
 			
+		var hlt = Math.iRandom(1, 5);
+		var man = Math.iRandom(1, 5);
+		
+		PlayerStats.health += hlt;
+		PlayerStats.mHealth += hlt;
+		
+		PlayerStats.mana += man;
+		PlayerStats.mMana += man;
+		
 		PlayerStats.str += str;
 		PlayerStats.dfs += dfs;
 		PlayerStats.spd += spd;
