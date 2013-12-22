@@ -67,7 +67,7 @@ MainScreen.prototype.step = function(game){
 	}else if (game.keyP[66] == 1){
 		game.scene = new Instructions();
 		game.keyP[65] = 2;
-	}else if (game.keyP[68] == 1){
+	}else if (game.keyP[67] == 1){
 		location.href = exitPath;
 		game.keyP[67] = 2;
 	}

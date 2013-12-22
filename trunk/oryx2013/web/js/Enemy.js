@@ -35,6 +35,7 @@ Enemy.prototype.followMovement = function(){
 	var player = this.mapManager.player;
 	var xdif = Math.abs(this.position.x - player.position.x);
 	var ydif = Math.abs(this.position.y - player.position.y);
+	if (xdif > 10 || ydif > 10) return;
 	if ((xdif == 1 && ydif == 0) || (xdif == 0 && ydif == 1)){
 		this.attackPlayer();
 		return;
@@ -103,6 +104,8 @@ Enemy.prototype.hurt = function(dmg){
 		this.keepAnimation = true;
 	}
 	
+	this.mapManager.repaint = true;
+	
 	Console.addMessage(msg, "rgb(255,255,255)");
 	
 	if (msg2 != "") Console.addMessage(msg2, "rgb(255,255,255)");
@@ -129,7 +132,8 @@ Enemy.prototype.draw = function(game, tile){
 			tile = (this.tile.parent)? this.tile.parent.getColor(75, 150, 163) : this.tile.getColor(75, 150, 163);
 		}
 		
-		Character.prototype.draw.call(this, game, tile);
+		if (this.blink <= 3 || this.blink >= 8)
+			Character.prototype.draw.call(this, game, tile);
 	}else if (PlayerStats.displayEnemies){
 		Character.prototype.draw.call(this, game, tile);
 	}
@@ -157,9 +161,7 @@ Enemy.prototype.animatedLoop = function(game){
 	if (this.mapManager.isVisible(this.position) != 2) return;
 	
 	if (this.blink > 3 && this.blink < 8){
-		var par = (this.tile.parent)? this.tile.parent : this.tile;
-		this.draw(game, par.getColor(0,0,0));
-		this.mapManager.drawFloor(this.position.x, this.position.y, true);
+		this.mapManager.repaint = true;
 	}
 	this.blink--;
 	if (this.blink == 0){
