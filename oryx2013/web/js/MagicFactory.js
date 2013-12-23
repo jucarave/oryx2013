@@ -1,17 +1,19 @@
 var MagicFactory = {
 	fireball: function(){
 		if (game.map.key == "town"){
-			Console.addMessage("This spell can't be cast in the town", "rgb(255,255,255)");
+			Console.addMessage(msg.spellFor, "rgb(255,255,255)");
 			return false;
 		}
 		
 		if (PlayerStats.mana < 5){
-			Console.addMessage("You have not enough mana", "rgb(255,255,0)");
+			Console.addMessage(msg.noMana, "rgb(255,255,0)");
 			return false;
 		}
 		
-		Console.addMessage("Cast fireball!", "rgb(255,201,14)");
+		Console.addMessage(msg.castFireball, "rgb(255,201,14)");
 		PlayerStats.mana -= 5;
+		
+		game.sounds.fireball.stopAndPlay();
 			
 		var tile = Tileset.effects.magic.getColor(255,201,14);
 		var player = game.map.player;
@@ -38,32 +40,34 @@ var MagicFactory = {
 	
 	bersek: function(){
 		if (game.map.key == "town"){
-			Console.addMessage("This spell can't be cast in the town", "rgb(255,255,255)");
+			Console.addMessage(msg.spellFor, "rgb(255,255,255)");
 			return false;
 		}
 		
 		if (PlayerStats.mana < 8){
-			Console.addMessage("You have not enough mana", "rgb(255,255,0)");
+			Console.addMessage(msg.noMana, "rgb(255,255,0)");
 			return false;
 		}
 		
-		Console.addMessage("Bersek! str+20 during 20 turns", "rgb(255,0,0)");
+		game.sounds.bersek.stopAndPlay();
+		Console.addMessage(msg.castBerserk, "rgb(255,0,0)");
 		PlayerStats.mana -= 8;
-		PlayerStats.bersekT = 20;
+		PlayerStats.bersekT = 50;
 	},
 	
 	portal: function(){
 		if (game.map.key == "town"){
-			Console.addMessage("This spell can't be cast in the town", "rgb(255,255,255)");
+			Console.addMessage(msg.spellFor, "rgb(255,255,255)");
 			return false;
 		}
 		
 		if (PlayerStats.mana < 35){
-			Console.addMessage("You have not enough mana", "rgb(255,255,0)");
+			Console.addMessage(msg.noMana, "rgb(255,255,0)");
 			return false;
 		}
 		
-		Console.addMessage("You opened a portal to the town", "rgb(255,0,0)");
+		Console.addMessage(msg.castPortal, "rgb(255,0,0)");
+		game.sounds.portal.stopAndPlay();
 		PlayerStats.mana -= 35;
 		PlayerStats.portal = {
 			pos: game.map.player.position.clone(),
@@ -74,24 +78,36 @@ var MagicFactory = {
 	},
 	
 	sleep: function(){
-		if (PlayerStats.mana < 10){
-			Console.addMessage("You have not enough mana", "rgb(255,255,0)");
+		if (game.map.key == "town"){
+			Console.addMessage(msg.spellFor, "rgb(255,255,255)");
 			return false;
 		}
 		
-		Console.addMessage("Cast a sleep spell on the nearby enemies", "rgb(75,N150,163)");
+		if (PlayerStats.mana < 10){
+			Console.addMessage(msg.noMana, "rgb(255,255,0)");
+			return false;
+		}
+		
+		Console.addMessage(msg.castSleep, "rgb(75,150,163)");
+		game.sounds.sleep.stopAndPlay();
 		PlayerStats.mana -= 10;
 		PlayerStats.sleepSp = true;
 		game.map.player.act();
 	},
 	
 	display: function(){
-		if (PlayerStats.mana < 12){
-			Console.addMessage("You have not enough mana", "rgb(255,255,0)");
+		if (game.map.key == "town"){
+			Console.addMessage(msg.spellFor, "rgb(255,255,255)");
 			return false;
 		}
 		
-		Console.addMessage("Watch the enemies location in this level", "rgb(255,255,255)");
+		if (PlayerStats.mana < 12){
+			Console.addMessage(msg.noMana, "rgb(255,255,0)");
+			return false;
+		}
+		
+		Console.addMessage(msg.castDisplay, "rgb(255,255,255)");
+		game.sounds.display.stopAndPlay();
 		PlayerStats.mana -= 12;
 		PlayerStats.displayEnemies = true;
 		game.map.player.act();
@@ -99,7 +115,7 @@ var MagicFactory = {
 	
 	blink: function(xTo, yTo){
 		if (xTo || yTo){
-			Console.addMessage("Blink executed", "rgb(255,255,255)");
+			Console.addMessage(msg.castBlink, "rgb(255,255,255)");
 			PlayerStats.mana -= 15;
 			PlayerStats.blinking = false;
 			
@@ -112,15 +128,16 @@ var MagicFactory = {
 				}
 			} 
 			
+			game.sounds.blink.stopAndPlay();
 			game.map.player.position = pos;
 			game.map.player.act();
 		}else{
 			if (PlayerStats.mana < 15){
-				Console.addMessage("You have not enough mana", "rgb(255,255,0)");
+				Console.addMessage(msg.noMana, "rgb(255,255,0)");
 				return false;
 			}
 			
-			Console.addMessage("Blink where? ", "rgb(255,255,255)");
+			Console.addMessage(msg.blinkWhere, "rgb(255,255,255)");
 			PlayerStats.blinking = true;
 			game.map.player.act();
 		}
@@ -128,11 +145,12 @@ var MagicFactory = {
 	
 	life: function(){
 		if (PlayerStats.mana < 20){
-			Console.addMessage("You have not enough mana", "rgb(255,255,0)");
+			Console.addMessage(msg.noMana, "rgb(255,255,0)");
 			return false;
 		}
 		
-		Console.addMessage("You recover 60 health points", "rgb(255,0,0)");
+		game.sounds.life.stopAndPlay();
+		Console.addMessage(msg.castLife, "rgb(255,0,0)");
 		PlayerStats.mana -= 20;
 		PlayerStats.health = Math.min(PlayerStats.health + 60, PlayerStats.mHealth);
 	}

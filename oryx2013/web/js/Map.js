@@ -101,7 +101,6 @@ Map.prototype.loadMap = function(map){
 		
 		this.loadVendors();
 	}
-	
 };
 
 Map.prototype.isSolid = function(position, avoidEnemies){
@@ -448,12 +447,13 @@ Map.prototype.inHotel = function(game){
 	if (game.keyP[89] == 1){
 		game.keyP[89] = 2;
 		if (PlayerStats.gold < 25){
-			Console.addMessage("You can't afford it", "rgb(255,255,0)");
+			Console.addMessage(msg.afford, "rgb(255,255,0)");
 			this.store = null;
 			return;
 		}
 		
-		Console.addMessage("The room is ready, rest well.", "rgb(255,255,255)");
+		game.sounds.pick.stopAndPlay();
+		Console.addMessage(msg.room, "rgb(255,255,255)");
 		PlayerStats.gold -= 25;
 		PlayerStats.health = PlayerStats.mHealth;
 		PlayerStats.mana = PlayerStats.mMana;
@@ -465,7 +465,7 @@ Map.prototype.inHotel = function(game){
 		this.store = null;
 		game.repoblateDungeons(1);
 	}else if (game.keyP[78] == 1){
-		Console.addMessage("Have a nice day then.", "rgb(255,255,255)");
+		Console.addMessage(msg.hNiceDay, "rgb(255,255,255)");
 		this.store = null;
 		game.keyP[78] = 2;
 	}
@@ -491,7 +491,7 @@ Map.prototype.drawStore = function(game){
 	ctx.strokeRect(x, y, 500, h);
 	
 	ctx.fillStyle = "rgb(255,255,255)";
-	ctx.fillText("Select the option of the item you want to buy.", x + 8, y + 20);
+	ctx.fillText(msg.optionsBuy, x + 8, y + 20);
 	
 	var chr = 65;
 	y += 60;
@@ -506,10 +506,10 @@ Map.prototype.drawStore = function(game){
 		if (game.keyP[chr] == 1 && !this.inTransact){
 			this.inTransact = this.store[i];
 			if (PlayerStats.gold < this.inTransact.price){
-				Console.addMessage("You can't afford it", "rgb(255,255,0)");
+				Console.addMessage(msg.afford, "rgb(255,255,0)");
 				this.inTransact = null;
 			}else{
-				Console.addMessage("Do you want to buy the " + name + "? Y/N", "rgb(255,255,0)");
+				Console.addMessage(msg.buyQuestion + name + "? Y/N", "rgb(255,255,0)");
 			}
 			game.keyP[chr] = 2;
 		}
@@ -522,17 +522,18 @@ Map.prototype.drawStore = function(game){
 			var name = ItemFactory.getItemName(this.inTransact);
 			if (this.inTransact.isWeapon){
 				if (PlayerStats.weapons.length == 7){
-					Console.addMessage("You can't carry more weapons", "rgb(255,255,255)");
+					Console.addMessage(msg.moreWeapons, "rgb(255,255,255)");
 					this.inTransact = null;
 					return;
 				}
 				if (PlayerStats.class.id != this.inTransact.class.id){
-					Console.addMessage("This weapon is reserved only for " + this.inTransact.class.name + "s", "rgb(255,255,255)");
+					Console.addMessage(msg.weaponReserved + this.inTransact.class.name + "s", "rgb(255,255,255)");
 					this.inTransact = null;
 					return;
 				}
 				PlayerStats.gold -= this.inTransact.price;
-				Console.addMessage("You bought a(n) " + name, "rgb(255,255,255)");
+				game.sounds.pick.stopAndPlay();
+				Console.addMessage(msg.bought + name, "rgb(255,255,255)");
 				var nItem = ItemFactory.getItem(this.inTransact.name, 1);
 				var it = new Item(this.inTransact.tile, new Position(-1, 0), nItem);
 				it.inWorld = false;
@@ -540,36 +541,39 @@ Map.prototype.drawStore = function(game){
 				this.inTransact = null;
 			}else if (this.inTransact.isArmour){
 				if (PlayerStats.armours.length == 7){
-					Console.addMessage("You can't carry more armours", "rgb(255,255,255)");
+					Console.addMessage(msg.moreArmour, "rgb(255,255,255)");
 					this.inTransact = null;
 					return;
 				}
 				PlayerStats.gold -= this.inTransact.price;
-				Console.addMessage("You bought a(n) " + name, "rgb(255,255,255)");
+				game.sounds.pick.stopAndPlay();
+				Console.addMessage(msg.bought + name, "rgb(255,255,255)");
 				var it = new Item(this.inTransact.tile, new Position(-1, 0), this.inTransact);
 				it.inWorld = false;
 				PlayerStats.armours.push(it);
 				this.inTransact = null;
 			}else if (this.inTransact.isFood){
 				if (PlayerStats.food == 9999){
-					Console.addMessage("You can't carry more food", "rgb(255,255,255)");
+					Console.addMessage(msg.moreFood, "rgb(255,255,255)");
 					this.inTransact = null;
 					return;
 				}
 				PlayerStats.gold -= this.inTransact.price;
-				Console.addMessage("You bought a(n) " + name, "rgb(255,255,255)");
+				game.sounds.pick.stopAndPlay();
+				Console.addMessage(msg.bought + name, "rgb(255,255,255)");
 				PlayerStats.food = Math.min(PlayerStats.food + this.inTransact.amount, 9999);
 				this.inTransact = null;
 			}else if (this.inTransact.isMagic){
 				for (var i=0;i<PlayerStats.spells.length;i++){
 					if (PlayerStats.spells[i].item.name == this.inTransact.name){
-						Console.addMessage("You already have this spell", "rgb(255,255,0)");
+						Console.addMessage(msg.spellOwn, "rgb(255,255,0)");
 						this.inTransact = null;
 						return;
 					}
 				}
 				PlayerStats.gold -= this.inTransact.price;
-				Console.addMessage("You bought the " + name + " spell", "rgb(255,255,255)");
+				game.sounds.pick.stopAndPlay();
+				Console.addMessage(msg.buySpell.replace("X", name), "rgb(255,255,255)");
 				var it = new Item(this.inTransact.tile, new Position(-1, 0), this.inTransact);
 				it.inWorld = false;
 				PlayerStats.spells.push(it);
@@ -577,11 +581,12 @@ Map.prototype.drawStore = function(game){
 			}
 			game.keyP[89] = 2;
 		}else if (game.keyP[78] == 1){
+			Console.addMessage(msg.whatToBuy, "rgb(255,255,255)");
 			this.inTransact = null;
 			game.keyP[78] = 2;
 		}
 	}else if (game.keyP[27] == 1){
-		Console.addMessage("Have a nice day", "rgb(255,255,255)");
+		Console.addMessage(msg.niceDay, "rgb(255,255,255)");
 		this.inTransact = null;
 		this.store = null;
 		this.player.playerAction = true;
@@ -686,7 +691,7 @@ Map.prototype.drawMap = function(game){
 	this.player.loop(game);
 	
 	if (this.passTurn == 500 || game.keyP[32] == 1){
-		Console.addMessage("Pass", "rgb(130,160,90)");
+		Console.addMessage(msg.pass, "rgb(130,160,90)");
 		this.player.act();
 		if (game.keyP[32] == 1)
 			game.keyP[32] = 2;

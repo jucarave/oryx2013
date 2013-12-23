@@ -25,9 +25,9 @@ CharacterCreation.prototype.processName = function(game){
 	var ctx = game.eng.ctx;
 	
 	ctx.textAlign = "left";
-	ctx.fillText("ENTER YOUR NAME: " + this.name, 16, 60);
-	ctx.fillText("(ONLY LETTERS AND SPACES, 12 CHARACTERS MAX)", 16, 80);
-	ctx.fillText("PRESS ENTER WHEN YOU FINISH OR ESC TO RETURN TO THE MAIN MENU", 16, 100);
+	ctx.fillText(msg.enterName + this.name, 16, 60);
+	ctx.fillText(msg.enterName2, 16, 80);
+	ctx.fillText(msg.enterName3, 16, 100);
 	
 	if (game.lastK != -1){
 		if ((game.lastK >= 65 && game.lastK <= 90) || (game.lastK >= 97 && game.lastK <= 122)){
@@ -60,26 +60,26 @@ CharacterCreation.prototype.processSkills = function(game){
 	var ctx = game.eng.ctx;
 	
 	ctx.textAlign = "left";
-	ctx.fillText("      YOUR NAME: " + this.name, 16, 60);
+	ctx.fillText(msg.yourName + this.name, 16, 60);
 	
 	ctx.textAlign = "center";
-	ctx.fillText("REMAIN SKILL POINTS: " + this.points, ctx.width / 2, 120);
+	ctx.fillText(msg.remainPoints + this.points, ctx.width / 2, 120);
 	
 	if (this.opt == 0) ctx.fillStyle = "rgb(255, 255, 0)"; else ctx.fillStyle = "rgb(255,255,255)"; 
-	ctx.fillText("STRENGTH............................." + this.skill[0], ctx.width / 2, 160);
+	ctx.fillText(msg.ccStrength + this.skill[0], ctx.width / 2, 160);
 	if (this.opt == 1) ctx.fillStyle = "rgb(255, 255, 0)"; else ctx.fillStyle = "rgb(255,255,255)";
-	ctx.fillText("DEFENSE.............................." + this.skill[1], ctx.width / 2, 180);
+	ctx.fillText(msg.ccDefense + this.skill[1], ctx.width / 2, 180);
 	if (this.opt == 2) ctx.fillStyle = "rgb(255, 255, 0)"; else ctx.fillStyle = "rgb(255,255,255)";
-	ctx.fillText("SPEED................................" + this.skill[2], ctx.width / 2, 200);
+	ctx.fillText(msg.ccSpeed + this.skill[2], ctx.width / 2, 200);
 	if (this.opt == 3) ctx.fillStyle = "rgb(255, 255, 0)"; else ctx.fillStyle = "rgb(255,255,255)";
-	ctx.fillText("LUCK................................." + this.skill[3], ctx.width / 2, 220);
+	ctx.fillText(msg.ccLuck + this.skill[3], ctx.width / 2, 220);
 	
 	ctx.fillStyle = "rgb(255,255,255)";
 	ctx.textAlign = "left";
 	
-	ctx.fillText("PRESS THE UP/DOWN ARROW KEYS TO NAVIGATE THROUGH THE OPTIONS", 16, 260);
-	ctx.fillText("PRESS THE RIGHT/LEFT ARROW KEYS TO ADD/REMOVE POINTS", 16, 280);
-	ctx.fillText("PRESS ENTER WHEN YOU ARE READY OR ESC TO RETURN.", 16, 300);
+	ctx.fillText(msg.upDownNav, 16, 260);
+	ctx.fillText(msg.rightLeftNav, 16, 280);
+	ctx.fillText(msg.skillsEnter, 16, 300);
 	
 	if (game.keyP[38] == 1){ this.opt--; game.keyP[38] = 2; }
 	else if (game.keyP[40] == 1){ this.opt++; game.keyP[40] = 2; }
@@ -115,16 +115,16 @@ CharacterCreation.prototype.processClass = function(game){
 	
 	ctx.textAlign = "left";
 	ctx.fillStyle = "rgb(255,255,255)";
-	ctx.fillText("      YOUR NAME: " + this.name, 16, 60);
+	ctx.fillText(msg.yourName + this.name, 16, 60);
 	
 	ctx.textAlign = "center";
-	ctx.fillText("       SKILL POINTS:  ", ctx.width / 2, 120);
+	ctx.fillText(msg.skillPoints, ctx.width / 2, 120);
 	
 	var atr = this.attribs[this.opt];
-	ctx.fillText("STRENGTH............................." + (this.skill[0] + atr[0]), ctx.width / 2, 160);
-	ctx.fillText("DEFENSE.............................." + (this.skill[1] + atr[1]), ctx.width / 2, 180);
-	ctx.fillText("SPEED................................" + (this.skill[2] + atr[2]), ctx.width / 2, 200);
-	ctx.fillText("LUCK................................." + (this.skill[3] + atr[3]), ctx.width / 2, 220);
+	ctx.fillText(msg.ccStrength + (this.skill[0] + atr[0]), ctx.width / 2, 160);
+	ctx.fillText(msg.ccDefense + (this.skill[1] + atr[1]), ctx.width / 2, 180);
+	ctx.fillText(msg.ccSpeed + (this.skill[2] + atr[2]), ctx.width / 2, 200);
+	ctx.fillText(msg.ccLuck + (this.skill[3] + atr[3]), ctx.width / 2, 220);
 	
 	ctx.textAlign = "center";
 	ctx.strokeStyle = "rgb(255,255,255)";
@@ -132,7 +132,7 @@ CharacterCreation.prototype.processClass = function(game){
 	var tile = Tileset.classes.fighter;
 	this.classPos.set(2,3);
 	game.drawTile(tile, this.classPos);
-	ctx.fillText("FIGHTER", 170, 360);
+	ctx.fillText(msg.fighter, 170, 360);
 	
 	if (this.opt == 0)
 		ctx.strokeRect(134, 270, 72, 72);
@@ -140,7 +140,7 @@ CharacterCreation.prototype.processClass = function(game){
 	var tile = Tileset.classes.archer;
 	this.classPos.set(4,3);
 	game.drawTile(tile, this.classPos);
-	ctx.fillText("ARCHER", 305, 360);
+	ctx.fillText(msg.archer, 305, 360);
 	
 	if (this.opt == 1)
 		ctx.strokeRect(269, 270, 72, 72);
@@ -148,7 +148,7 @@ CharacterCreation.prototype.processClass = function(game){
 	var tile = Tileset.classes.wizard;
 	this.classPos.set(6,3);
 	game.drawTile(tile, this.classPos);
-	ctx.fillText("WIZARD", 440, 360);
+	ctx.fillText(msg.wizard, 440, 360);
 	
 	if (this.opt == 2)
 		ctx.strokeRect(404, 270, 72, 72);
@@ -159,8 +159,8 @@ CharacterCreation.prototype.processClass = function(game){
 	this.opt = Math.max(0, Math.min(2, this.opt));
 	
 	ctx.textAlign = "left";
-	ctx.fillText("PRESS THE RIGHT/LEFT KEYS TO NAVIGATE THROUGH THE CLASSES", 16, 400);
-	ctx.fillText("PRESS ENTER WHEN YOU ARE READY OR ESC TO RETURN.", 16, 420);
+	ctx.fillText(msg.classesNav, 16, 400);
+	ctx.fillText(msg.classesEnt, 16, 420);
 	
 	if (game.keyP[13] == 1){
 		this.process = 3;
@@ -178,16 +178,16 @@ CharacterCreation.prototype.processConfirm = function(game){
 	
 	ctx.textAlign = "left";
 	ctx.fillStyle = "rgb(255,255,255)";
-	ctx.fillText("      YOUR NAME: " + this.name, 16, 60);
+	ctx.fillText(msg.yourName+ this.name, 16, 60);
 	
 	ctx.textAlign = "center";
-	ctx.fillText("       SKILL POINTS:  ", ctx.width / 2, 120);
+	ctx.fillText(msg.skillPoints, ctx.width / 2, 120);
 	
 	var atr = this.attribs[this.class];
-	ctx.fillText("STRENGTH............................." + (this.skill[0] + atr[0]), ctx.width / 2, 160);
-	ctx.fillText("DEFENSE.............................." + (this.skill[1] + atr[1]), ctx.width / 2, 180);
-	ctx.fillText("SPEED................................" + (this.skill[2] + atr[2]), ctx.width / 2, 200);
-	ctx.fillText("LUCK................................." + (this.skill[3] + atr[3]), ctx.width / 2, 220);
+	ctx.fillText(msg.ccStrength + (this.skill[0] + atr[0]), ctx.width / 2, 160);
+	ctx.fillText(msg.ccDefense + (this.skill[1] + atr[1]), ctx.width / 2, 180);
+	ctx.fillText(msg.ccSpeed + (this.skill[2] + atr[2]), ctx.width / 2, 200);
+	ctx.fillText(msg.ccLuck + (this.skill[3] + atr[3]), ctx.width / 2, 220);
 	
 	ctx.textAlign = "center";
 	ctx.strokeStyle = "rgb(255,255,255)";
@@ -196,20 +196,20 @@ CharacterCreation.prototype.processConfirm = function(game){
 		var tile = Tileset.classes.fighter;
 		this.classPos.set(4,3);
 		game.drawTile(tile, this.classPos);
-		ctx.fillText("FIGHTER", 305, 360);
+		ctx.fillText(msg.fighter, 305, 360);
 	}else if (this.class == 1){
 		var tile = Tileset.classes.archer;
 		this.classPos.set(4,3);
 		game.drawTile(tile, this.classPos);
-		ctx.fillText("ARCHER", 305, 360);
+		ctx.fillText(msg.archer, 305, 360);
 	}else if (this.class == 2){
 		var tile = Tileset.classes.wizard;
 		this.classPos.set(4,3);
 		game.drawTile(tile, this.classPos);
-		ctx.fillText("WIZARD", 305, 360);
+		ctx.fillText(msg.wizard, 305, 360);
 	}
 	
-	ctx.fillText("IS THIS CHARACTER CORRECT? Y / N", ctx.width/ 2, 400);
+	ctx.fillText(msg.correctChar, ctx.width/ 2, 400);
 	
 	ctx.textAlign = "left";
 	if (game.keyP[89] == 1){
@@ -299,7 +299,7 @@ CharacterCreation.prototype.loop = function(game){
 	
 	ctx.fillStyle = "rgb(255,255,255)";
 	ctx.textAlign = "center";
-	ctx.fillText("Character generation", ctx.width / 2, 20);
+	ctx.fillText(msg.characterCreation, ctx.width / 2, 20);
 	
 	switch (this.process){
 		case 0: this.processName(game); break;

@@ -1,7 +1,7 @@
 var HeroClasses = {
-	fighter: {id: 0, name: "Fighter", tile: Tileset.heroes.warrior},
-	archer: {id: 1, name: "Archer", tile: Tileset.heroes.archer},
-	wizard: {id: 2, name: "Wizard", tile: Tileset.heroes.wizard},
+	fighter: {id: 0, name: msg.fighter, tile: Tileset.heroes.warrior},
+	archer: {id: 1, name: msg.archer, tile: Tileset.heroes.archer},
+	wizard: {id: 2, name: msg.wizard, tile: Tileset.heroes.wizard},
 	
 	fromId: function(id){
 		for (var i in HeroClasses){

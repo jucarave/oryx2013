@@ -14,10 +14,10 @@ Player.prototype = Object.create(Character.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.consoleMovement = function(xTo, yTo){
-	if (yTo < 0){ Console.addMessage("North", "rgb(255,255,255)"); }
-	else if (yTo > 0){ Console.addMessage("South", "rgb(255,255,255)"); }
-	else if (xTo < 0){ Console.addMessage("West", "rgb(255,255,255)"); }
-	else if (xTo > 0){ Console.addMessage("East", "rgb(255,255,255)"); }
+	if (yTo < 0){ Console.addMessage(msg.north, "rgb(255,255,255)"); }
+	else if (yTo > 0){ Console.addMessage(msg.south, "rgb(255,255,255)"); }
+	else if (xTo < 0){ Console.addMessage(msg.west, "rgb(255,255,255)"); }
+	else if (xTo > 0){ Console.addMessage(msg.east, "rgb(255,255,255)"); }
 };
 
 Player.prototype.consumeFood = function(){
@@ -25,7 +25,6 @@ Player.prototype.consumeFood = function(){
 	if (PlayerStats.slowerT > 0){ 
 		PlayerStats.slowerT--;
 		if (PlayerStats.slowerT == 0){
-			Console.addMessage("The slower time effect has finished", "rgb(255,255,255)");
 			this.stepCount = 0;
 		} 
 	}
@@ -48,6 +47,7 @@ Player.prototype.consumeFood = function(){
 
 Player.prototype.poisonBlink = function(){
 	if (PlayerStats.poison > 0){
+		game.sounds.step.stopAndPlay();
 		PlayerStats.health -= PlayerStats.poison;
 		game.clearScreen("rgb(255,200,255)");
 		if (PlayerStats.health <= 0){
@@ -62,7 +62,7 @@ Player.prototype.magicEffects = function(){
 	if (PlayerStats.bersekT > 0){ 
 		PlayerStats.bersekT--;
 		if (PlayerStats.bersekT == 0)
-			Console.addMessage("Bersek effect is over", "rgb(255,255,0)");
+			Console.addMessage(msg.berserkOver, "rgb(255,255,0)");
 	}
 };
 
@@ -81,9 +81,9 @@ Player.prototype.tryMove = function(key, xTo, yTo){
 				if (PlayerStats.portal){
 					if (PlayerStats.portal.townPos.equals(this.position) || PlayerStats.portal.pos.equals(this.position)){
 						if (this.mapManager.key == "town"){
-							Console.addMessage("This portal leads to " + PlayerStats.portal.map.name, "rgb(255,255,0)");
+							Console.addMessage(msg.portalLeads + PlayerStats.portal.map.name, "rgb(255,255,0)");
 						}else{
-							Console.addMessage("This portal leads to the town", "rgb(255,255,0)");
+							Console.addMessage(msg.portalTown, "rgb(255,255,0)");
 						}
 					}
 				}
@@ -102,7 +102,9 @@ Player.prototype.hurt = function(enemy, dmg){
 	if (dmg <= 0) dmg = 1 + Math.iRandom(2);
 	
 	PlayerStats.health -= dmg;
-	Console.addMessage(" > The " + enemy.name + " hit " + dmg + " points to you", "rgb(255,0,0)");
+	var mess = msg.playerHurt.replace("X", enemy.name);
+	mess = mess.replace("Y", dmg);
+	Console.addMessage(mess, "rgb(255,0,0)");
 	
 	if (PlayerStats.health <= 0){
 		PlayerStats.deathCause = enemy.name;
@@ -116,7 +118,7 @@ Player.prototype.hurt = function(enemy, dmg){
 		if (armour.item.status <= 0){
 			armour.item.status = 0;
 			if (!armour.damaged){
-				Console.addMessage("Your armour got damaged!", "rgb(255,255,0)");
+				Console.addMessage(msg.armourDmg, "rgb(255,255,0)");
 				armour.damaged = true;
 			}
 		}
@@ -130,19 +132,19 @@ Player.prototype.castAttack = function(x, y){
 	
 	var enemy = this.mapManager.getEnemyAt(x, y);
 	if (!enemy){
-		Console.addMessage("There is nothing in there", "rgb(255,255,255)"); 
+		Console.addMessage(msg.nothingThere, "rgb(255,255,255)"); 
 		return; 
 	}
 	
 	var dice = Math.iRandom(10);
 	if (enemy.enemy.spd > PlayerStats.spd + 10 && dice != 6 && dice != 3){
-		Console.addMessage("Missed!", "rgb(255,255,255)");
+		Console.addMessage(msg.missed, "rgb(255,255,255)");
 		return;
 	}
 	
 	var weapon = PlayerStats.weapons[PlayerStats.currentW];
 	if (!weapon){
-		Console.addMessage("You have no weapon", "rgb(255,255,0)");
+		Console.addMessage(msg.noWeapon, "rgb(255,255,0)");
 		return;
 	}
 	
@@ -150,12 +152,14 @@ Player.prototype.castAttack = function(x, y){
 	weapon.item.status -= weapon.item.wear / 100;
 	if (weapon.item.status < 0){
 		weapon.item.status = 0;
-		Console.addMessage("The weapon is damaged!", "rgb(255,255,0)");
+		Console.addMessage(msg.weaponDmg, "rgb(255,255,0)");
 		return;
 	}
 	var dmg = PlayerStats.str;
 	if (weapon) dmg += Math.round(weapon.item.dmg * weapon.item.status);
 	if (PlayerStats.bersekT > 0) dmg += 20;
+	if (Math.iRandom(100) <= PlayerStats.luk) dmg += Math.round(PlayerStats.str / 3);
+	
 	dmg -= enemy.enemy.dfs;
 	
 	var dice = weapon.item.dice;
@@ -167,6 +171,7 @@ Player.prototype.castAttack = function(x, y){
 		}
 	}
 	
+	game.sounds.attack.stopAndPlay();
 	enemy.hurt(dmg);
 	enemy.prior = true;
 };
@@ -197,14 +202,14 @@ Player.prototype.attack = function(game){
 		var dir = "";
 		var x = 0;
 		var y = 0;
-		if (game.keyP[37] == 1){ dir = "West"; game.keyP[37] = 2; x--; }else
-		if (game.keyP[38] == 1){ dir = "North"; game.keyP[38] = 2; y--; }else
-		if (game.keyP[39] == 1){ dir = "East"; game.keyP[39] = 2; x++; }else
-		if (game.keyP[40] == 1){ dir = "South"; game.keyP[40] = 2; y++; }
+		if (game.keyP[37] == 1){ dir = msg.west; game.keyP[37] = 2; x--; }else
+		if (game.keyP[38] == 1){ dir = msg.north; game.keyP[38] = 2; y--; }else
+		if (game.keyP[39] == 1){ dir = msg.east; game.keyP[39] = 2; x++; }else
+		if (game.keyP[40] == 1){ dir = msg.south; game.keyP[40] = 2; y++; }
 		
 		if (dir != ""){
 			Console.removeLastMessage();
-			Console.addMessage("Attack where? " + dir, "rgb(255, 255, 255)", "attack");
+			Console.addMessage(msg.attackWhere + dir, "rgb(255, 255, 255)", "attack");
 			this.battle = -5;
 			
 			if (PlayerStats.weapons[PlayerStats.currentW].item.isStaff){
@@ -219,7 +224,7 @@ Player.prototype.attack = function(game){
 		}
 	}else{
 		if (game.keyP[65] == 1){
-			Console.addMessage("Attack where? ", "rgb(255, 255, 255)", "attack");
+			Console.addMessage(msg.attackWhere, "rgb(255, 255, 255)", "attack");
 			this.battle = 1;
 			game.keyP[65] = 2;
 			return true;
@@ -254,17 +259,6 @@ Player.prototype.transact = function(game){
 	if (seller){
 		seller.greet();
 		return;
-	}
-};
-
-Player.prototype.levelUp = function(level){
-	level -= PlayerStats.lvl;
-	for (var i=0;i<level;i++){
-		var lvl = 60 * (PlayerStats.lvl + i - 1);
-		var requiredExp = lvl + Math.round(Math.pow(lvl / 10, 2));
-		
-		PlayerStats.exp = 0;
-		this.addExperience(requiredExp);
 	}
 };
 
@@ -312,7 +306,7 @@ Player.prototype.addExperience = function(exp){
 		PlayerStats.spd += spd;
 		PlayerStats.luk += luk;
 		
-		Console.addMessage("New level: " + PlayerStats.lvl + " -> str+" + str + " -> dfs+" + dfs + " -> spd+" + spd + " -> luck+" + luk, "rgb(255,0,255)");
+		Console.addMessage(msg.newLevel + PlayerStats.lvl + " -> str+" + str + " -> dfs+" + dfs + " -> spd+" + spd + " -> luck+" + luk, "rgb(255,0,255)");
 	}
 };
 
@@ -346,7 +340,7 @@ Player.prototype.checkBlink = function(game){
 		if (game.keyP[39] == 1){ MagicFactory.blink( 1, 0); game.keyP[39] = 2; }else
 		if (game.keyP[40] == 1){ MagicFactory.blink( 0, 1); game.keyP[40] = 2; }else
 		if (game.keyP[27] == 1){
-			Console.addMessage("Blink canceled!", "rgb(255,255,0)"); 
+			Console.addMessage(msg.blinkCanceled, "rgb(255,255,0)"); 
 			PlayerStats.blinking = false; 
 			game.keyP[27] = 2; 
 		}
@@ -398,10 +392,10 @@ Player.prototype.setView = function(game){
 	var x = this.position.x - game.viewS.x / 2;
 	var y = this.position.y - game.viewS.y / 2;
 	
+	if (x + game.viewS.x > this.mapManager.map[0].length) x = this.mapManager.map[0].length - game.viewS.x;
+	if (y + game.viewS.y > this.mapManager.map.length) y = this.mapManager.map.length - game.viewS.y;
 	if (x < 0) x = 0;
 	if (y < 0) y = 0;
-	if (x + game.viewS.x > game.map.map[0].length) x = game.map.map[0].length - game.viewS.x;
-	if (y + game.viewS.y > game.map.map.length) y = game.map.map.length - game.viewS.y;
 	
 	view.set(x, y);
 };
@@ -415,14 +409,14 @@ Player.prototype.pickItem = function(item){
 	var items = PlayerStats.items;
 	if (item.item.isWeapon){
 		if (weapons.length == 7){
-			Console.addMessage("You can't carry more weapons!", "rgb(255,0,0)");
+			Console.addMessage(msg.carryWeapon, "rgb(255,0,0)");
 			return;
 		}
 		weapons.push(item);
 		if (weapons.length == 1){ PlayerStats.currentW = 0; }
 	}else if (item.item.isArmour){
 		if (armours.length == 7){
-			Console.addMessage("You can't carry more armours!", "rgb(255,0,0)");
+			Console.addMessage(msg.carryArmour, "rgb(255,0,0)");
 			return;
 		}
 		armours.push(item);
@@ -431,19 +425,20 @@ Player.prototype.pickItem = function(item){
 		PlayerStats.gold += item.item.amount;
 	}else if (item.item.isItem){
 		if (items.length == 7){
-			Console.addMessage("You can't carry more items!", "rgb(255,0,0)");
+			Console.addMessage(msg.carryItems, "rgb(255,0,0)");
 			return;
 		}
 		items.push(item);
 		if (items.length == 1){ PlayerStats.currentI = 0; }
 	}
 	
+	game.sounds.pick.stopAndPlay();
 	if (item.item.isMoney){
-		Console.addMessage("You pick " + item.item.name, "rgb(255,255,255)");
+		Console.addMessage(msg.pick + item.item.name, "rgb(255,255,255)");
 	}else if (item.item.isItem){
-		Console.addMessage("You pick up a(n) " + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
+		Console.addMessage(msg.pickup + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
 	}else{
-		Console.addMessage("You pick up a(n) " + ItemFactory.getItemQuality(item.item.status) + " " + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
+		Console.addMessage(msg.pickup + ItemFactory.getItemQuality(item.item.status) + " " + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
 	}
 };
 
@@ -467,22 +462,28 @@ Player.prototype.checkItems = function(game){
 
 Player.prototype.checkStairs = function(){
 	if (!PlayerStats.stairs) return;
+	if (PlayerStats.weaponsMenu) return;
+	if (PlayerStats.armourMenu) return;
+	if (PlayerStats.pickItemsMenu) return;
+	if (PlayerStats.itemsMenu) return;
+	if (PlayerStats.spellsMenu) return;
+	
 	if (game.keyP[13] == 1){
-		var dir = "ascend";
+		var dir = msg.ascendVerb;
 		var rand = true;
 		var level = PlayerStats.stairs.level;
 		if (PlayerStats.stairs.direction == 'D')
-			dir = "descend";
+			dir = msg.descendVerb;
 		if (PlayerStats.stairs.direction == 'E'){
-			Console.addMessage("You enter the dungeon!", "rgb(255,255,255)");
+			Console.addMessage(msg.enterDun, "rgb(255,255,255)");
 			PlayerStats.level = 1;
 			level = 1;
 		}else if (PlayerStats.stairs.level == 0){
-			Console.addMessage("You enter the town!", "rgb(255,255,255)");
+			Console.addMessage(msg.enterTown, "rgb(255,255,255)");
 			PlayerStats.level = 0;
 			rand = false;
 		}else{
-			Console.addMessage("You " + dir + " to level " + PlayerStats.stairs.level, "rgb(255,255,255)");
+			Console.addMessage(msg.useStairs.replace("DD", dir) + PlayerStats.stairs.level, "rgb(255,255,255)");
 			PlayerStats.level = PlayerStats.stairs.level;
 		}
 		

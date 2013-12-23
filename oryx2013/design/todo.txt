@@ -59,6 +59,7 @@
 * Start cinematic                  *
 * Ending cinematic                 *
 * Enemies Data                     *
+* Sound effects                    *
 *                                  *
 ************************************
 
@@ -66,8 +67,6 @@
 * ACTIVITIES PENDING               *
 ************************************
 * Last boss scenario               *
-* Sound effects                    *
-* Music                            *
 *                                  *
 ************************************
 
@@ -77,5 +76,6 @@
 * Progress Saving                  *
 * Progress Restore                 *
 * Sprite fonts                     *
+* Music                            *
 *                                  *
 ************************************

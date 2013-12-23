@@ -9,9 +9,12 @@ function Game(container){
 	
 	this.room = 0;
 	this.sprites = {};
+	this.sounds = {};
+	this.music = {};
 	this.instances = [];
 	
 	this.loadImages();
+	this.loadSounds();
 	
 	this.selectedOpt = 0;
 	
@@ -39,6 +42,20 @@ Game.prototype.loadImages = function(){
 	this.sprites["magic"] = this.eng.loadImage(cp + "img/magic.png?version=" + version, 7, 1);
 	this.sprites["keyboard"] = this.eng.loadImage(cp + "img/keyboard.png?version=" + version, 1, 1);
 	this.sprites["cinema"] = this.eng.loadImage(cp + "img/cinema.png?version=" + version, 2, 3);
+};
+
+Game.prototype.loadSounds = function(){
+	this.sounds["step"] = this.eng.loadSound(cp + "wav/step.wav?version=" + version);
+	this.sounds["attack"] = this.eng.loadSound(cp + "wav/attack1.wav?version=" + version);
+	this.sounds["pick"] = this.eng.loadSound(cp + "wav/pick.wav?version=" + version);
+	this.sounds["drop"] = this.eng.loadSound(cp + "wav/drop.wav?version=" + version);
+	this.sounds["fireball"] = this.eng.loadSound(cp + "wav/fireball.wav?version=" + version);
+	this.sounds["bersek"] = this.eng.loadSound(cp + "wav/bersek.wav?version=" + version);
+	this.sounds["blink"] = this.eng.loadSound(cp + "wav/blink.wav?version=" + version);
+	this.sounds["display"] = this.eng.loadSound(cp + "wav/display.wav?version=" + version);
+	this.sounds["life"] = this.eng.loadSound(cp + "wav/life.wav?version=" + version);
+	this.sounds["portal"] = this.eng.loadSound(cp + "wav/portal.wav?version=" + version);
+	this.sounds["sleep"] = this.eng.loadSound(cp + "wav/sleep.wav?version=" + version);
 };
 
 Game.prototype.drawLoading = function(){
@@ -197,7 +214,8 @@ Game.prototype.drawPlayerMenu = function(bucket, current, x, canDrop){
 				this.map.player.act();
 				this.keyP[68] = 2;
 				item.mapManager = this.map;
-				Console.addMessage("You dropped a(n) " + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
+				Console.addMessage(msg.dropped + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
+				this.sounds.drop.stopAndPlay();
 				PlayerStats.steppedItems.push(item);
 				continue;
 			}
@@ -206,7 +224,7 @@ Game.prototype.drawPlayerMenu = function(bucket, current, x, canDrop){
 				if (item.item.effect.used){
 					Console.addMessage(item.item.effect.desc, "rgb(255,255,255)");
 				}else{
-					Console.addMessage("Unknow effect", "rgb(255,255,255)");
+					Console.addMessage(msg.unknow, "rgb(255,255,255)");
 				}
 				this.keyP[73] = 2;
 			}
@@ -345,13 +363,13 @@ Game.prototype.drawInterface = function(){
 	if (ps.armours[ps.currentA]) exDfs = ps.armours[ps.currentA].item.dfs;
 	exDmg += (PlayerStats.bersekT > 0)? 20 : 0;
 	
-	x = 100 + this.gridS.x;
+	x = 60 + this.gridS.x;
 	y = ctx.height - this.gridS.y * 2 + 24;
 	
-	ctx.fillText("lvl: " + ps.lvl, x, y);
-	ctx.fillText("exp: " + ps.exp, x, y + 20);
+	ctx.fillText("lvl:" + ps.lvl, x, y);
+	ctx.fillText("exp:" + ps.exp, x, y + 20);
 	
-	x += 100;
+	x += 120;
 	ctx.fillStyle = (PlayerStats.bersekT > 0)? "rgb(255,0,0)" : "rgb(255,255,255)";
 	ctx.fillText("str: " + (ps.str + exDmg), x, y);
 	ctx.fillStyle = "rgb(255,255,255)";

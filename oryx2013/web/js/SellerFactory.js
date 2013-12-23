@@ -1,6 +1,6 @@
 var SellerFactory = {
 	weapons: {
-		greet: "Get the best weapons for cleaning the dungeon",
+		greet: "Enter into the doom with the best weapons you can afford.",
 		store: [
 			"knife",
 			"dagger",

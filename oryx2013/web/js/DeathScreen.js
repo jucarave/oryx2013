@@ -35,28 +35,32 @@ DeathScreen.prototype.draw = function(game){
 	
 	ctx.fillText(PlayerStats.name + " the " + PlayerStats.class.name, ctx.width / 2, 70);
 	
-	ctx.fillText("As you went through your adventure you", ctx.width / 2, 200);
+	ctx.fillText(msg.death1, ctx.width / 2, 200);
 	if (PlayerStats.deathCause == 's'){
 		if (PlayerStats.level == 0){
-			ctx.fillText("starved to death in the middle of the town", ctx.width / 2, 220);
+			ctx.fillText(msg.death2, ctx.width / 2, 220);
 		}else{
-			ctx.fillText("manage to advance to the level " + PlayerStats.level, ctx.width / 2, 220);
-			ctx.fillText("but you starved to death", ctx.width / 2, 240);
+			ctx.fillText(msg.death3 + PlayerStats.level, ctx.width / 2, 220);
+			ctx.fillText(msg.death4, ctx.width / 2, 240);
 		}
 	}else if (PlayerStats.deathCause == 'p'){
 		if (PlayerStats.level == 0){
-			ctx.fillText("died of a poisoned injury in the middle of the town", ctx.width / 2, 220);
+			ctx.fillText(msg.death5, ctx.width / 2, 220);
 		}else{
-			ctx.fillText("manage to advance to the level " + PlayerStats.level, ctx.width / 2, 220);
-			ctx.fillText("but you died of a poisoned injury", ctx.width / 2, 240);
+			ctx.fillText(msg.death6 + PlayerStats.level, ctx.width / 2, 220);
+			ctx.fillText(msg.death7, ctx.width / 2, 240);
 		}
 	}else{
-		ctx.fillText("were slayed by a " + PlayerStats.deathCause + " on the level " + PlayerStats.level, ctx.width / 2, 220);
-		ctx.fillText("of the dungeon ", ctx.width / 2, 240);
+		if (PlayerStats.deathCause == "Ias")
+			ctx.fillText(msg.death8, ctx.width / 2, 220);
+		else{
+			ctx.fillText(msg.death9.replace("X", PlayerStats.deathCause) + PlayerStats.level, ctx.width / 2, 220);
+			ctx.fillText(msg.death10, ctx.width / 2, 240);
+		}
 	}
 	
 	if (this.blink > 15){
-		ctx.fillText("Press [Enter] key to return to the main screen", ctx.width / 2, 360);
+		ctx.fillText(msg.reset, ctx.width / 2, 360);
 	}
 	
 	ctx.textAlign = "left";

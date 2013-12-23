@@ -122,7 +122,7 @@ var ItemFactory = {
 		for (var i in ItemFactory){
 			var item = ItemFactory[i];
 			if (!item.isItem) continue;
-			if (item.chance >= chance)
+			if (chance <= item.chance)
 				bucket.push(i);
 		}
 		
@@ -132,6 +132,7 @@ var ItemFactory = {
 	getRandomItem: function(){
 		var chance = Math.iRandom(100);
 		var bucket = this.getBucket(chance);
+		if (Math.iRandom(100) <= PlayerStats.luk)  chance = 0;
 		
 		if (bucket.length == 0) return null;
 		

@@ -97,9 +97,12 @@ var Tileset = {
 			}else if (level <= 15){
 				if (tile.isWall){ return {r:104, g:36, b: 99}; } else
 				if (tile.isFloor){ return {r:80,g:80,b:118}; }
-			}else{
+			}else if (level <= 20){
 				if (tile.isWall){ return {r:198, g:0, b: 0}; } else
 				if (tile.isFloor){ return {r:132,g:137,b:61}; }
+			}else{
+				if (tile.isWall){ return {r:255, g:190, b: 255}; } else
+				if (tile.isFloor){ return {r:255, g:190, b: 255}; }
 			}
 		},
 		
@@ -204,7 +207,7 @@ var Tileset = {
 		centaur: {img: "enemies", subImg: new Position(0, 2), getColor: getColor, color: {r: 255, g: 200, b: 64}},
 		warriorBear: {img: "enemies", subImg: new Position(14, 1), getColor: getColor, color: {r: 255, g: 0, b: 0}},
 		ghost: {img: "enemies", subImg: new Position(2, 6), getColor: getColor, color: {r: 217, g: 191, b: 251}},
-		lizardmen: {img: "enemies", subImg: new Position(9, 3), getColor: getColor, color: {r: 60, g: 140, b: 50}},
+		lizardmen: {img: "enemies", subImg: new Position(9, 3), getColor: getColor, color: {r: 30, g: 110, b: 20}},
 		//Level 7
 		giantSpider: {img: "enemies", subImg: new Position(17, 6), getColor: getColor, color: {r: 68, g: 68, b: 68}},
 		bigSpore: {img: "enemies", subImg: new Position(17, 3), getColor: getColor, color: {r: 163, g: 73, b: 164}},

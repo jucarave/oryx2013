@@ -2,7 +2,7 @@ function EndScene(){
 	this.scene = 0;
 	this.scenePos = new Position(0, 0);
 	
-	this.text1 = ("As you fight with the evil Ias, you finally give end to his\nlife granting the peace to not only Tull but all the earth\nitself. Although you decided to not returning with the king\nto report your feat, you get out of the town before anyone\nnotices you and continue your journey throught the desert.\n\nThis is not the end of your journeys but is the last time\nthat the town of Tull or any other hear about you.").split("\n");
+	this.text1 = (msg.ending).split("\n");
 }
 
 EndScene.prototype.step = function(game){
@@ -11,7 +11,7 @@ EndScene.prototype.step = function(game){
 	ctx.fillStyle = "rgb(255,255,255)";
 	ctx.textAlign = "center";
 	
-	ctx.fillText("[Press Enter to continue]", ctx.width / 2, ctx.height - 30);
+	ctx.fillText(msg.storeContinue, ctx.width / 2, ctx.height - 30);
 	
 	ctx.textAlign = "left";
 	
