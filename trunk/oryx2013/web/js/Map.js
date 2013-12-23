@@ -25,10 +25,11 @@ function Map(params){
 	
 	if (params.random){
 		var lev = (params.level == 20)? 1 : params.level;
+		var l = Math.ceil(params.level / 5);
 		
 		this.light = false;
 		this.signs = [];
-		this.name = "Dungeon Test - Level " + params.level;
+		this.name = msg["level" + l] + " - " + params.level;
 		this.key = params.map;
 		this.map = RDG.newMap(lev);
 		this.level = params.level;

@@ -36,12 +36,12 @@ var ItemFactory = {
 	timeSlower: {isItem: true, tile: "time", color: {r:255,g:255,b:0}, chance: 30, effect: EffectFactory.time },
 	
 	//Food
-	pack10: {amount: 20, isFood: true, tile: "food", rName: "pack of 20 rations", price: 10 },
-	pack20: {amount: 50, isFood: true, tile: "food", rName: "pack of 50 rations", price: 20 },
-	pack50: {amount: 100, isFood: true, tile: "food", rName: "pack of 100 rations", price: 50 },
-	pack100: {amount: 200, isFood: true, tile: "food", rName: "pack of 200 rations", price: 100 },
-	pack300: {amount: 600, isFood: true, tile: "food", rName: "pack of 600 rations", price: 300 },
-	pack500: {amount: 1000, isFood: true, tile: "food", rName: "pack of 1000 rations", price: 500 },
+	pack10: {amount: 20, isFood: true, tile: "food", price: 10 },
+	pack20: {amount: 50, isFood: true, tile: "food", price: 20 },
+	pack50: {amount: 100, isFood: true, tile: "food", price: 50 },
+	pack100: {amount: 200, isFood: true, tile: "food", price: 100 },
+	pack300: {amount: 600, isFood: true, tile: "food", price: 300 },
+	pack500: {amount: 1000, isFood: true, tile: "food", price: 500 },
 	
 	//Magic
 	fireball: {isMagic: true, tile: "fireball", color: {r:255,g:201,b:14}, cast: MagicFactory.fireball, price: 70 },
@@ -57,7 +57,7 @@ var ItemFactory = {
 			tile: Tileset.itemsWeapons.money,
 			amount: amount,
 			isMoney: true,
-			name: amount + " gold coins"
+			name: amount + msg.currency
 		};
 		
 		return ret;
@@ -100,6 +100,8 @@ var ItemFactory = {
 	},
 	
 	getItemName: function(item){
+		return msg.i[item.name];
+		
 		if (item.rName) return item.rName;
 		
 		var name = "";

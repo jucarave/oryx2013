@@ -33,7 +33,7 @@ DeathScreen.prototype.draw = function(game){
 	this.tilePos.set(16.5,2.5);
 	game.drawTile(this.skull, this.tilePos);
 	
-	ctx.fillText(PlayerStats.name + " the " + PlayerStats.class.name, ctx.width / 2, 70);
+	ctx.fillText(PlayerStats.name + ", " + PlayerStats.class.name, ctx.width / 2, 70);
 	
 	ctx.fillText(msg.death1, ctx.width / 2, 200);
 	if (PlayerStats.deathCause == 's'){

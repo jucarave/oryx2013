@@ -1,6 +1,6 @@
 var SellerFactory = {
 	weapons: {
-		greet: "Enter into the doom with the best weapons you can afford.",
+		greet: msg.weaponSeller,
 		store: [
 			"knife",
 			"dagger",
@@ -18,7 +18,7 @@ var SellerFactory = {
 	},
 	
 	food: {
-		greet: "You cannot get into the dungeon without food",
+		greet: msg.foodSeller,
 		store: [
 			"pack10",
 			"pack20",
@@ -30,7 +30,7 @@ var SellerFactory = {
 	},
 	
 	armour: {
-		greet: "We have the best protection you can find",
+		greet: msg.armourSeller,
 		store: [
 			"leatherArmour",
 			"robe",
@@ -42,12 +42,12 @@ var SellerFactory = {
 	},
 	
 	hotel: {
-		greet: "Do you want to spend the night here for 25? Y/N",
+		greet: msg.hotelSeller,
 		store: ["hotel"]
 	},
 	
 	magic: {
-		greet: "A good magic spell can save your life.",
+		greet: msg.spellSeller,
 		store: [
 			"fireball",
 			"bersek",
