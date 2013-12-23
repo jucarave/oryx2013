@@ -25,10 +25,52 @@ Enemy.prototype.attackPlayer = function(){
 		return;
 	}
 	
+	var dice = Math.iRandom(100);
+	if (dice > PlayerStats.luk){
+		if (this.enemy.attr == "poison"){
+			PlayerStats.poison = 1;
+			Console.addMessage(msg.enPoison.replace("X",this.enemy.name), "rgb(0,255,255)");
+		}else if (this.enemy.attr == "steal"){
+			var money = Math.iRandom(this.enemy.money);
+			money = Math.min(money, PlayerStats.gold);
+			PlayerStats.gold -= money;
+			
+			var mess = msg.enSteal.replace("X", this.enemy.name);
+			mess = mess.replace("Y", money);
+			Console.addMessage(mess, "rgb(0,255,255)");
+		}
+	}
+	
 	var dmg = this.enemy.str;
 	dmg -= PlayerStats.def;
 	
+	game.sounds.attack.stopAndPlay();
 	player.hurt(this.enemy, dmg);
+};
+
+Enemy.prototype.shotMissile = function(arrow){
+	var player = this.mapManager.player;
+	var x = 0, y = 0;
+	if (player.position.x > this.position.x) x = 1; else 
+	if (player.position.x < this.position.x) x = -1; else
+	if (player.position.y > this.position.y) y = 1; else 
+	if (player.position.y < this.position.y) y = -1;
+	
+	if (x == 0 && y == 0){ return; }
+	
+	var tile = Tileset.effects.magic;
+	if (arrow){
+		if (x > 0) tile = Tileset.effects.arrowRight; else
+		if (x < 0) tile = Tileset.effects.arrowLeft; else
+		if (y > 0) tile = Tileset.effects.arrowDown; else
+		if (y < 0) tile = Tileset.effects.arrowUp;
+	}
+	
+	var arrow = new PowerEffect(tile.getColor(255,0,0), new Position(this.position.x + x, this.position.y + y), new Position(x, y));
+	arrow.mapManager = this.mapManager;
+	arrow.hitPlayer = true;
+	arrow.master = this;
+	this.mapManager.animateInstances.push(arrow);
 };
 
 Enemy.prototype.followMovement = function(){
@@ -38,6 +80,16 @@ Enemy.prototype.followMovement = function(){
 	if (xdif > 10 || ydif > 10) return;
 	if ((xdif == 1 && ydif == 0) || (xdif == 0 && ydif == 1)){
 		this.attackPlayer();
+		return;
+	}
+	
+	if ((xdif == 0 || ydif == 0) && this.enemy.attr == "arrow"){
+		this.shotMissile(true);
+		return;
+	}
+	
+	if ((xdif == 0 || ydif == 0) && this.enemy.attr == "magic"){
+		this.shotMissile();
 		return;
 	}
 	

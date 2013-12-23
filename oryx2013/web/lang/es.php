@@ -77,7 +77,7 @@
 	msg.afford = "No puedes comprarlo.";
 	msg.room = "La habitación está lista, descanza bien.";
 	msg.hNiceDay = "Ten un buen día entonces.";
-	msg.optionsBuy = "Seleccione la opción del objeto que quiere comprar.";
+	msg.optionsBuy = "Seleccione la opción que quiere comprar.";
 	msg.buyQuestion = "¿Quieres comprar la ";
 	msg.moreWeapons = "No puedes llevar mas armas";
 	msg.weaponReserved = "Esta arma está reservada solo para ";
@@ -249,4 +249,66 @@
 	msg.e.incubus = "incubus";
 	msg.e.medusa = "medusa";
 	msg.e.Ias = "Ias";
+	
+	msg.weaponSeller = "Entra al calabozo con las mejores armas que puedas comprar.";
+	msg.foodSeller = "No puedes aventurarte sin comida.";
+	msg.armourSeller = "Tenemos la mejor protección que puedas comprar.";
+	msg.hotelSeller = "¿Quieres pasar la noche aquí por 25? Y/N";
+	msg.spellSeller = "Un buen conjuro a tiempo puede salvarte la vida.";
+	
+	msg.currency = " monedas de oro";
+	
+	msg.i = {};
+	
+	msg.i.sword = "espada";
+	msg.i.heavySword = "espada pesada";
+	msg.i.greatSword = "gran espada";
+	msg.i.knife = "cuchillo";
+	msg.i.dagger = "daga";
+	msg.i.quarterStaff = "bastón de madera";
+	msg.i.gemStaff = "bastón de gema";
+	msg.i.battleAxe = "hacha de combate";
+	msg.i.heavyAxe = "hacha pesada";
+	msg.i.bow = "arco";
+	msg.i.longBow = "arco largo";
+	msg.i.crossBow = "ballesta";
+	msg.i.cottomCloth = "camisa de algodón";
+	msg.i.leatherArmour = "armadura de cuero";
+	msg.i.robe = "bata";
+	msg.i.plateArmour = "armadura de plata";
+	msg.i.mailArmour = "armadura de malla";
+	msg.i.scaleArmour = "armadura de scala";
+	msg.i.reflectArmour = "armadura reflectante";
+	msg.i.redSmallPotion = "pequeña poción roja";
+	msg.i.blueSmallPotion = "pequeña poción azul";
+	msg.i.purpleSmallPotion = "pequeña poción purpura";
+	msg.i.greenSmallPotion = "pequeña poción verde";
+	msg.i.redLargePotion = "gran poción roja";
+	msg.i.blueLargePotion = "gran poción azul";
+	msg.i.purpleLargePotion = "gran poción purpura";
+	msg.i.greenLargePotion = "gran poción verde";
+	msg.i.shovel = "pala";
+	msg.i.mapDiscoverer = "orbe revelador";
+	msg.i.timeSlower = "control de tiempo";
+	msg.i.pack10 = "paquete de 20 raciones";
+	msg.i.pack20 = "paquete de 50 raciones";
+	msg.i.pack50 = "paquete de 100 raciones";
+	msg.i.pack100 = "paquete de 200 raciones";
+	msg.i.pack300 = "paquete de 300 raciones";
+	msg.i.pack500 = "paquete de 500 raciones";
+	msg.i.fireball = "bola de fuego";
+	msg.i.bersek = "berserk";
+	msg.i.portal = "portal";
+	msg.i.sleep = "dormir enemigos";
+	msg.i.display = "revelar enemigos";
+	msg.i.blink = "parpadeo";
+	msg.i.life = "vida";
+	
+	msg.level1 = "Cementerio de Tull";
+	msg.level2 = "Calabozo Dolvor";
+	msg.level3 = "Dolor Elemental";
+	msg.level4 = "Cámara de Ias";
+	
+	msg.enPoison = "¡el X te envenenó!";
+	msg.enSteal = "¡el X te ha robado Y monedas de oro!";
 </script>

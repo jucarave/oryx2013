@@ -249,4 +249,66 @@
 	msg.e.incubus = "incubus";
 	msg.e.medusa = "medusa";
 	msg.e.Ias = "Ias";
+	
+	msg.weaponSeller = "Enter into the doom with the best weapons you can afford.";
+	msg.foodSeller = "You cannot get into the dungeon without food";
+	msg.armourSeller = "We have the best protection you can find";
+	msg.hotelSeller = "Do you want to spend the night here for 25? Y/N";
+	msg.spellSeller = "A good magic spell can save your life.";
+	
+	msg.currency = " gold coins";
+	
+	msg.i = {};
+	
+	msg.i.sword = "sword";
+	msg.i.heavySword = "heavy sword";
+	msg.i.greatSword = "great sword";
+	msg.i.knife = "knife";
+	msg.i.dagger = "dagger";
+	msg.i.quarterStaff = "quarter staff";
+	msg.i.gemStaff = "gem staff";
+	msg.i.battleAxe = "battle axe";
+	msg.i.heavyAxe = "heavy axe";
+	msg.i.bow = "bow";
+	msg.i.longBow = "long bow";
+	msg.i.crossBow = "crossbow";
+	msg.i.cottomCloth = "cottom cloth";
+	msg.i.leatherArmour = "leather armour";
+	msg.i.robe = "robe";
+	msg.i.plateArmour = "plate armour";
+	msg.i.mailArmour = "mail armour";
+	msg.i.scaleArmour = "scale armour";
+	msg.i.reflectArmour = "reflect armour";
+	msg.i.redSmallPotion = "red small potion";
+	msg.i.blueSmallPotion = "blue small potion";
+	msg.i.purpleSmallPotion = "purple small potion";
+	msg.i.greenSmallPotion = "green small potion";
+	msg.i.redLargePotion = "red large potion";
+	msg.i.blueLargePotion = "blue large potion";
+	msg.i.purpleLargePotion = "purple large potion";
+	msg.i.greenLargePotion = "green large potion";
+	msg.i.shovel = "shovel";
+	msg.i.mapDiscoverer = "map discoverer";
+	msg.i.timeSlower = "time slower";
+	msg.i.pack10 = "pack of 20 rations";
+	msg.i.pack20 = "pack of 50 rations";
+	msg.i.pack50 = "pack of 100 rations";
+	msg.i.pack100 = "pack of 200 rations";
+	msg.i.pack300 = "pack of 600 rations";
+	msg.i.pack500 = "pack of 1000 rations";
+	msg.i.fireball = "fireball";
+	msg.i.bersek = "berserk";
+	msg.i.portal = "portal";
+	msg.i.sleep = "sleep";
+	msg.i.display = "display";
+	msg.i.blink = "blink";
+	msg.i.life = "life";
+	
+	msg.level1 = "Tull Graveyard";
+	msg.level2 = "Dolvor Dungeon";
+	msg.level3 = "Elemental Pain";
+	msg.level4 = "Ias Chamber";
+	
+	msg.enPoison = "the X poisoned you!";
+	msg.enSteal = "the X steals you Y gold coins!";
 </script>

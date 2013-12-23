@@ -5,6 +5,8 @@ function PowerEffect(tile, position, dir){
 	this.inWorld = true;
 	this.keepAnimation = true;
 	this.repaint = true;
+	this.hitPlayer = false;
+	this.master = null;
 	
 	Character.call(this, tile, position);
 }
@@ -14,9 +16,18 @@ PowerEffect.prototype.constructor = PowerEffect;
 
 PowerEffect.prototype.step = function(game){
 	var enemy = this.mapManager.getEnemyAt(this.position.x, this.position.y);
-	if (enemy){
+	var player = this.mapManager.player;
+	
+	if (enemy && !this.hitPlayer){
 		this.mapManager.player.castAttack(this.position.x, this.position.y);
 		this.mapManager.player.act();
+		this.keepAnimation = false;
+		return false;
+	}
+	
+	if (player.position.equals(this.position) && this.hitPlayer){
+		game.sounds.step.stopAndPlay();
+		this.master.attackPlayer();
 		this.keepAnimation = false;
 		return false;
 	}
@@ -27,8 +38,6 @@ PowerEffect.prototype.step = function(game){
 		return false;
 	}
 	
-	//this.draw(game, this.tile.getColor(0,0,0));
-	//this.mapManager.drawFloor(this.position.x, this.position.y, true);
 	this.position.sum(this.dir);
 	this.mapManager.repaint = true;
 	
