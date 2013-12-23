@@ -71,9 +71,12 @@ Enemy.prototype.dropLoot = function(){
 	var ret = "";
 	this.mapManager.player.addExperience(this.enemy.exp);
 	
-	ret += "> You earn " + this.enemy.exp + " points of experience";
+	ret += msg.earnExp.replace("X", this.enemy.exp);
 	
 	var money = Math.iRandom(this.enemy.money);
+	if (Math.iRandom(100) <= PlayerStats.luk)
+		money = Math.iRandom(Math.floor(this.enemy.money / 2), this.enemy.money); 
+	
 	if (money > 0){
 		var it = ItemFactory.getMoney(money);
 		var item = new Item(it.tile.getColor(255,255,0), new Position(this.position.x, this.position.y), it);
@@ -87,26 +90,40 @@ Enemy.prototype.dropLoot = function(){
 
 Enemy.prototype.hurt = function(dmg){
 	if (dmg <= 0){
-		Console.addMessage("Missed!", "rgb(255,255,255)");
+		Console.addMessage(msg.missed, "rgb(255,255,255)");
 		return;
 	}
 	
 	this.enemy.hp -= dmg;
-	var msg = "You hit " + dmg + " points to the " + this.enemy.name;
+	var mess = msg.hitTo.replace("D", dmg) + this.enemy.name;
 	var msg2 = "";
 	
+	this.mapManager.repaint = true;
+	
 	if (this.enemy.hp <= 0){
-		msg += ". You killed the " + this.enemy.name;
+		mess += msg.killedTo + this.enemy.name;
 		msg2 = this.dropLoot();
 		this.inWorld = false;
+		
+		if (this.mapManager.level == 20){
+			setTimeout(function(){
+				game.map = null;
+				game.scene = new EndScene();
+			}, 1000);
+		}
+		if (this.enemy.name == "Ias"){
+			Console.addMessage(msg.killedIas, "rgb(255,255,255)");
+			return;
+		}
 	}else{
 		this.mapManager.addAnimationInstance(this);
 		this.keepAnimation = true;
 	}
 	
-	this.mapManager.repaint = true;
-	
-	Console.addMessage(msg, "rgb(255,255,255)");
+	if (this.enemy.name == "Ias")
+		Console.addMessage(msg.iasDmg.replace("D", dmg), "rgb(255,255,255)");
+	else
+		Console.addMessage(mess, "rgb(255,255,255)");
 	
 	if (msg2 != "") Console.addMessage(msg2, "rgb(255,255,255)");
 };
@@ -116,7 +133,11 @@ Enemy.prototype.draw = function(game, tile){
 	if (this.mapManager.isVisible(this.position) == 2){
 		this.followPlayer = 5;
 		if (!this.discovered){
-			Console.addMessage("You saw a " + this.enemy.name, "rgb(255,0,0)");
+			if (this.enemy.name == "Ias"){
+				Console.addMessage(msg.findIas, "rgb(255,0,0)");
+			}else{
+				Console.addMessage(msg.sawTo + this.enemy.name, "rgb(255,0,0)");
+			}
 			this.discovered = true;
 		}
 		

@@ -2,8 +2,8 @@ function StartScene(){
 	this.scene = 0;
 	this.scenePos = new Position(0, 0);
 	
-	this.text1 = ("In the depths of the corner of the world, an ancient ruins\nare buried into the forgotten, it's been a thousand of years\nsince the realm of Ias, lord of the darkness fell and\neveryone on the earth have forgot about the pain and suffer\nthat he had caused.\n\nIas has been on his chamber, growing in strength, in hatred,\nreuniting an army and is waiting for the perfect time to come\nto the world once again.").split("\n");
-	this.text2 = ("Some recent exploration has connected an human graveyard\nwith the ruins of Ias, legions of monsters are crawling to\nthe surface obeying their master. The town of Tull is now\nthreaten by Ias return, the king has called all the warriors\nto get into the dungeon and destroy Ias and his minions.\n\nyou came from far lands hearing about the rumor of the\nreturning of an ancient demon and decided to help to the town\nof Tull.").split("\n");
+	this.text1 = (msg.story1).split("\n");
+	this.text2 = (msg.story2).split("\n");
 }
 
 StartScene.prototype.step = function(game){
@@ -12,7 +12,7 @@ StartScene.prototype.step = function(game){
 	ctx.fillStyle = "rgb(255,255,255)";
 	ctx.textAlign = "center";
 	
-	ctx.fillText("[Press Enter to continue]", ctx.width / 2, ctx.height - 30);
+	ctx.fillText(msg.storeContinue, ctx.width / 2, ctx.height - 30);
 	
 	ctx.textAlign = "left";
 	

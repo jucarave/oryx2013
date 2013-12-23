@@ -16,15 +16,15 @@ Stairs.prototype.checkPlayer = function(game){
 	if (this.mapManager.player.position.equals(this.position)){
 		PlayerStats.stairs = this;
 		if (this.isHole){
-			Console.addMessage("You stepped on a hole, you can pass throught", "rgb(255,255,255)");
+			Console.addMessage(msg.hole, "rgb(255,255,255)");
 			return;
 		}
 		if (this.direction == 'E'){
-			Console.addMessage("You stepped into the dungeon entry", "rgb(255,255,0)");
+			Console.addMessage(msg.dungeonEntry, "rgb(255,255,0)");
 			return;
 		}
-		var dir = (this.direction == 'D')? "descend" : "ascend";
-		Console.addMessage("You stepped into a(n) " + dir +" stairs ", "rgb(255,255,255)");
+		var dir = (this.direction == 'D')? msg.descend : msg.ascend;
+		Console.addMessage(msg.stepStairs.replace("D", dir), "rgb(255,255,255)");
 	}
 };
 

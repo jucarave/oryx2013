@@ -3,7 +3,16 @@
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
-		<title>Oryx roguelike 2013</title>
+		<title>Tull - Jucarave 2013</title>
+		
+		<?php
+			$lang = "en";
+			if (isset($_REQUEST["lang"])){
+				$lang = $_REQUEST["lang"];
+			} 
+			
+			require("lang/" . $lang . ".php");
+		?>
 
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Engine.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Utils.js?version=<?php echo $version; ?>"></script>
@@ -38,10 +47,21 @@
 			var cp = "<?php echo $contextPath; ?>";
 			var version = "<?php echo $version; ?>";
 			var exitPath ="<?php echo $exitPath; ?>";
+			var lang = "<?php echo $lang; ?>";
 		</script>
+		
+		<style>
+			body{ background-color: #000; color: #FFF; font-family: Courier; }
+		</style>
 	</head>
 	
 	<body>
-		<div id="divGame"></div>
+		<div style="text-align: center;">
+			<div id="divGame"></div>
+			
+			<div style="height: 64px;">&nbsp;</div>
+			Tull, Developed by <a href="http://jucarave.dx.am/">Jucarave</a> for the <a href="http://oryxdesignlab.com/trials/">trials of oryx 2013</a>
+			<div>Graphics by <a href="http://oryxdesignlab.com/">Oryx</a></div>
+		</div>
 	</body>
 </html>

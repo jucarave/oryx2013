@@ -18,25 +18,25 @@ Instructions.prototype.draw = function(game){
 	
 	ctx.fillStyle = "rgb(255,255,255)";
 	ctx.textAlign = "center";
-	ctx.fillText("Ingame instructions", ctx.width / 2, 30);
+	ctx.fillText(msg.inst, ctx.width / 2, 30);
 	
 	ctx.textAlign = "left";
-	ctx.fillText("Q: Open the weapons menu", 16, 250);
-	ctx.fillText("W: Open the armour menu", 16, 270);
-	ctx.fillText("E: Open the Items menu", 16, 290);
-	ctx.fillText("R: Open the magic menu", 16, 310);
-	ctx.fillText("T: Transact with the vendors", 16, 330);
-	ctx.fillText("A: Attack", 16, 350);
-	ctx.fillText("D: Drops a weapon or an armour", 16, 370);
-	ctx.fillText("I: Gets info about an item", 16, 390);
-	ctx.fillText("U: Use the current item", 16, 410);
-	ctx.fillText("M: Use the current magic spell", 16, 430);
-	ctx.fillText("Space Bar: Pass the turn", 16, 450);
-	ctx.fillText("Enter: Accept / Choose / Pickup / Enter", 16, 470);
-	ctx.fillText("Arrow Keys: Movement", 16, 490);
+	ctx.fillText(msg.instQ, 16, 250);
+	ctx.fillText(msg.instW, 16, 270);
+	ctx.fillText(msg.instE, 16, 290);
+	ctx.fillText(msg.instR, 16, 310);
+	ctx.fillText(msg.instT, 16, 330);
+	ctx.fillText(msg.instA, 16, 350);
+	ctx.fillText(msg.instD, 16, 370);
+	ctx.fillText(msg.instI, 16, 390);
+	ctx.fillText(msg.instU, 16, 410);
+	ctx.fillText(msg.instM, 16, 430);
+	ctx.fillText(msg.instSB, 16, 450);
+	ctx.fillText(msg.instInt, 16, 470);
+	ctx.fillText(msg.instArr, 16, 490);
 	
 	ctx.textAlign = "center";
-	ctx.fillText("Press Escape to return", ctx.width / 2, 520);
+	ctx.fillText(msg.instEsc, ctx.width / 2, 520);
 };
 
 Instructions.prototype.loop = function(game){

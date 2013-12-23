@@ -289,6 +289,9 @@ var RDG = {
 			}
 		}
 		
+		if (maxW.x < 20) maxW.x = 22;
+		if (maxH.y < 8) maxH.x = 9;
+		
 		return {w: maxW.x + maxW.w + 5, h: maxH.y + maxH.h + 5};
 	},
 	

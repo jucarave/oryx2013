@@ -38,6 +38,13 @@ Engine.prototype.getContext = function(canvas){
 	return ctx;
 };
 
+Engine.prototype.loadSound = function(url){
+	var sound = new Audio();
+	sound.src = url;
+		
+	return sound;
+};
+
 Engine.prototype.loadImage = function(url, imgNum, vImgNum){
 	var img = new Image();
 	img.src = url;
@@ -113,7 +120,7 @@ Engine.prototype.colorizeImage = function(img, r, g, b){
 			imageData.data[i] = r;
 			imageData.data[i+1] = g;
 			imageData.data[i+2] = b;
-		}else{
+		}else if (!(imageData.data[i] == 0 && imageData.data[i+1] == 0 && imageData.data[i+2] == 0)){
 			imageData.data[i+3] = 0;
 		}
 	}

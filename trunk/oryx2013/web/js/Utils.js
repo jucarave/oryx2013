@@ -30,3 +30,19 @@ Math.iRandom = function(a, b){
 		return a + Math.round(Math.random() * (b - a));
 	}
 };
+
+Audio.prototype.stop = function(){
+	this.pause();
+	this.currentTime = 0;
+};
+
+Audio.prototype.stopAndPlay = function(){
+	this.loop = false;
+	this.stop();
+	this.play();
+};
+
+Audio.prototype.loopPlay = function(){
+	this.loop = true;
+	this.play();
+};
