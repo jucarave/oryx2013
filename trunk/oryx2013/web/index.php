@@ -1,4 +1,5 @@
 <?php require("php/conf.php"); ?>
+<?php require("system/visitCounter.php"); ?>
 <!DOCTYPE HTML>
 <html>
 	<head>
