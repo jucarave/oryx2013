@@ -60,13 +60,13 @@
 * Ending cinematic                 *
 * Enemies Data                     *
 * Sound effects                    *
+* Last boss scenario               *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* Last boss scenario               *
 *                                  *
 ************************************
 
