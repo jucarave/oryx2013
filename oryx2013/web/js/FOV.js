@@ -26,15 +26,27 @@ var FOV = {
 		this.nodes.push(node);
 	},
 	
+	isNodeAt: function(position){
+		for (var i=0,len=this.nodes.length;i<len;i++){
+			if (this.nodes[i].position.equals(position)){
+				return true;
+			}
+		}
+		
+		return false;
+	},
+	
 	createSideNode: function(parentNode){
 		if (parentNode.life <= 1) return;
 		
 		if (parentNode.dir.y != 0){
 			var pos = parentNode.position.clone(); pos.sum(1, 0);
-			this.createNode(pos, parentNode.dir, parentNode.life - 1);
+			if (!this.isNodeAt(pos))
+				this.createNode(pos, parentNode.dir, parentNode.life - 1);
 			
 			pos = parentNode.position.clone(); pos.sum(-1, 0);
-			this.createNode(pos, parentNode.dir, parentNode.life - 1);
+			if (!this.isNodeAt(pos))
+				this.createNode(pos, parentNode.dir, parentNode.life - 1);
 		}
 	},
 	
@@ -44,6 +56,7 @@ var FOV = {
 			
 			while (node.life > 0){
 				this.map.setVisible(node.position, 2);
+				
 				if (this.map.isSolid(node.position, true)){
 					node.life = 0;
 				}

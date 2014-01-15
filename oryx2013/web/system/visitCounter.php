@@ -1,4 +1,6 @@
 <?php
+	if ($localV) return;
+	
 	require("conf.php");
 	$connection = mysql_connect($dbHost, $dbUser, $dbPass)or die(exit("Database connection failed"));
 	mysql_select_db($dbData, $connection);

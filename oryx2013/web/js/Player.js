@@ -1,7 +1,7 @@
 function Player(tile, position){
 	this.playerAction = true;
 	this.playerMoved = false;
-	this.fovDistance = 4;
+	this.fovDistance = 5;
 	this.run = 0;
 	
 	this.stepCount = 0;
@@ -302,7 +302,7 @@ Player.prototype.addExperience = function(exp){
 		PlayerStats.mMana += man;
 		
 		PlayerStats.str += str;
-		PlayerStats.dfs += dfs;
+		PlayerStats.def += dfs;
 		PlayerStats.spd += spd;
 		PlayerStats.luk += luk;
 		
