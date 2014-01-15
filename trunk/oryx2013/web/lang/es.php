@@ -279,10 +279,12 @@
 	msg.i.mailArmour = "armadura de malla";
 	msg.i.scaleArmour = "armadura de scala";
 	msg.i.reflectArmour = "armadura reflectante";
+	msg.i.unknowSmallPotion = "poción pequeña";
 	msg.i.redSmallPotion = "pequeña poción roja";
 	msg.i.blueSmallPotion = "pequeña poción azul";
 	msg.i.purpleSmallPotion = "pequeña poción purpura";
 	msg.i.greenSmallPotion = "pequeña poción verde";
+	msg.i.unknowLargePotion = "poción grande";
 	msg.i.redLargePotion = "gran poción roja";
 	msg.i.blueLargePotion = "gran poción azul";
 	msg.i.purpleLargePotion = "gran poción purpura";

@@ -27,7 +27,7 @@ Enemy.prototype.attackPlayer = function(){
 	
 	var dice = Math.iRandom(100);
 	if (dice > PlayerStats.luk){
-		if (this.enemy.attr == "poison"){
+		if (this.enemy.attr == "poison" && PlayerStats.level > 10){
 			PlayerStats.poison = 1;
 			Console.addMessage(msg.enPoison.replace("X",this.enemy.name), "rgb(0,255,255)");
 		}else if (this.enemy.attr == "steal"){
@@ -130,11 +130,17 @@ Enemy.prototype.dropLoot = function(){
 		money = Math.iRandom(Math.floor(this.enemy.money / 2), this.enemy.money); 
 	
 	if (money > 0){
-		var it = ItemFactory.getMoney(money);
-		var item = new Item(it.tile.getColor(255,255,0), new Position(this.position.x, this.position.y), it);
-		item.mapManager = this.mapManager;
-		
-		this.mapManager.instances.push(item);
+		var item = this.mapManager.getMoneyAt(new Position(this.position.x, this.position.y));
+		if (item){
+			item.item.amount += money;
+			item.item.name = item.item.amount + msg.currency;
+		}else{
+			var it = ItemFactory.getMoney(money);
+			var item = new Item(it.tile.getColor(255,255,0), new Position(this.position.x, this.position.y), it);
+			item.mapManager = this.mapManager;
+			
+			this.mapManager.instances.push(item);
+		}
 	}
 	
 	return ret;

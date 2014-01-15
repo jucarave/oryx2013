@@ -28,6 +28,8 @@ function Game(container){
 	
 	this.keyP = new Array(255);
 	this.lastK = -1;
+	
+	this.blink = 30;
 }
 
 Game.prototype.loadImages = function(){
@@ -97,7 +99,7 @@ Game.prototype.drawTile = function(tile, position, view, darker){
 		if (darker === true){
 			ctx.fillStyle = "rgba(0,0,0,0.8)";
 		}else if (darker > 0){
-			ctx.fillStyle = "rgba(0,0,0," + (0.1 + darker) + ")";
+			ctx.fillStyle = "rgba(0,0,0," + (darker - 0.1) + ")";
 		}
 		ctx.fillRect(x*spr.imgWidth,y*spr.imgHeight,spr.imgWidth,spr.imgHeight);
 	}
@@ -149,7 +151,12 @@ Game.prototype.drawPickupItemsMenu = function(){
 		
 		var itile = items[i].tile;
 		var img = (game.sprites[itile.img])? game.sprites[itile.img] : itile.img;
-		this.eng.drawImage(img, xx, y, itile.subImg);
+		if (items[i].item.effect && !items[i].item.effect.used){
+			img = game.sprites[items[i].tile.parent.img];
+			this.eng.drawImage(img, xx, y, itile.subImg);
+		}else{
+			this.eng.drawImage(img, xx, y, itile.subImg);
+		}
 		
 		if (this.selectedOpt == i)
 			this.eng.drawImage(tile.getColor(255,255,0).img, xx, y, tile.subImg);
@@ -381,7 +388,14 @@ Game.prototype.drawInterface = function(){
 	ctx.fillText("spd: " + ps.spd, x, y + 40);
 	
 	x += 100;
+	this.blink -= 1;
+	if (this.blink <= 0) this.blink = 30;
+	if (this.blink < 15 && ps.food <= 30){
+		ctx.fillStyle = "rgb(255,0,0)";
+	}
 	ctx.fillText("food: " + ps.food, x, y);
+	
+	ctx.fillStyle = "rgb(255,255,255)";
 	ctx.fillText("luck: " + ps.luk, x, y + 20);
 	ctx.fillText("gold: " + ps.gold, x, y + 40);
 	
@@ -423,7 +437,11 @@ Game.prototype.drawInterface = function(){
 		var item = PlayerStats.items[PlayerStats.currentI];
 		tile = item.tile;
 		var img = (this.sprites[tile.img])? this.sprites[tile.img] : tile.img;
-		this.eng.drawImage(img, x, y, tile.subImg);
+		if (item.item.effect && !item.item.effect.used){
+			this.eng.drawImage(this.sprites[item.tile.parent.img], x, y, tile.subImg);
+		}else{
+			this.eng.drawImage(img, x, y, tile.subImg);
+		}
 	}
 	
 	//Magic

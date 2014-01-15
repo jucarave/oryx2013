@@ -36,7 +36,7 @@ MainScreen.prototype.setInitStats = function(){
 	game.maps = [];
 	Console.messages = [];
 	
-	this.setRandomPotions();
+	//this.setRandomPotions();
 };
 
 MainScreen.prototype.drawTitle = function(ctx){

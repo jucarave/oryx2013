@@ -130,7 +130,7 @@ CharacterCreation.prototype.processClass = function(game){
 	ctx.strokeStyle = "rgb(255,255,255)";
 	
 	var tile = Tileset.classes.fighter;
-	this.classPos.set(2,3);
+	this.classPos.set(2,2.5);
 	game.drawTile(tile, this.classPos);
 	ctx.fillText(msg.fighter, 170, 360);
 	
@@ -138,7 +138,7 @@ CharacterCreation.prototype.processClass = function(game){
 		ctx.strokeRect(134, 270, 72, 72);
 	
 	var tile = Tileset.classes.archer;
-	this.classPos.set(4,3);
+	this.classPos.set(4,2.5);
 	game.drawTile(tile, this.classPos);
 	ctx.fillText(msg.archer, 305, 360);
 	
@@ -146,7 +146,7 @@ CharacterCreation.prototype.processClass = function(game){
 		ctx.strokeRect(269, 270, 72, 72);
 	
 	var tile = Tileset.classes.wizard;
-	this.classPos.set(6,3);
+	this.classPos.set(6,2.5);
 	game.drawTile(tile, this.classPos);
 	ctx.fillText(msg.wizard, 440, 360);
 	
@@ -194,17 +194,17 @@ CharacterCreation.prototype.processConfirm = function(game){
 	
 	if (this.class == 0){
 		var tile = Tileset.classes.fighter;
-		this.classPos.set(4,3);
+		this.classPos.set(4,2.5);
 		game.drawTile(tile, this.classPos);
 		ctx.fillText(msg.fighter, 305, 360);
 	}else if (this.class == 1){
 		var tile = Tileset.classes.archer;
-		this.classPos.set(4,3);
+		this.classPos.set(4,2.5);
 		game.drawTile(tile, this.classPos);
 		ctx.fillText(msg.archer, 305, 360);
 	}else if (this.class == 2){
 		var tile = Tileset.classes.wizard;
-		this.classPos.set(4,3);
+		this.classPos.set(4,2.5);
 		game.drawTile(tile, this.classPos);
 		ctx.fillText(msg.wizard, 305, 360);
 	}

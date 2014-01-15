@@ -57,6 +57,7 @@ var EffectFactory = {
 	hpPotionS: {
 		desc: msg.hpDesc,
 		used: false,
+		size: 's',
 		cast: function(){
 			PlayerStats.health = Math.min(PlayerStats.health + 20, PlayerStats.mHealth);
 			Console.addMessage(msg.hpUses, "rgb(255,255,255)");
@@ -70,6 +71,7 @@ var EffectFactory = {
 	hpPotionL: {
 		desc: msg.hpLDesc,
 		used: false,
+		size: 'l',
 		cast: function(){
 			PlayerStats.health = Math.min(PlayerStats.health + 60, PlayerStats.mHealth);
 			Console.addMessage(msg.hplUses, "rgb(255,255,255)");
@@ -83,6 +85,7 @@ var EffectFactory = {
 	poisonS: {
 		desc: msg.poisonDesc,
 		used: false,
+		size: 's',
 		cast: function(){
 			PlayerStats.poison = 1;
 			Console.addMessage(msg.poisonUses, "rgb(255,0,0)");
@@ -96,6 +99,7 @@ var EffectFactory = {
 	poisonL: {
 		desc: msg.poisonLDesc,
 		used: false,
+		size: 'l',
 		cast: function(){
 			PlayerStats.poison = 3;
 			Console.addMessage(msg.poisonUses, "rgb(255,0,0)");
@@ -109,6 +113,7 @@ var EffectFactory = {
 	antidoteS: {
 		desc: msg.antDesc,
 		used: false,
+		size: 's',
 		cast: function(){
 			if (PlayerStats.poison > 0){
 				Console.addMessage(msg.antUses, "rgb(255,255,0)");
@@ -126,6 +131,7 @@ var EffectFactory = {
 	antidoteL: {
 		desc: msg.antLDesc,
 		used: false,
+		size: 'l',
 		cast: function(){
 			if (PlayerStats.poison > 0){
 				Console.addMessage(msg.antLUses, "rgb(255,255,0)");
@@ -144,6 +150,7 @@ var EffectFactory = {
 	attributeS: {
 		desc: msg.attrDesc,
 		used: false,
+		size: 's',
 		cast: function(){
 			var ps = PlayerStats;
 			var attrs = ["str", "def", "spd", "luk"];
@@ -161,6 +168,7 @@ var EffectFactory = {
 	attributeL: {
 		desc: msg.attrLDesc,
 		used: false,
+		size: 'l',
 		cast: function(){
 			var ps = PlayerStats;
 			var attrs = ["str", "def", "spd", "luk"];

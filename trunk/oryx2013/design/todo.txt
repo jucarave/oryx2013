@@ -61,21 +61,33 @@
 * Enemies Data                     *
 * Sound effects                    *
 * Last boss scenario               *
+*------------REV 2014--------------*
+* FOV Degraded                     *
+* Starvation Alert                 *
+* Gray Unknow Potions              *
+* Combine Dropped Gold             *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
+* Torchs in world                  *
+* Blood splaters                   *
+* New UI                           *
+* Days Progress                    *
+* Variety to Dungeon               *
+* New Tull                         *
+* Progress Saving                  *
+* Progress Restore                 *
+* Music                            *
 *                                  *
 ************************************
 
 ************************************
 * POSSIBLE ACTIVITIES              *
 ************************************
-* Progress Saving                  *
-* Progress Restore                 *
 * Sprite fonts                     *
-* Music                            *
+* Autobump Attack                  *
 *                                  *
 ************************************
