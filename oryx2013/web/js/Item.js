@@ -15,8 +15,13 @@ Item.prototype.checkPlayer = function(){
 			desc = this.item.name;
 			Console.addMessage(desc, "rgb(255,255,255)", "stepped");
 		}else if (this.item.isItem){
-			desc = ItemFactory.getItemName(this.item);
-			Console.addMessage(msg.stepped + desc, "rgb(255,255,255)", "stepped");
+			if (this.item.effect && !this.item.effect.used){
+				desc = (this.item.effect.size == 's')? msg.i.unknowSmallPotion : msg.i.unknowLargePotion;
+				Console.addMessage(msg.stepped + desc, "rgb(255,255,255)", "stepped");
+			}else{
+				desc = ItemFactory.getItemName(this.item);
+				Console.addMessage(msg.stepped + desc, "rgb(255,255,255)", "stepped");
+			}
 		}else{
 			desc = ItemFactory.getItemQuality(this.item.status) + " " + ItemFactory.getItemName(this.item);
 			Console.addMessage(msg.stepped + desc, "rgb(255,255,255)", "stepped");
@@ -27,8 +32,13 @@ Item.prototype.checkPlayer = function(){
 };
 
 Item.prototype.draw = function(game){
-	if (this.mapManager.isVisible(this.position) == 2)
-		game.drawTile(this.tile, this.position, this.mapManager.view);
+	if (this.mapManager.isVisible(this.position) == 2){
+		if (this.item.effect && !this.item.effect.used){
+			game.drawTile(this.tile.parent, this.position, this.mapManager.view);
+		}else{
+			game.drawTile(this.tile, this.position, this.mapManager.view);
+		}
+	}
 };
 
 Item.prototype.loop = function(game){

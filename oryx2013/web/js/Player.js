@@ -1,7 +1,7 @@
 function Player(tile, position){
 	this.playerAction = true;
 	this.playerMoved = false;
-	this.fovDistance = 5;
+	this.fovDistance = 6;
 	this.run = 0;
 	
 	this.stepCount = 0;
@@ -436,7 +436,12 @@ Player.prototype.pickItem = function(item){
 	if (item.item.isMoney){
 		Console.addMessage(msg.pick + item.item.name, "rgb(255,255,255)");
 	}else if (item.item.isItem){
-		Console.addMessage(msg.pickup + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
+		if (item.item.effect && !item.item.effect.used){
+			desc = (item.item.effect.size == 's')? msg.i.unknowSmallPotion : msg.i.unknowLargePotion;
+			Console.addMessage(msg.pickup + desc, "rgb(255,255,255)");
+		}else{
+			Console.addMessage(msg.pickup + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
+		}
 	}else{
 		Console.addMessage(msg.pickup + ItemFactory.getItemQuality(item.item.status) + " " + ItemFactory.getItemName(item.item), "rgb(255,255,255)");
 	}

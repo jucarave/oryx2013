@@ -296,6 +296,18 @@ Map.prototype.createEnemies = function(percent){
 	}
 };
 
+Map.prototype.getMoneyAt = function(position){
+	for (var i=0;i<this.instances.length;i++){
+		if (this.instances[i].item && this.instances[i].item.isMoney){
+			if (this.instances[i].position.equals(position)){
+				return this.instances[i];
+			}
+		}
+	}
+	
+	return null;
+};
+
 Map.prototype.getDescendStairs = function(){
 	for (var i=0;i<this.instances.length;i++){
 		if (this.instances[i].isStairs){
