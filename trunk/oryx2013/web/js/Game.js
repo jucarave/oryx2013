@@ -19,7 +19,7 @@ function Game(container){
 	this.selectedOpt = 0;
 	
 	this.viewS = new Position(20, 8);
-	this.viewPos = new Position(0, 1);
+	this.viewPos = new Position(0, 1.5);
 	this.gridS = new Position(32, 48);
 	
 	this.maps = [];
@@ -94,7 +94,11 @@ Game.prototype.drawTile = function(tile, position, view, darker){
 	
 	if (darker){
 		var ctx = this.eng.ctx;
-		ctx.fillStyle = "rgba(0,0,0,0.8)";
+		if (darker === true){
+			ctx.fillStyle = "rgba(0,0,0,0.8)";
+		}else if (darker > 0){
+			ctx.fillStyle = "rgba(0,0,0," + (0.1 + darker) + ")";
+		}
 		ctx.fillRect(x*spr.imgWidth,y*spr.imgHeight,spr.imgWidth,spr.imgHeight);
 	}
 };
@@ -299,9 +303,9 @@ Game.prototype.drawConsole = function(){
 	var ctx = this.eng.ctx;
 	
 	ctx.fillStyle = "rgb(33,33,33)";
-	ctx.fillRect(0,0,ctx.width, this.gridS.y + 4);
+	ctx.fillRect(0,0,ctx.width, this.gridS.y + 24);
 	
-	this.eng.drawLine(0,this.gridS.y + 3, ctx.width, this.gridS.y + 3, "rgb(255,255,255)");
+	this.eng.drawLine(0,this.gridS.y + 23, ctx.width, this.gridS.y + 23, "rgb(255,255,255)");
 	
 	var messages = Console.messages;
 	var end = messages.length;
@@ -319,13 +323,13 @@ Game.prototype.drawInterface = function(){
 	var ctx = this.eng.ctx;
 	
 	ctx.fillStyle = "rgb(33,33,33)";
-	ctx.fillRect(0,ctx.height - this.gridS.y * 2,ctx.width, this.gridS.y * 2);
+	ctx.fillRect(0,ctx.height - this.gridS.y * 2 + 20, ctx.width, this.gridS.y * 2);
 	
-	this.eng.drawLine(0,ctx.height - this.gridS.y * 2 + 1, ctx.width,ctx.height - this.gridS.y * 2 + 1, "rgb(255,255,255)");
+	this.eng.drawLine(0,ctx.height - this.gridS.y * 2 + 21, ctx.width,ctx.height - this.gridS.y * 2 + 21, "rgb(255,255,255)");
 	
 	//Health
 	var x = 8;
-	var y = ctx.height - this.gridS.y * 2 + 8;
+	var y = ctx.height - this.gridS.y * 2 + 28;
 	this.eng.drawImage(Tileset.hud.healthBack.getColor(255,0,0).img, x, y, Tileset.hud.healthBack.subImg);
 	
 	var tile = Tileset.hud.health;
@@ -338,7 +342,7 @@ Game.prototype.drawInterface = function(){
 		
 	//Magic
 	x = 52;
-	y = ctx.height - this.gridS.y * 2 + 8;
+	y = ctx.height - this.gridS.y * 2 + 28;
 	this.eng.drawImage(Tileset.hud.manaBack.getColor(58,135,175).img, x, y, Tileset.hud.manaBack.subImg);
 	
 	tile = Tileset.hud.mana;
@@ -356,7 +360,7 @@ Game.prototype.drawInterface = function(){
 	var ps = PlayerStats;
 	ctx.fillStyle = "rgb(255,255,255)";
 	ctx.fillText(ps.name + ", " + ps.class.name, x, y);
-	ctx.fillText(this.map.name, x, y + 16);
+	//ctx.fillText(this.map.name, x, y + 16);
 	
 	var exDmg = 0, exDfs = 0;
 	if (ps.weapons[ps.currentW]) exDmg = ps.weapons[ps.currentW].item.dmg;
@@ -364,7 +368,7 @@ Game.prototype.drawInterface = function(){
 	exDmg += (PlayerStats.bersekT > 0)? 20 : 0;
 	
 	x = 60 + this.gridS.x;
-	y = ctx.height - this.gridS.y * 2 + 24;
+	y = ctx.height - this.gridS.y * 2 + 44;
 	
 	ctx.fillText("lvl:" + ps.lvl, x, y);
 	ctx.fillText("exp:" + ps.exp, x, y + 20);
@@ -384,7 +388,7 @@ Game.prototype.drawInterface = function(){
 	//Weapon
 	tile = Tileset.itemsWeapons.frame;
 	x = ctx.width - this.gridS.x * 6 - 16;
-	y = ctx.height - this.gridS.y * 2 + 8;
+	y = ctx.height - this.gridS.y * 2 + 28;
 	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 	
 	if (PlayerStats.weapons[PlayerStats.currentW]){

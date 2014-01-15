@@ -59,10 +59,6 @@
 	<body>
 		<div style="text-align: center;">
 			<div id="divGame"></div>
-			
-			<div style="height: 64px;">&nbsp;</div>
-			Tull, Developed by <a href="http://jucarave.dx.am/">Jucarave</a> for the <a href="http://oryxdesignlab.com/trials/">trials of oryx 2013</a>
-			<div>Graphics by <a href="http://oryxdesignlab.com/">Oryx</a></div>
 		</div>
 	</body>
 </html>

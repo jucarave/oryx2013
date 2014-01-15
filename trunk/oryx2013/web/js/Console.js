@@ -16,7 +16,7 @@ var Console = {
 			this.messages.push(m);
 		}
 		
-		while (this.messages.length > 3){
+		while (this.messages.length > 4){
 			this.messages.splice(0,1);
 		}
 	},

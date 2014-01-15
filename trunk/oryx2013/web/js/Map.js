@@ -614,8 +614,18 @@ Map.prototype.drawFloor = function(x, y, visible){
 			tile[t].visible = 2;
 		}
 		
-		if (tile[t].visible == 2 || (light)){
+		if (this.light){
 			game.drawTile(tile[t].tile, new Position(x - xx, y - yy), null, false);
+			tile[t].wasVisible = 2;
+		}else if (tile[t].visible == 2 || light){
+			var dis = 0;
+			if (t==tlen-1){
+				xdis = Math.abs(this.player.position.x - x) / 7;
+				ydis = Math.abs(this.player.position.y - y) / 7;
+				dis = Math.max(xdis, ydis);
+			}
+			
+			game.drawTile(tile[t].tile, new Position(x - xx, y - yy), null, dis);
 			tile[t].wasVisible = 2;
 		}else if (tile[t].visible == 1 || this.reveal){
 			var vis = (t==tlen-1);
