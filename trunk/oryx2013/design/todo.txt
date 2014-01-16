@@ -66,14 +66,13 @@
 * Starvation Alert                 *
 * Gray Unknow Potions              *
 * Combine Dropped Gold             *
+* Blood splaters                   *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* Torchs in world                  *
-* Blood splaters                   *
 * New UI                           *
 * Days Progress                    *
 * Variety to Dungeon               *
@@ -89,5 +88,6 @@
 ************************************
 * Sprite fonts                     *
 * Autobump Attack                  *
+* Torchs in world                  *
 *                                  *
 ************************************

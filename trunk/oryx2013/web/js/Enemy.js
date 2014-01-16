@@ -146,6 +146,45 @@ Enemy.prototype.dropLoot = function(){
 	return ret;
 };
 
+Enemy.prototype.splitBlood = function(){
+	var dice = Math.iRandom(10);
+	if (dice == 8 || dice == 4) return;
+	
+	var tile = 10 + Math.iRandom(1,4);
+	this.mapManager.map[this.position.y][this.position.x].push({
+		tileId: tile,
+		tile: Tileset.dungeon.getByTileId(tile, this.mapManager.level),
+		visible: 0,
+		wasVisible: true
+	});
+	
+	if (this.enemy.hp > 0) return;
+	
+	var pos = this.position.clone();
+	var player = this.mapManager.player;
+	if (player.position.x > this.position.x) pos.sum(-1, 0); else
+	if (player.position.x < this.position.x) pos.sum( 1, 0); else
+	if (player.position.y > this.position.y) pos.sum( 0,-1); else
+	if (player.position.y < this.position.y) pos.sum( 0, 1);
+	
+	var rnd = Math.iRandom(4);
+	for (var i=0;i<rnd;i++){
+		var xx = pos.x + Math.iRandom(-1, 1);
+		var yy = pos.y + Math.iRandom(-1, 1);
+		
+		if (this.mapManager.map[yy][xx] == 0) continue;
+		if (this.mapManager.isSolid(new Position(xx, yy), true)) continue;
+		
+		tile = 10 + Math.iRandom(1,4);
+		this.mapManager.map[yy][xx].push({
+			tileId: tile,
+			tile: Tileset.dungeon.getByTileId(tile, this.mapManager.level),
+			visible: 0,
+			wasVisible: true
+		});
+	}
+};
+
 Enemy.prototype.hurt = function(dmg){
 	if (dmg <= 0){
 		Console.addMessage(msg.missed, "rgb(255,255,255)");
@@ -155,6 +194,8 @@ Enemy.prototype.hurt = function(dmg){
 	this.enemy.hp -= dmg;
 	var mess = msg.hitTo.replace("D", dmg) + this.enemy.name;
 	var msg2 = "";
+	
+	this.splitBlood();
 	
 	this.mapManager.repaint = true;
 	
