@@ -87,6 +87,10 @@ var Tileset = {
 		grass2: {img: "misc", subImg: new Position(2, 5), tileId: 7, getColor: getColor, color: {r:0,g:100,b:0}},
 		drops: {img: "environment", subImg: new Position(3, 3), tileId: 8, getColor: getColor, color: {r:0,g:0,b:200}},
 		web: {img: "misc", subImg: new Position(8, 2), tileId: 9, getColor: getColor},
+		blood1: {img: "misc", subImg: new Position(6, 3), tileId: 11, getColor: getColor, color: {r:255,g:0,b:0}},
+		blood2: {img: "misc", subImg: new Position(7, 3), tileId: 12, getColor: getColor, color: {r:255,g:0,b:0}},
+		blood3: {img: "misc", subImg: new Position(8, 3), tileId: 13, getColor: getColor, color: {r:255,g:0,b:0}},
+		blood4: {img: "misc", subImg: new Position(9, 3), tileId: 14, getColor: getColor, color: {r:255,g:0,b:0}},
 		
 		getColorByLevel: function(tile, level){
 			if (level <= 5){
@@ -175,7 +179,7 @@ var Tileset = {
 		stairsDown: {img: "misc", subImg: new Position(1, 1), getColor: getColor},
 		stairsDungeon: {img: "misc", subImg: new Position(16, 2), getColor: getColor},
 		hole: {img: "misc", subImg: new Position(13, 1), getColor: getColor},
-		portal: {img: "misc", subImg: new Position(16, 4), getColor: getColor}
+		portal: {img: "misc", subImg: new Position(16, 4), getColor: getColor},
 	},
 	
 	enemies: {
