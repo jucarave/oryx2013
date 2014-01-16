@@ -79,6 +79,7 @@ var Tileset = {
 		wall: {img: "environment", subImg: new Position(0, 1), tileId: 2, getColor: getColor, solid: true, isWall: true},
 		sidewall: {img: "environment", subImg: new Position(7, 0), tileId: 3, getColor: getColor, solid: true, isWall: true},
 		wall2: {img: "environment", subImg: new Position(3, 1), tileId: 4, getColor: getColor, solid: true, isWall: true},
+		wallTorch: {img: "environment", subImg: new Position(4, 1), tileId: 10, getColor: getColor, solid: true, isWall: true},
 		
 		//garbage
 		bones: {img: "misc", subImg: new Position(1, 3), tileId: 5, getColor: getColor},

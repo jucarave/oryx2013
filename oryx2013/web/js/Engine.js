@@ -120,8 +120,6 @@ Engine.prototype.colorizeImage = function(img, r, g, b){
 			imageData.data[i] = r;
 			imageData.data[i+1] = g;
 			imageData.data[i+2] = b;
-		}else if (!(imageData.data[i] == 0 && imageData.data[i+1] == 0 && imageData.data[i+2] == 0)){
-			imageData.data[i+3] = 0;
 		}
 	}
 	
