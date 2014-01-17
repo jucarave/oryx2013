@@ -15,7 +15,7 @@ DeathScreen.prototype.step = function(game){
 DeathScreen.prototype.drawTomb = function(game){
 	var ctx = game.eng.ctx;
 	
-	this.tilePos.set(9, 1);
+	this.tilePos.set(10, 1);
 	game.drawTile(Tileset.environment.highGrass.getColor(0, 160, 0), this.tilePos);
 	game.drawTile(Tileset.environment.grave, this.tilePos);
 };
@@ -30,7 +30,7 @@ DeathScreen.prototype.draw = function(game){
 	
 	this.tilePos.set(2.5,2.5);
 	game.drawTile(this.skull, this.tilePos);
-	this.tilePos.set(16.5,2.5);
+	this.tilePos.set(17.5,2.5);
 	game.drawTile(this.skull, this.tilePos);
 	
 	ctx.fillText(PlayerStats.name + ", " + PlayerStats.class.name, ctx.width / 2, 70);

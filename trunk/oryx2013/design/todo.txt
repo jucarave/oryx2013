@@ -67,19 +67,34 @@
 * Gray Unknow Potions              *
 * Combine Dropped Gold             *
 * Blood splaters                   *
+* New UI                           *
+* Increase canvas size             *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* New UI                           *
 * Days Progress                    *
 * Variety to Dungeon               *
 * New Tull                         *
 * Progress Saving                  *
 * Progress Restore                 *
 * Music                            *
+*                                  *
+************************************
+
+
+************************************
+* PENDING BUGS                     *
+************************************
+* Fix Main Scene Space             *
+* Wait during attack               *
+* Weird random light               *
+* Enemies swap position            *
+* Rnadom first bad level           *
+* Armours linked?                  *
+* Portal allows advance?           *
 *                                  *
 ************************************
 
