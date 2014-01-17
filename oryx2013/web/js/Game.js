@@ -1,8 +1,8 @@
 function Game(container){
 	this.eng = new Engine();
-	this.eng.createCanvas(640, 528, container);
+	this.eng.createCanvas(672, 528, container);
 	//this.eng.canvas.style.zoom = "200%";
-	this.eng.ctx.font = '16px "Courier New"';
+	this.eng.ctx.font = '15px "Courier New"';
 	
 	this.fps = 1000 / 30;
 	this.lastF = Date.now();
@@ -18,7 +18,7 @@ function Game(container){
 	
 	this.selectedOpt = 0;
 	
-	this.viewS = new Position(20, 8);
+	this.viewS = new Position(21, 8);
 	this.viewPos = new Position(0, 1.5);
 	this.gridS = new Position(32, 48);
 	
@@ -44,6 +44,9 @@ Game.prototype.loadImages = function(){
 	this.sprites["magic"] = this.eng.loadImage(cp + "img/magic.png?version=" + version, 7, 1);
 	this.sprites["keyboard"] = this.eng.loadImage(cp + "img/keyboard.png?version=" + version, 1, 1);
 	this.sprites["cinema"] = this.eng.loadImage(cp + "img/cinema.png?version=" + version, 2, 3);
+	
+	this.sprites["console"] = this.eng.loadImage(cp + "img/console.png?version=" + version, 1, 1);
+	this.sprites["ui"] = this.eng.loadImage(cp + "img/UI.png?version=" + version, 1, 1);
 };
 
 Game.prototype.loadSounds = function(){
@@ -206,7 +209,7 @@ Game.prototype.drawPlayerMenu = function(bucket, current, x, canDrop){
 	var ctx = this.eng.ctx;
 
 	tile = Tileset.itemsWeapons.frame;
-	y = this.gridS.y + 16;
+	y = 80;
 	
 	for (var i=0;i<7;i++){
 		this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
@@ -258,7 +261,7 @@ Game.prototype.drawSpellsMenu = function(){
 	if (!PlayerStats.spellsMenu) return;
 	
 	var ctx = this.eng.ctx;
-	x = ctx.width - this.gridS.x * 6 + 149;
+	x = 635;
 	this.drawPlayerMenu(PlayerStats.spells, "currentS", x, false);
 	
 	if (this.navigateMenu(82)){
@@ -271,7 +274,7 @@ Game.prototype.drawItemsMenu = function(){
 	if (!PlayerStats.itemsMenu) return;
 	
 	var ctx = this.eng.ctx;
-	x = ctx.width - this.gridS.x * 6 + 94;
+	x = 600;
 	this.drawPlayerMenu(PlayerStats.items, "currentI", x, true);
 	
 	if (this.navigateMenu(69)){
@@ -284,7 +287,7 @@ Game.prototype.drawWeaponsMenu = function(){
 	if (!PlayerStats.weaponsMenu) return;
 	
 	var ctx = this.eng.ctx;
-	x = ctx.width - this.gridS.x * 6 - 16;
+	x = 530;
 	this.drawPlayerMenu(PlayerStats.weapons, "currentW", x, true);
 	
 	if (this.navigateMenu(81)){
@@ -297,7 +300,7 @@ Game.prototype.drawArmourMenu = function(){
 	if (!PlayerStats.armourMenu) return;
 	
 	var ctx = this.eng.ctx;
-	x = ctx.width - this.gridS.x * 6 + 39;
+	x = 565;
 	this.drawPlayerMenu(PlayerStats.armours, "currentA", x, true);
 	
 	if (this.navigateMenu(87)){
@@ -309,10 +312,12 @@ Game.prototype.drawArmourMenu = function(){
 Game.prototype.drawConsole = function(){
 	var ctx = this.eng.ctx;
 	
-	ctx.fillStyle = "rgb(33,33,33)";
-	ctx.fillRect(0,0,ctx.width, this.gridS.y + 24);
+	//ctx.fillStyle = "rgb(33,33,33)";
+	//ctx.fillRect(0,0,ctx.width, this.gridS.y + 24);
 	
-	this.eng.drawLine(0,this.gridS.y + 23, ctx.width, this.gridS.y + 23, "rgb(255,255,255)");
+	//this.eng.drawLine(0,this.gridS.y + 23, ctx.width, this.gridS.y + 23, "rgb(255,255,255)");
+	
+	ctx.drawImage(this.sprites["console"], 0, 0);
 	
 	var messages = Console.messages;
 	var end = messages.length;
@@ -321,7 +326,7 @@ Game.prototype.drawConsole = function(){
 		var m = messages[i];
 		
 		ctx.fillStyle = m.color;
-		ctx.fillText(m.text, 4, 16 + (16 * i));
+		ctx.fillText(m.text, 10, 19 + (13 * i));
 	}
 };
 
@@ -329,131 +334,127 @@ Game.prototype.drawInterface = function(){
 	this.drawConsole();
 	var ctx = this.eng.ctx;
 	
-	ctx.fillStyle = "rgb(33,33,33)";
-	ctx.fillRect(0,ctx.height - this.gridS.y * 2 + 20, ctx.width, this.gridS.y * 2);
+	//ctx.fillRect(0,ctx.height - this.gridS.y * 2 + 20, ctx.width, this.gridS.y * 2);
+
+	var x = 14;
+	var y = ctx.height - this.sprites["ui"].height;
 	
-	this.eng.drawLine(0,ctx.height - this.gridS.y * 2 + 21, ctx.width,ctx.height - this.gridS.y * 2 + 21, "rgb(255,255,255)");
-	
-	//Health
-	var x = 8;
-	var y = ctx.height - this.gridS.y * 2 + 28;
-	this.eng.drawImage(Tileset.hud.healthBack.getColor(255,0,0).img, x, y, Tileset.hud.healthBack.subImg);
-	
-	var tile = Tileset.hud.health;
-	var s = tile.subImg;
-	var img = tile.getColor(255,0,0).img;
-	var per = (PlayerStats.health / PlayerStats.mHealth) * img.imgHeight;
-	ctx.drawImage(img,
-		s.x * img.imgWidth, s.y * img.imgHeight + img.imgHeight - per, img.imgWidth, per, 
-		x, y + img.imgHeight - per, img.imgWidth, per);
-		
-	//Magic
-	x = 52;
-	y = ctx.height - this.gridS.y * 2 + 28;
-	this.eng.drawImage(Tileset.hud.manaBack.getColor(58,135,175).img, x, y, Tileset.hud.manaBack.subImg);
-	
-	tile = Tileset.hud.mana;
-	s = tile.subImg;
-	img = tile.getColor(58,135,175).img;
-	per = (PlayerStats.mana / PlayerStats.mMana) * img.imgHeight;
-	ctx.drawImage(img,
-		s.x * img.imgWidth, s.y * img.imgHeight + img.imgHeight - per, img.imgWidth, per, 
-		x, y + img.imgHeight - per, img.imgWidth, per);
-		
-	//Stats
-	x = 8;
-	y += 54;
-	
+	ctx.drawImage(this.sprites["ui"], 0, y);
+
+	//Name
+	var yy = y + 34;
 	var ps = PlayerStats;
 	ctx.fillStyle = "rgb(255,255,255)";
-	ctx.fillText(ps.name + ", " + ps.class.name, x, y);
-	//ctx.fillText(this.map.name, x, y + 16);
+	ctx.fillText(ps.name + ", " + ps.class.name, x, yy);
+
+	//Health
+	var per = (PlayerStats.health / PlayerStats.mHealth);
+	yy = y + 40;
+		
+	ctx.strokeStyle = "rgb(255,0,0)";
+	ctx.strokeRect(x, yy, 150, 10);
 	
+	ctx.fillStyle = "rgb(255,0,0)";
+	ctx.fillRect(x + 2, yy + 2, 146 * per, 6);
+	
+	//Magic
+	var per = (PlayerStats.mana / PlayerStats.mMana);
+	yy = y + 56;
+		
+	ctx.strokeStyle = "rgb(58,135,175)";
+	ctx.strokeRect(x, yy, 130, 8);
+	
+	ctx.fillStyle = "rgb(58,135,175)";
+	ctx.fillRect(x + 2, yy + 2, 126 * per, 4);
+	
+	//Main Stats
+	x = 180;
+	yy = y + 34;
+	
+	ctx.fillStyle = "rgb(255,255,255)";
+	ctx.fillText("Lvl " + ps.lvl, x, yy + 16);
+	
+	ctx.fillText("exp " + ps.exp, x, yy + 32);
+	
+	x = 355;
 	var exDmg = 0, exDfs = 0;
 	if (ps.weapons[ps.currentW]) exDmg = ps.weapons[ps.currentW].item.dmg;
 	if (ps.armours[ps.currentA]) exDfs = ps.armours[ps.currentA].item.dfs;
 	exDmg += (PlayerStats.bersekT > 0)? 20 : 0;
 	
-	x = 60 + this.gridS.x;
-	y = ctx.height - this.gridS.y * 2 + 44;
-	
-	ctx.fillText("lvl:" + ps.lvl, x, y);
-	ctx.fillText("exp:" + ps.exp, x, y + 20);
-	
-	x += 120;
 	ctx.fillStyle = (PlayerStats.bersekT > 0)? "rgb(255,0,0)" : "rgb(255,255,255)";
-	ctx.fillText("str: " + (ps.str + exDmg), x, y);
+	ctx.fillText("str 12" + (ps.str + exDmg), x, yy);
 	ctx.fillStyle = "rgb(255,255,255)";
-	ctx.fillText("def: " + (ps.def + exDfs), x, y + 20);
-	ctx.fillText("spd: " + ps.spd, x, y + 40);
+	ctx.fillText("def " + (ps.def + exDfs), x, yy + 16);
+	ctx.fillText("spd " + ps.spd, x, yy + 32);
 	
-	x += 100;
+	x += 80;
 	this.blink -= 1;
 	if (this.blink <= 0) this.blink = 30;
 	if (this.blink < 15 && ps.food <= 30){
 		ctx.fillStyle = "rgb(255,0,0)";
 	}
-	ctx.fillText("food: " + ps.food, x, y);
+	ctx.fillText("food " + ps.food, x, yy);
 	
 	ctx.fillStyle = "rgb(255,255,255)";
-	ctx.fillText("luck: " + ps.luk, x, y + 20);
-	ctx.fillText("gold: " + ps.gold, x, y + 40);
+	ctx.fillText("luck " + ps.luk, x, yy + 16);
+	ctx.fillText("gold " + ps.gold, x, yy + 32);
 	
 	//Weapon
 	tile = Tileset.itemsWeapons.frame;
-	x = ctx.width - this.gridS.x * 6 - 16;
-	y = ctx.height - this.gridS.y * 2 + 28;
-	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
+	x += 95;
+	yy = y + 20;
+	//this.eng.drawImage(this.sprites[tile.img], x, yy, tile.subImg);
 	
 	if (PlayerStats.weapons[PlayerStats.currentW]){
 		var weapon = PlayerStats.weapons[PlayerStats.currentW];
 		tile = weapon.tile;
 		var img = (this.sprites[tile.img])? this.sprites[tile.img] : tile.img;
-		this.eng.drawImage(img, x, y, tile.subImg);
+		this.eng.drawImage(img, x, yy, tile.subImg);
 		
-		ctx.fillText(Math.round(weapon.item.status * 100) + "%", x, y + this.gridS.y + 16);
+		ctx.fillText(Math.round(weapon.item.status * 100), x, yy + 48);
 	}
 	
 	//Armour
 	tile = Tileset.itemsWeapons.frame;
-	x += 55;
-	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
+	x += 35;
+	//this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 	
 	if (PlayerStats.armours[PlayerStats.currentA]){
 		var armour = PlayerStats.armours[PlayerStats.currentA];
 		tile = armour.tile;
 		var img = (this.sprites[tile.img])? this.sprites[tile.img] : tile.img;
-		this.eng.drawImage(img, x, y, tile.subImg);
+		this.eng.drawImage(img, x, yy, tile.subImg);
 		
-		ctx.fillText(Math.round(armour.item.status * 100) + "%", x, y + this.gridS.y + 16);
+		ctx.fillText(Math.round(armour.item.status * 100), x, yy + 48);
 	}
 	
 	//Items
 	tile = Tileset.itemsWeapons.frame;
-	x += 55;
-	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
+	x += 35;
+	//this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 	
 	if (PlayerStats.items[PlayerStats.currentI]){
 		var item = PlayerStats.items[PlayerStats.currentI];
 		tile = item.tile;
 		var img = (this.sprites[tile.img])? this.sprites[tile.img] : tile.img;
 		if (item.item.effect && !item.item.effect.used){
-			this.eng.drawImage(this.sprites[item.tile.parent.img], x, y, tile.subImg);
+			this.eng.drawImage(this.sprites[item.tile.parent.img], x, yy, tile.subImg);
 		}else{
-			this.eng.drawImage(img, x, y, tile.subImg);
+			this.eng.drawImage(img, x, yy, tile.subImg);
 		}
 	}
 	
 	//Magic
 	tile = Tileset.itemsWeapons.frame;
-	x += 55;
-	this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
+	x += 35;
+	//this.eng.drawImage(this.sprites[tile.img], x, yy, tile.subImg);
 	
 	if (PlayerStats.spells[PlayerStats.currentS]){
 		var item = PlayerStats.spells[PlayerStats.currentS];
 		tile = item.tile;
 		var img = (this.sprites[tile.img])? this.sprites[tile.img] : tile.img;
-		this.eng.drawImage(img, x, y, tile.subImg);
+		this.eng.drawImage(img, x, yy, tile.subImg);
 	}
 	
 	this.drawWeaponsMenu();

@@ -389,8 +389,8 @@ Player.prototype.step = function(game){
 
 Player.prototype.setView = function(game){
 	var view = this.mapManager.view;
-	var x = this.position.x - game.viewS.x / 2;
-	var y = this.position.y - game.viewS.y / 2;
+	var x = Math.floor(this.position.x - game.viewS.x / 2);
+	var y = Math.floor(this.position.y - game.viewS.y / 2);
 	
 	if (x + game.viewS.x > this.mapManager.map[0].length) x = this.mapManager.map[0].length - game.viewS.x;
 	if (y + game.viewS.y > this.mapManager.map.length) y = this.mapManager.map.length - game.viewS.y;
