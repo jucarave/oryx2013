@@ -345,7 +345,7 @@ Game.prototype.drawInterface = function(){
 	var yy = y + 34;
 	var ps = PlayerStats;
 	ctx.fillStyle = "rgb(255,255,255)";
-	ctx.fillText(ps.name + ", " + ps.class.name, x, yy);
+	ctx.fillText(ps.name, x, yy);
 
 	//Health
 	var per = (PlayerStats.health / PlayerStats.mHealth);
@@ -371,9 +371,10 @@ Game.prototype.drawInterface = function(){
 	x = 180;
 	yy = y + 34;
 	
+	var name = (this.map.level == 0)? "Tull" : this.map.level;
 	ctx.fillStyle = "rgb(255,255,255)";
+	ctx.fillText("depth " + name, x, yy);
 	ctx.fillText("Lvl " + ps.lvl, x, yy + 16);
-	
 	ctx.fillText("exp " + ps.exp, x, yy + 32);
 	
 	x = 355;
@@ -383,7 +384,7 @@ Game.prototype.drawInterface = function(){
 	exDmg += (PlayerStats.bersekT > 0)? 20 : 0;
 	
 	ctx.fillStyle = (PlayerStats.bersekT > 0)? "rgb(255,0,0)" : "rgb(255,255,255)";
-	ctx.fillText("str 12" + (ps.str + exDmg), x, yy);
+	ctx.fillText("str " + (ps.str + exDmg), x, yy);
 	ctx.fillStyle = "rgb(255,255,255)";
 	ctx.fillText("def " + (ps.def + exDfs), x, yy + 16);
 	ctx.fillText("spd " + ps.spd, x, yy + 32);
@@ -456,6 +457,26 @@ Game.prototype.drawInterface = function(){
 		var img = (this.sprites[tile.img])? this.sprites[tile.img] : tile.img;
 		this.eng.drawImage(img, x, yy, tile.subImg);
 	}
+	
+	//Clock
+	x = 320;
+	yy = 480;
+	
+	ctx.strokeStyle = "rgb(255,255,255)";
+	ctx.beginPath();
+	//Hour
+	ctx.moveTo(x, yy);
+	ctx.lineTo(x,yy-5);
+	//Minute
+	ctx.moveTo(x, yy);
+	ctx.lineTo(x+10,yy);
+	ctx.stroke();
+	
+	ctx.textAlign = "center";
+	ctx.fillText("Day", 320, 462);
+	ctx.fillText(Clock.day, 320, 510);
+	
+	ctx.textAlign = "left";
 	
 	this.drawWeaponsMenu();
 	this.drawArmourMenu();

@@ -76,6 +76,8 @@
 * ACTIVITIES PENDING               *
 ************************************
 * Days Progress                    *
+* Dungeon traps                    *
+* Doors                            *
 * Variety to Dungeon               *
 * New Tull                         *
 * Progress Saving                  *
