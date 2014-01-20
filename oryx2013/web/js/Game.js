@@ -464,12 +464,22 @@ Game.prototype.drawInterface = function(){
 	
 	ctx.strokeStyle = "rgb(255,255,255)";
 	ctx.beginPath();
+	
 	//Hour
+	var angle = Math.degToRad((90 - (Clock.hour % 12) * 30) % 360);
+	var x2 = Math.cos(angle) * 8;
+	var y2 = -Math.sin(angle) * 8;
+	
 	ctx.moveTo(x, yy);
-	ctx.lineTo(x,yy-5);
+	ctx.lineTo(x + x2,yy + y2);
+	
 	//Minute
+	angle = Math.degToRad((90 - Clock.minute * 6) % 360);
+	x2 = Math.cos(angle) * 10;
+	y2 = -Math.sin(angle) * 10;
+	
 	ctx.moveTo(x, yy);
-	ctx.lineTo(x+10,yy);
+	ctx.lineTo(x+x2,yy+y2);
 	ctx.stroke();
 	
 	ctx.textAlign = "center";

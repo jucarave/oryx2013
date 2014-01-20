@@ -28,6 +28,9 @@ Player.prototype.consumeFood = function(){
 			this.stepCount = 0;
 		} 
 	}
+	if (this.stepCount > 0 && this.stepCount % 5 == 0){
+		Clock.addMinute();
+	}
 	if ((this.stepCount == 10 && PlayerStats.slowerT == 0) || (this.stepCount == 50 && PlayerStats.slowerT > 0)){
 		PlayerStats.food--;
 		if (PlayerStats.food == 0){

@@ -34,15 +34,17 @@ function Map(params){
 		this.map = RDG.newMap(lev);
 		this.level = params.level;
 		
+		this.parseMap();
+		
 		this.createItems();
 		if (params.level < 20)
 			this.createEnemies();
 		this.createBoss();
 	}else if (params.map){
 		this.loadMap(params.map);
+		
+		this.parseMap();
 	}
-	
-	this.parseMap();
 }
 
 Map.prototype.loadMap = function(map){
@@ -471,6 +473,7 @@ Map.prototype.inHotel = function(game){
 		PlayerStats.health = PlayerStats.mHealth;
 		PlayerStats.mana = PlayerStats.mMana;
 		PlayerStats.poison = 0;
+		Clock.addHours(8);
 		this.player.position.set(33, 24);
 		this.player.playerAction = true;
 		this.player.playerMoved = true;
@@ -561,7 +564,8 @@ Map.prototype.drawStore = function(game){
 				PlayerStats.gold -= this.inTransact.price;
 				game.sounds.pick.stopAndPlay();
 				Console.addMessage(msg.bought + name, "rgb(255,255,255)");
-				var it = new Item(this.inTransact.tile, new Position(-1, 0), this.inTransact);
+				var nItem = ItemFactory.getItem(this.inTransact.name, 1);
+				var it = new Item(this.inTransact.tile, new Position(-1, 0), nItem);
 				it.inWorld = false;
 				PlayerStats.armours.push(it);
 				this.inTransact = null;
@@ -617,9 +621,6 @@ Map.prototype.drawFloor = function(x, y, visible){
 		if (tile[t] === 0)  continue;
 		if (tile[t].visible == 0 && !this.reveal) continue;
 		
-		var light = false;
-		if (visible && tile[t].wasVisible == 2) light = true;
-		
 		tile[t].wasVisible = 0;
 		if (this.light){
 			tile[t].wasVisible = 2;
@@ -629,7 +630,7 @@ Map.prototype.drawFloor = function(x, y, visible){
 		if (this.light){
 			game.drawTile(tile[t].tile, new Position(x - xx, y - yy), null, false);
 			tile[t].wasVisible = 2;
-		}else if (tile[t].visible == 2 || light){
+		}else if (tile[t].visible == 2){
 			var dis = 0;
 			if (t==tlen-1){
 				xdis = Math.abs(this.player.position.x - x) / 7;
@@ -713,7 +714,8 @@ Map.prototype.drawMap = function(game){
 	this.player.playerAction = false;
 	this.player.loop(game);
 	
-	if (this.passTurn == 500 || game.keyP[32] == 1){
+	if (this.passTurn == 500 || game.keyP[32] == 1 && this.player.battle == 0){
+		Clock.addMinute();
 		Console.addMessage(msg.pass, "rgb(130,160,90)");
 		this.player.act();
 		if (game.keyP[32] == 1)
