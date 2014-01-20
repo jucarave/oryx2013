@@ -69,13 +69,17 @@
 * Blood splaters                   *
 * New UI                           *
 * Increase canvas size             *
+* Days Progress                    *
+* Remake FOV system                *
+*--------BUGS COMPLETED------------*
+* Wait during attack               *
+* Armours linked                   *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* Days Progress                    *
 * Dungeon traps                    *
 * Doors                            *
 * Variety to Dungeon               *
@@ -90,12 +94,11 @@
 ************************************
 * PENDING BUGS                     *
 ************************************
+* Random duplicated coins dropped  *
 * Fix Main Scene Space             *
-* Wait during attack               *
 * Weird random light               *
 * Enemies swap position            *
-* Rnadom first bad level           *
-* Armours linked?                  *
+* Random first bad level           *
 * Portal allows advance?           *
 *                                  *
 ************************************

@@ -10,17 +10,25 @@ var FOV = {
 		this.map = map;
 		this.distance = distance;
 		
-		this.createNode(position.clone(), new Position(0, -1), distance);
-		this.createNode(position.clone(), new Position(0, 1), distance);
+		this.createNode(position.clone(), new Position(0, -1), distance, false);
+		this.createNode(position.clone(), new Position(0, 1), distance, false);
+		this.createNode(position.clone(), new Position(1, 0), distance, false);
+		this.createNode(position.clone(), new Position(-1, 0), distance, false);
+		
+		this.createNode(position.clone(), new Position(-1, -1), distance - 2, true);
+		this.createNode(position.clone(), new Position(1, -1), distance - 2, true);
+		this.createNode(position.clone(), new Position(-1, 1), distance - 2, true);
+		this.createNode(position.clone(), new Position(1, 1), distance - 2, true);
 		
 		this.execute();
 	},
 	
-	createNode: function(position, dir, dis){
+	createNode: function(position, dir, dis, sibling){
 		var node = {
 			position: position,
 			dir: dir,
-			life: dis
+			life: dis,
+			sibling: sibling
 		};
 		
 		this.nodes.push(node);
@@ -37,17 +45,17 @@ var FOV = {
 	},
 	
 	createSideNode: function(parentNode){
+		if (!parentNode.sibling) return;
 		if (parentNode.life <= 1) return;
 		
-		if (parentNode.dir.y != 0){
-			var pos = parentNode.position.clone(); pos.sum(1, 0);
-			if (!this.isNodeAt(pos))
-				this.createNode(pos, parentNode.dir, parentNode.life - 1);
-			
-			pos = parentNode.position.clone(); pos.sum(-1, 0);
-			if (!this.isNodeAt(pos))
-				this.createNode(pos, parentNode.dir, parentNode.life - 1);
-		}
+		var pos = parentNode.position.clone();
+		var dir = new Position(parentNode.dir.x, 0);
+		var life = (parentNode.life % 2 == 0)? parentNode.life : parentNode.life + 1;
+		this.createNode(pos, dir, life);
+		
+		pos = parentNode.position.clone();
+		dir = new Position(0, parentNode.dir.y);
+		this.createNode(pos, dir, life);
 	},
 	
 	execute: function(){
@@ -59,9 +67,9 @@ var FOV = {
 				
 				if (this.map.isSolid(node.position, true)){
 					node.life = 0;
+				}else{
+					this.createSideNode(node);
 				}
-				
-				this.createSideNode(node);
 				
 				node.position.sum(node.dir);
 				node.life--;

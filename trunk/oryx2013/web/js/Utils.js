@@ -31,6 +31,10 @@ Math.iRandom = function(a, b){
 	}
 };
 
+Math.degToRad = function(degrees){
+	return degrees * Math.PI / 180;
+};
+
 Audio.prototype.stop = function(){
 	this.pause();
 	this.currentTime = 0;
