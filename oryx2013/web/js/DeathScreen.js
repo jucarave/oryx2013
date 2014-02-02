@@ -36,7 +36,10 @@ DeathScreen.prototype.draw = function(game){
 	ctx.fillText(PlayerStats.name + ", " + PlayerStats.class.name, ctx.width / 2, 70);
 	
 	ctx.fillText(msg.death1, ctx.width / 2, 200);
-	if (PlayerStats.deathCause == 's'){
+	if (PlayerStats.deathCause == 't'){
+		ctx.fillText(msg.death3 + PlayerStats.level, ctx.width / 2, 220);
+		ctx.fillText(msg.death11, ctx.width / 2, 240);
+	}else if (PlayerStats.deathCause == 's'){
 		if (PlayerStats.level == 0){
 			ctx.fillText(msg.death2, ctx.width / 2, 220);
 		}else{

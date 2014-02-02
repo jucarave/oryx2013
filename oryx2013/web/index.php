@@ -45,6 +45,7 @@
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/StartScene.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/EndScene.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Clock.js?version=<?php echo $version; ?>"></script>
+		<script type="text/javascript" src="<?php echo $contextPath; ?>js/Trap.js?version=<?php echo $version; ?>"></script>
 		<script type="text/javascript">
 			var cp = "<?php echo $contextPath; ?>";
 			var version = "<?php echo $version; ?>";

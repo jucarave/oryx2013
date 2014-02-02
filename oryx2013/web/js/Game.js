@@ -536,6 +536,216 @@ Game.prototype.gotoMap = function(map){
 	this.map.repaint = true;
 };
 
+Game.prototype.loadGame = function(){
+	var game = JSON.parse(localStorage.getItem("tull"));
+	if (!game) return false;
+	
+	PlayerStats.name = game.p.n;
+	PlayerStats.class = HeroClasses.fromId(game.p.c);
+	PlayerStats.health = game.p.h;
+	PlayerStats.mHealth = game.p.mH;
+	PlayerStats.mana = game.p.m;
+	PlayerStats.mMana = game.p.mM;
+	PlayerStats.food = game.p.f;
+	PlayerStats.lvl = game.p.l;
+	PlayerStats.exp = game.p.e;
+	PlayerStats.str = game.p.s;
+	PlayerStats.def = game.p.d;
+	PlayerStats.luk = game.p.lu;
+	PlayerStats.spd = game.p.sp;
+	PlayerStats.gold = game.p.g;
+	PlayerStats.p = game.p.p;
+	
+	PlayerStats.currentW = game.p.cw;
+	for (var i=0,len=game.p.w.length;i<len;i++){
+		var w = game.p.w[i];
+		var weapon = ItemFactory.getItem(w.n, w.s);
+		item = new Item(weapon.tile, new Position(0,0), weapon);
+		PlayerStats.weapons.push(item);
+	}
+	
+	PlayerStats.currentA = game.p.ca;
+	for (var i=0,len=game.p.a.length;i<len;i++){
+		var a = game.p.a[i];
+		var armour = ItemFactory.getItem(a.n, a.s);
+		item = new Item(armour.tile, new Position(0,0), armour);
+		PlayerStats.armours.push(item);
+	}
+	
+	PlayerStats.currentI = game.p.ci;
+	for (var i=0,len=game.p.i.length;i<len;i++){
+		var a = game.p.i[i];
+		var it = ItemFactory.getItem(a.n, a.s);
+		item = new Item(it.tile, new Position(0,0), it);
+		PlayerStats.items.push(item);
+	}
+	
+	PlayerStats.currentS = game.p.cs;
+	for (var i=0,len=game.p.spl.length;i<len;i++){
+		var s = game.p.spl[i];
+		var spl = ItemFactory.getItem(a.n, a.s);
+		item = new Item(spl.tile, new Position(0,0), spl);
+		PlayerStats.spells.push(item);
+	}
+	
+	Clock.day = game.c.d;
+	Clock.hour = game.c.h;
+	Clock.minute = game.c.m;
+	
+	for (var i=0,len=game.m.length;i<len;i++){
+		var m = game.m[i];
+	}
+	
+	return true;
+};
+
+Game.prototype.saveGame = function(){
+	var game = {
+		p: {},
+		m: [],
+		c: {
+			d: Clock.day,
+			h: Clock.hour,
+			m: Clock.minute
+		}
+	};
+	
+	game.p.n = PlayerStats.name;
+	game.p.c = PlayerStats.class.id;
+	game.p.h = PlayerStats.health;
+	game.p.mH = PlayerStats.mHealth;
+	game.p.m = PlayerStats.mana;
+	game.p.mM = PlayerStats.mMana;
+	game.p.f = PlayerStats.food;
+	game.p.l = PlayerStats.lvl;
+	game.p.e = PlayerStats.exp;
+	game.p.s = PlayerStats.str;
+	game.p.d = PlayerStats.def;
+	game.p.lu = PlayerStats.luk;
+	game.p.sp = PlayerStats.spd;
+	game.p.g = PlayerStats.gold;
+	game.p.p = PlayerStats.poison;
+	
+	game.p.w = [];
+	game.p.cw = PlayerStats.currentW;
+	for (var i=0,len=PlayerStats.weapons.length;i<len;i++){
+		var w = PlayerStats.weapons[i].item;
+		game.p.w.push({
+			n: w.name,
+			s: w.status
+		});
+	}
+	
+	game.p.a = [];
+	game.p.ca = PlayerStats.currentA;
+	for (var i=0,len=PlayerStats.armours.length;i<len;i++){
+		var a = PlayerStats.armours[i].item;
+		game.p.a.push({
+			n: a.name,
+			s: a.status
+		});
+	}
+	
+	game.p.i = [];
+	game.p.ci = PlayerStats.currentI;
+	for (var i=0,len=PlayerStats.items.length;i<len;i++){
+		var it = PlayerStats.items[i].item;
+		game.p.i.push({
+			n: it.name,
+			s: it.status
+		});
+	}
+	
+	game.p.spl = [];
+	game.p.cs = PlayerStats.currentS;
+	for (var i=0,len=PlayerStats.spells.length;i<len;i++){
+		var s = PlayerStats.spells[i].item;
+		game.p.spl.push({
+			n: s.name,
+			s: s.status
+		});
+	}
+	
+	for (var i=1,len=this.maps.length;i<len;i++){
+		var m = this.maps[i];
+		var map = {
+			m: [],
+			n: m.name,
+			p: m.player.position.clone(),
+			l: m.level,
+			t: m.total,
+			i: []
+		};
+		
+		var offset = 0;
+		var trackO = true;
+		for (var j=0,jlen=m.map.length;j<jlen;j++){
+			var row = [];
+			var empty = true;
+			for (var k=0,klen=m.map[j].length;k<klen;k++){
+				var t = m.map[j][k];
+				if (t == 0){
+					row.push(t);
+				}else{
+					empty = false;
+					trackO = false;
+					if (t[0].visible > 0)
+						row.push(t[0].tileId + "v");
+					else
+						row.push(t[0].tileId);
+				}
+			}
+			
+			if (!empty)
+				map.m[j] = row;
+			else if (trackO)
+				offset += 1;
+		}
+		
+		map.p.y -= offset;
+		
+		for (var j=0,jlen=m.instances.length;j<jlen;j++){
+			var ins = m.instances[j];
+			
+			if (ins.enemy) continue;
+			
+			var instance = {
+				x: ins.position.x,
+				y: ins.position.y - offset,
+				t: ins.tile.tile
+			};
+			
+			if (ins.item){
+				instance.i = {
+					n: ins.item.name,
+				};
+				
+				if (ins.isMoney){
+					instance.i.a = ins.item.amount;
+					instance.i.i = true;
+				}else if (ins.status){
+					instance.i.s = status;
+				}
+			}
+			
+			if (ins.isStairs){
+				instance.iS = true;
+				instance.d = ins.direction;
+				instance.l = ins.level;
+				instance.iH = ins.isHole;
+				instance.dN = ins.dungeonName;
+			}
+			
+			map.i.push(instance);
+		}
+		
+		game.m.push(map);
+	}
+	
+	var str = JSON.stringify(game);
+	localStorage.setItem("tull", str);
+};
+
 Game.prototype.newGame = function(){
 	var g = this;
 	if (g.eng.imagesReady()){

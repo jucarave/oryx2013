@@ -71,21 +71,22 @@
 * Increase canvas size             *
 * Days Progress                    *
 * Remake FOV system                *
+* Dungeon traps                    *
 *--------BUGS COMPLETED------------*
 * Wait during attack               *
 * Armours linked                   *
+* Fix Main Scene Space             *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************
-* Dungeon traps                    *
+* Progress Saving                  *
+* Progress Restore                 * 
 * Doors                            *
 * Variety to Dungeon               *
 * New Tull                         *
-* Progress Saving                  *
-* Progress Restore                 *
 * Music                            *
 *                                  *
 ************************************
@@ -95,7 +96,6 @@
 * PENDING BUGS                     *
 ************************************
 * Random duplicated coins dropped  *
-* Fix Main Scene Space             *
 * Weird random light               *
 * Enemies swap position            *
 * Random first bad level           *

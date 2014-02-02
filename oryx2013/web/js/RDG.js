@@ -319,20 +319,28 @@ var RDG = {
 			
 			room = null;
 		}
-	}
-};
-
-
-function mapToText(map){
-	var text = "";
-	for (var y=0;y<map.length;y++){
-		for (var x=0;x<map[y].length;x++){
-			text += map[y][x];
+	},
+	
+	createFromData: function(data){
+		var map = [];
+		for (var i=0,len=data.length;i<len;i++){
+			if (data[i] == null) continue;
+			
+			map[i] = [];
+			for (var j=0,jlen=data[i].length;j<jlen;j++){
+				var t = data[i][j];
+				var v = false;
+				
+				if (t.indexOf("v") != -1){
+					t = parseInt(t, 10);
+					v = true;
+				}
+				
+				map[i][j] = t;
+				map[i][j].visible = v;
+			}
 		}
 		
-		text += "\n";
+		
 	}
-	
-	console.log(text);
-}
-
+};
