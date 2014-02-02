@@ -66,14 +66,19 @@ MainScreen.prototype.step = function(game){
 		game.keyP[65] = 2;
 	}else if (game.keyP[66] == 1){
 		game.scene = new Instructions();
-		game.keyP[65] = 2;
-	}else if (game.keyP[68] == 1){
-		location.href = exitPath;
-		game.keyP[68] = 2;
+		game.keyP[66] = 2;
 	}else if (game.keyP[67] == 1){
+		if (game.loadGame()){
+			game.gotoMap({map: "town"});
+		}
+		game.keyP[67] = 2;
+	}else if (game.keyP[68] == 1){
 		var l = (lang == "es")? "en" : "es";
 		location.href = cp + "?lang=" + l;
-		game.keyP[67] = 2;
+		game.keyP[68] = 2;
+	}else if (game.keyP[69] == 1){
+		location.href = exitPath;
+		game.keyP[69] = 2;
 	}
 };
 
@@ -89,8 +94,9 @@ MainScreen.prototype.draw = function(game){
 	ctx.textAlign = "center";
 	ctx.fillText(msg.newAdventure, ctx.width / 2, 380);
 	ctx.fillText(msg.instructions, ctx.width / 2, 400);
-	ctx.fillText(msg.language, ctx.width / 2, 420);
-	ctx.fillText(msg.exitGame, ctx.width / 2, 440);
+	ctx.fillText(msg.loadGame, ctx.width / 2, 420);
+	ctx.fillText(msg.language, ctx.width / 2, 440);
+	ctx.fillText(msg.exitGame, ctx.width / 2, 460);
 	
 	ctx.fillText(msg.info1, ctx.width / 2, ctx.height - 30);
 	ctx.fillText(msg.info2, ctx.width / 2, ctx.height - 10);

@@ -3,8 +3,9 @@
 	
 	msg.newAdventure = "a) To start a new adventure";
 	msg.instructions = "b) To see the instructions";
-	msg.language = "c) Para cambiar a español";
-	msg.exitGame = "d) To exit the game";
+	msg.loadGame = "c) To load the previous adventure";
+	msg.language = "d) Para cambiar a español";
+	msg.exitGame = "e) To exit the game";
 	msg.info1 = "TULL, Developed by Camilo Ramírez (Jucarave) 2013";
 	msg.info2 = "For the trials of oryx 2013";
 	
@@ -31,8 +32,8 @@
 	msg.classesEnt = "PRESS ENTER WHEN YOU ARE READY OR ESC TO RETURN.";
 	msg.correctChar = "IS THIS CHARACTER CORRECT? Y / N";
 	
-	msg.story1 = "In the depths of a corner of the world, ancient forgotten\nruins are buried.  It's been one thousand years since the\nrealm  of Ias Lord of the darkness fell, and  everyone on\nearth forgot about the pain and suffering he caused.\n\nBut along all these centuries Ias has been on his chamber,\ngrowing in  strength  and hatred,  reuniting an  army and\nwaiting for the perfect time  to rise into the world once\nagain.";
-	msg.story2 = "A recent exploration has connected an human graveyard with\nthe ruins of Ias...  the worst then took place: legions of\nmonsters are crawling  to the surface obeying their master.\nThe town of Tull is now threaten by the return of Ias, and\nthe king  has called out for all warriors to get  into the\ndungeon and destroy Ias and his minions.\n\nYou came from far away lands after hearing the rumor of the\nreturn of an ancient demon, and decided to help to the town\nof Tull.";
+	msg.story1 = "In the depths of a corner of the world, ancient forgotten  ruins are\nburied.  It's been one thousand years since the realm of Ias Lord of\nthe darkness fell, and  everyone on  earth forgot about the pain and\nsuffering he caused.\n\nBut along all these centuries  Ias has been on  his chamber, growing\nin  strength   and hatred,  reuniting an  army  and  waiting for the\nperfect time  to rise into the world once again.";
+	msg.story2 = "A recent exploration has  connected an human  graveyard with the ruins\nof Ias...  the worst then took place: legions of monsters are crawling\nto the surface obeying their master.  The town of Tull is now threaten\nby the return of Ias, and the king  has called out for all warriors to\nget  into the dungeon and destroy Ias and his minions.\n\nYou came from far away lands after hearing the  rumor of the return of\nan ancient demon, and decided to help to the town of Tull.";
 	msg.storeContinue = "[Press Enter to continue]";
 	
 	msg.pass = "Pass";
@@ -45,7 +46,10 @@
 	msg.portalLeads = "This portal leads to ";
 	msg.portalTown = "This portal leads to the town";
 	
-	msg.playerHurt = " > The X hit Y points to you";
+	msg.trapHurt = "> You step on a trap and loose X points";
+	msg.trapAvoid = "You avoid a trap";
+	
+	msg.playerHurt = "> The X hit Y points to you";
 	msg.armourDmg = "Your armour got damaged!";
 	msg.nothingThere = "There is nothing in there";
 	msg.missed = "Missed!";
@@ -147,9 +151,10 @@
 	msg.death8 = "were slayed by Ias.";
 	msg.death9 = "were slayed by a(n) X on the level ";
 	msg.death10 = "of the dungeon ";
+	msg.death11 = "but you activated a trap that kills you";
 	msg.reset = "Press [Enter] key to return to the main screen";
 	
-	msg.ending = "In your fight with evil Ias, you finally give end to his life\ngranting peace not only to Tull but to earth itself. However,\nyou decide  not to return with the king to report  your feat,\ninstead you abandon  the town before anyone  notices you and\ncontinue your journey through the desert. This is not the end\nof your journey but it will be the last time the town of Tull\nor any other hears about you.";
+	msg.ending = "In your fight with evil Ias, you finally give  end to his  life granting\npeace not only to Tull but to earth itself.  However, you  decide not to\nreturn with the king to report  your feat, instead  you abandon the town\nbefore anyone  notices you and continue your journey through the desert.\nThis  is  not the end  of your  journey but it will be the last time the\ntown of Tull or any other hears about you.";
 	
 	msg.inst = "Ingame instructions";
 	msg.instQ = "Q: Open the weapons menu";

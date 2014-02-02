@@ -3,8 +3,9 @@
 	
 	msg.newAdventure = "a) Para comenzar una nueva aventura";
 	msg.instructions = "b) Para ver las instrucciones";
-	msg.language = "c) To switch to English";
-	msg.exitGame = "d) Para salir del juego";
+	msg.loadGame = "c) Para cargar la aventura anterior";
+	msg.language = "d) To switch to English";
+	msg.exitGame = "e) Para salir del juego";
 	msg.info1 = "TULL, Desarrollado por Camilo Ramírez (Jucarave) 2013";
 	msg.info2 = "para 'trials of oryx 2013'";
 	
@@ -31,8 +32,8 @@
 	msg.classesEnt = "PRESIONE ENTER CUANDO ESTE LISTO O ESC PARA VOLVER";
 	msg.correctChar = "¿ESTE PERSONAJE ESTÁ CORRECTO? Y/N";
 	
-	msg.story1 = "En  las  profundidades  en la  esquina  del  mundo, ruinas\nantiguas  están  enterradas. Han pasado mil años desde que\nel reino de Ias Señor de la  oscuridad cayó, y todos en la\ntierra  se olvidaron del dolor y sufrimiento que el causó.\n\nPero a lo largo de  todos estos siglos Ias ha estado en su\ncámara,  creciendo  en  fuerza  y  en  odio,  reuniendo un\nejercito  esperando  por el momento perfecto para ascender\nal mundo nuevamente.";
-	msg.story2 = "Una exploración  reciente ha conectado un  cementerio humano\ncon las ruinas de Ias... Entonces lo  peor ocurrió: legiones\nde   monstruos  están  arrastrándose   hacia  la  superficie\nobedeciendo a  su maestro.  El pueblo de Tull  está bajo  la\namenaza del  regreso de Ias, el  rey ha llamado a  todos los\nguerreros para que se  adentren en el calabozo y destruyan a\nIas y a sus sirvientes.\n\nLlegas al  pueblo  desde tierras  lejanas  después  de  haber\nescuchado del retorno de un antiguo demonio, y decides ayudar\nal poblado de Tull.";
+	msg.story1 = "En  las  profundidades  en  la   esquina  del  mundo,  ruinas antiguas\nestán  enterradas. Han pasado mil años desde que el reino de Ias Señor\nde la  oscuridad cayó, y todos en la tierra  se  olvidaron del dolor y\nsufrimiento que el causó.\n\nPero a lo largo de  todos  estos  siglos Ias ha  estado  en su cámara,\ncreciendo  en  fuerza  y  en  odio,  reuniendo  un ejercito  esperando\npor el momento perfecto para ascender al mundo nuevamente.";
+	msg.story2 = "Una exploración  reciente  ha  conectado  un  cementerio humano con las\nruinas de  Ias... Entonces  lo  peor  ocurrió:  legiones de   monstruos\nestán  arrastrándose   hacia  la  superficie obedeciendo a  su maestro.\nEl pueblo de Tull  está bajo  la  amenaza  del  regreso de Ias, el  rey\nha llamado a  todos los guerreros  para que se  adentren en el calabozo\ny destruyan a Ias y a sus sirvientes.\n\nLlegas al  pueblo  desde tierras  lejanas  después  de  haber escuchado\ndel retorno de un antiguo demonio, y decides ayudar al poblado de Tull.";
 	msg.storeContinue = "[Presione Enter para continuar]";
 	
 	msg.pass = "Pasar turno";
@@ -44,6 +45,9 @@
 	msg.berserkOver = "El efecto Berserk se ha agotado";
 	msg.portalLeads = "Este portal conduce a ";
 	msg.portalTown = "Este portal conduce al pueblo.";
+	
+	msg.trapHurt = "> Pisas una trampa y pierdes X puntos!";
+	msg.trapAvoid = "Esquivas una trampa";
 	
 	msg.playerHurt = " > El X te hace Y puntos de daño";
 	msg.armourDmg = "¡Tu armadura se ha dañado!";
@@ -147,9 +151,10 @@
 	msg.death8 = "fuistes asesinado por Ias.";
 	msg.death9 = "fuistes asesinado por un(a) X en el nivel ";
 	msg.death10 = "del calabozo ";
+	msg.death11 = "Pero activas una trampa con la cual mueres";
 	msg.reset = "presione [Enter] para volver a la pantalla de inicio.";
 	
-	msg.ending = "En tu pelea con el malvado Ias, finalmente pones fin a su vida\ngarantizando  la paz no solo de  Tull si no de toda la tierra.\ndecides no  regresar al con el rey para  reportar tu victoria,\nen  cambio decides  abandonar el pueblo  antes de que nadie te\nnote y  continuas con tu viaje a  través del desierto. Este no\nes  el fin de tu viaje  pero será la ultima vez  que el pueblo\nde Tull o alguien mas escuche de vos.";
+	msg.ending = "En tu pelea con el malvado Ias, finalmente das fin a su vida asegurando\nla paz no solo de  Tull si no de toda la tierra. decides no regresar al\ncon el rey para  reportar tu victoria, en  cambio decides  abandonar el\npueblo  antes  de que nadie te note y  continuas con tu viaje a  través\ndel desierto.  Este no es  el fin de tu viaje  pero será la  ultima vez\nque el pueblo de Tull o alguien mas escuche tu nombre.";
 	
 	msg.inst = "Instrucciones del juego";
 	msg.instQ = "Q: Abre el menú de armas.";

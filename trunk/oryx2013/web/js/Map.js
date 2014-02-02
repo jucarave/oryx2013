@@ -1,7 +1,6 @@
 function Map(params){
 	this.map = null;
 	this.name = "";
-	this.tiles = [];
 	this.instances = [];
 	this.enemies = [];
 	this.view = new Position( 0, 0);
@@ -23,7 +22,14 @@ function Map(params){
 	this.repaint = false;
 	this.reveal = false;
 	
-	if (params.random){
+	if (params.data){
+		var d = params.data;
+		
+		this.name = d.n;
+		this.total = d.t;
+		this.level = d.l;
+		
+	}else if (params.random){
 		var lev = (params.level == 20)? 1 : params.level;
 		var l = Math.ceil(params.level / 5);
 		
@@ -37,8 +43,10 @@ function Map(params){
 		this.parseMap();
 		
 		this.createItems();
-		if (params.level < 20)
+		if (params.level < 20){
 			this.createEnemies();
+			this.createTraps();
+		}
 		this.createBoss();
 	}else if (params.map){
 		this.loadMap(params.map);
@@ -252,6 +260,47 @@ Map.prototype.createBoss = function(){
 	enemy.mapManager = this;
 	this.instances.push(enemy);
 	this.enemies.push(enemy);
+};
+
+Map.prototype.createTraps = function(){
+	var n = 2 + this.level + Math.iRandom(this.level, this.level);
+	
+	for (var i=0;i<n;i++){
+		var x, y;
+		
+		var counter = 0;
+		while (true){
+			if (counter == 1000) break;
+			x = Math.iRandom(this.map[0].length - 1);
+			y = Math.iRandom(this.map.length - 1);
+			
+			if (this.map[y][x] != 0 && !this.getEnemyAt(x, y)){
+				var t = this.map[y][x];
+				if (t instanceof Array) t = t[0];
+				if (t <= 0) continue;
+				var tileId = (t.tileId)? t.tileId : t;
+				var tile = Tileset.dungeon.getByTileId(tileId, this.level);
+				if (tile.isFloor){
+					counter = 0;
+					break;
+				}
+			}
+			counter++;
+		}
+		
+		if (counter > 0) continue;
+		
+		var tile = Tileset.misc.trap;
+		var dmg = 5 + this.level * 2;
+		if (Math.iRandom(10) == 6){
+			tile = Tileset.misc.trap2;
+			dmg = Math.round(8 + this.level * 2.5);
+		}
+		
+		var trap = new Trap(tile, new Position(x, y), dmg);
+		trap.mapManager = this;
+		this.instances.push(trap);
+	}
 };
 
 Map.prototype.createEnemies = function(percent){
