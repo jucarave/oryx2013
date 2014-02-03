@@ -329,18 +329,17 @@ var RDG = {
 			map[i] = [];
 			for (var j=0,jlen=data[i].length;j<jlen;j++){
 				var t = data[i][j];
-				var v = false;
+				var v = 0;
 				
-				if (t.indexOf("v") != -1){
+				if (((typeof t) == "string") && t.indexOf("v") != -1){
 					t = parseInt(t, 10);
-					v = true;
+					v = 200;
 				}
 				
-				map[i][j] = t;
-				map[i][j].visible = v;
+				map[i][j] = t + v;
 			}
 		}
 		
-		
+		return map;
 	}
 };
