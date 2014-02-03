@@ -28,7 +28,35 @@ function Map(params){
 		this.name = d.n;
 		this.total = d.t;
 		this.level = d.l;
+		this.key = d.k;
 		
+		this.map = RDG.createFromData(d.m);
+		for (var i=0;i<this.map.length;i++){
+			if (this.map[i] == undefined){
+				this.map.splice(i,1);
+				i--;
+			}
+		}
+		
+		this.setPlayer(d.p.x, d.p.y);
+		this.player.mapManager = this;
+		
+		for (var i=0;i<d.i.length;i++){
+			var ins = d.i[i];
+			if (ins.iS){
+				var name = ins.t.split(".");
+				if (name[0] == "m") name[0] = "misc";
+				var tile = Tileset[name[0]][name[1]];
+				
+				var ins = new Stairs(tile, new Position(ins.x, ins.y), ins.d, ins.dN);
+				ins.mapManager = this;
+				ins.level = ins.l;
+				
+				this.instances.push(ins);
+			}
+		}
+		
+		this.parseMap();
 	}else if (params.random){
 		var lev = (params.level == 20)? 1 : params.level;
 		var l = Math.ceil(params.level / 5);
@@ -483,19 +511,24 @@ Map.prototype.parseMap = function(){
 			
 			this.map[i][j] = [];
 			for (var t=0;t<tile.length;t++){
+				var visible = 0;
+				if (this.light) visible = 2;
+				if (tile[t] > 200){ 
+					visible = 1;
+					tile[t] -= 200;
+				}
+				
 				if (Tileset.dungeon.getByTileId(tile[t], this.level).isWall && this.map[i + 1]){
 					var bt = this.map[i + 1][j];
 					if (bt instanceof Array) bt = this.map[i + 1][j][t];
 					
-					if (bt){
+					if (bt && bt < 200){
 						if (Tileset.dungeon.getByTileId(bt, this.level).isWall){
 							tile[t]++;
 						}
 					}
 				}
 					
-				var visible = 0;
-				if (this.light) visible = 2;
 				this.map[i][j][t] = {
 					tileId: tile[t],
 					tile: Tileset.dungeon.getByTileId(tile[t], this.level),

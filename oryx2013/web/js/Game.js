@@ -594,6 +594,9 @@ Game.prototype.loadGame = function(){
 	
 	for (var i=0,len=game.m.length;i<len;i++){
 		var m = game.m[i];
+		
+		var map = new Map({data: m});
+		this.maps.push(map);
 	}
 	
 	return true;
@@ -674,6 +677,7 @@ Game.prototype.saveGame = function(){
 			p: m.player.position.clone(),
 			l: m.level,
 			t: m.total,
+			k: m.key,
 			i: []
 		};
 		
