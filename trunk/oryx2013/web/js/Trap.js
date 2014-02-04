@@ -3,6 +3,7 @@ function Trap(tile, position, damage){
 	this.tile = tile;
 	this.damage = damage;
 	
+	this.isTrap = true;
 	this.active = false;
 	this.mapManager = null;
 	this.inWorld = true;

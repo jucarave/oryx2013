@@ -738,6 +738,9 @@ Game.prototype.saveGame = function(){
 				instance.l = ins.level;
 				instance.iH = ins.isHole;
 				instance.dN = ins.dungeonName;
+			}else if (ins.isTrap){
+				instance.iT = true;
+				instance.di = ins.active;
 			}
 			
 			map.i.push(instance);

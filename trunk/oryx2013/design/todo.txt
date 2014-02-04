@@ -95,6 +95,7 @@
 ************************************
 * PENDING BUGS                     *
 ************************************
+* Potions shows colors in inventory*
 * Random duplicated coins dropped  *
 * Weird random light               *
 * Enemies swap position            *
