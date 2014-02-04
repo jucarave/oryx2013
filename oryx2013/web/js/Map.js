@@ -43,9 +43,11 @@ function Map(params){
 		
 		for (var i=0;i<d.i.length;i++){
 			var ins = d.i[i];
+			var name = ins.t.split(".");
+			if (name[0] == "m") name[0] = "misc"; else
+			if (name[0] == "i") name[0] = "itemsWeapons";
+			
 			if (ins.iS){
-				var name = ins.t.split(".");
-				if (name[0] == "m") name[0] = "misc";
 				var tile = Tileset[name[0]][name[1]];
 				
 				var ins = new Stairs(tile, new Position(ins.x, ins.y), ins.d, ins.dN);
@@ -53,10 +55,28 @@ function Map(params){
 				ins.level = ins.l;
 				
 				this.instances.push(ins);
+			}else if (ins.iT){
+				var tile = Tileset[name[0]][name[1]];
+				
+				var dmg = 5 + this.level * 2;
+				if (Math.iRandom(10) == 6){
+					tile = Tileset.misc.trap2;
+					dmg = Math.round(8 + this.level * 2.5);
+				}
+				var trap = new Trap(tile, new Position(ins.x, ins.y), dmg);
+				trap.active = ins.di;
+				trap.mapManager = this;
+				this.instances.push(trap);
+			}else if (ins.i){
+				var it = ItemFactory.getItem(ins.i.n, 1);
+				
+				var item = new Item(it.tile, new Position(ins.x, ins.y), it);
+				item.mapManager = this;
+				this.instances.push(item);
 			}
 		}
 		
-		this.parseMap();
+		this.parseMap(true);
 	}else if (params.random){
 		var lev = (params.level == 20)? 1 : params.level;
 		var l = Math.ceil(params.level / 5);
@@ -484,7 +504,7 @@ Map.prototype.loadInstances = function(game){
 	}
 };
 
-Map.prototype.parseMap = function(){
+Map.prototype.parseMap = function(fromData){
 	for (var i= 0,len=this.map.length;i<len;i++){
 		for (var j= 0,jlen=this.map[i].length;j<jlen;j++){
 			var tile = this.map[i][j];
@@ -518,7 +538,7 @@ Map.prototype.parseMap = function(){
 					tile[t] -= 200;
 				}
 				
-				if (Tileset.dungeon.getByTileId(tile[t], this.level).isWall && this.map[i + 1]){
+				if (!fromData && Tileset.dungeon.getByTileId(tile[t], this.level).isWall && this.map[i + 1]){
 					var bt = this.map[i + 1][j];
 					if (bt instanceof Array) bt = this.map[i + 1][j][t];
 					
