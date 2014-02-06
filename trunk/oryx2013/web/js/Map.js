@@ -29,7 +29,7 @@ function Map(params){
 		this.level = d.l;
 		this.key = d.k;
 		
-		this.map = RDG.createFromData(d.m);
+		this.map = RDG.createFromData(d.m, d.l);
 		for (var i=0;i<this.map.length;i++){
 			if (this.map[i] == undefined){
 				this.map.splice(i,1);
