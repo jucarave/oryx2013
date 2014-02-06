@@ -26,7 +26,6 @@ function Map(params){
 		var d = params.data;
 		
 		this.name = d.n;
-		this.total = d.t;
 		this.level = d.l;
 		this.key = d.k;
 		
@@ -67,6 +66,12 @@ function Map(params){
 				trap.active = ins.di;
 				trap.mapManager = this;
 				this.instances.push(trap);
+			}else if (ins.iM){
+				var it = ItemFactory.getMoney(ins.i.a);
+				var item = new Item(it.tile.getColor(255,255,0), new Position(ins.x, ins.y), it);
+				item.mapManager = this;
+				
+				this.instances.push(item);
 			}else if (ins.i){
 				var it = ItemFactory.getItem(ins.i.n, 1);
 				
@@ -77,6 +82,7 @@ function Map(params){
 		}
 		
 		this.parseMap(true);
+		this.createEnemies();
 	}else if (params.random){
 		var lev = (params.level == 20)? 1 : params.level;
 		var l = Math.ceil(params.level / 5);
