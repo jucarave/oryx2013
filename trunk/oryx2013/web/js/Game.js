@@ -724,9 +724,9 @@ Game.prototype.saveGame = function(){
 					n: ins.item.name,
 				};
 				
-				if (ins.isMoney){
+				if (ins.item.isMoney){
 					instance.i.a = ins.item.amount;
-					instance.i.i = true;
+					instance.iM = true;
 				}else if (ins.status){
 					instance.i.s = status;
 				}
