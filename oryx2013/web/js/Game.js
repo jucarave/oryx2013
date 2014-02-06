@@ -669,8 +669,9 @@ Game.prototype.saveGame = function(){
 		});
 	}
 	
-	for (var i=1,len=this.maps.length;i<len;i++){
+	for (var i=0,len=this.maps.length;i<len;i++){
 		var m = this.maps[i];
+		if (m.key == "town") continue;
 		var map = {
 			m: [],
 			n: m.name,

@@ -321,7 +321,7 @@ var RDG = {
 		}
 	},
 	
-	createFromData: function(data){
+	createFromData: function(data, level){
 		var map = [];
 		for (var i=0,len=data.length;i<len;i++){
 			if (data[i] == null) continue;
@@ -337,6 +337,36 @@ var RDG = {
 				}
 				
 				map[i][j] = t + v;
+			}
+		}
+		
+		map = this.setGarbageToMap(map, level);
+		
+		return map;
+	},
+	
+	setGarbageToMap: function(map, level){
+		var numberOfRooms = level * 2 + Math.iRandom(2);
+		var n = numberOfRooms + Math.iRandom(numberOfRooms * 3);
+		
+		var h = map.length;
+		var w = map[map.length-1].length;
+		
+		for (var i=0;i<n;i++){
+			var x = Math.iRandom(0, w - 3);
+			var y = Math.iRandom(1, h - 3);
+			
+			var tile = map[y][x];
+			if (tile != 1 && tile != 201){
+				i--;
+				continue;
+			}
+			
+			var nTile = Math.iRandom(5, 9);
+			if (map[y][x] instanceof Array){
+				map[y][x].push(nTile);
+			}else{
+				map[y][x] = [map[y][x], nTile];
 			}
 		}
 		
