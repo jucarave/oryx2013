@@ -3,6 +3,8 @@ function DeathScreen(){
 	this.skull = Tileset.itemsWeapons.skull;
 	
 	this.tilePos = new Position(2.5, 2.5);
+	
+	localStorage.removeItem("tull");
 }
 
 DeathScreen.prototype.step = function(game){

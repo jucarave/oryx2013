@@ -69,7 +69,7 @@ MainScreen.prototype.step = function(game){
 		game.keyP[66] = 2;
 	}else if (game.keyP[67] == 1){
 		if (game.loadGame()){
-			game.gotoMap({map: "town"});
+			game.gotoMap({map: "town"}, new Position(33, 24));
 		}
 		game.keyP[67] = 2;
 	}else if (game.keyP[68] == 1){

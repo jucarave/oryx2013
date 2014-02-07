@@ -215,7 +215,12 @@ Game.prototype.drawPlayerMenu = function(bucket, current, x, canDrop){
 		this.eng.drawImage(this.sprites[tile.img], x, y, tile.subImg);
 		if (bucket[i]){
 			var item = bucket[i];
-			var wtile = (this.sprites[item.tile.img])? this.sprites[item.tile.img] : item.tile.img;
+			var rtile = item.tile.img;
+			if (item.item.effect && !item.item.effect.used){
+				rtile = item.tile.parent.img;
+			}
+			
+			var wtile = (this.sprites[rtile])? this.sprites[rtile] : rtile;
 			this.eng.drawImage(wtile, x, y, item.tile.subImg);
 			
 			if (this.selectedOpt == i && this.keyP[68] == 1 && canDrop){
@@ -509,7 +514,7 @@ Game.prototype.repoblateDungeons = function(percentage){
 	}
 };
 
-Game.prototype.gotoMap = function(map){
+Game.prototype.gotoMap = function(map, playerPos){
 	this.scene = null;
 	if (map.map){
 		this.map = null;
@@ -528,6 +533,10 @@ Game.prototype.gotoMap = function(map){
 		this.map = new Map(map);
 		this.maps.push(this.map);
 		this.map.loadInstances(this);
+	}
+	
+	if (playerPos){
+		this.map.player.position.set(playerPos);
 	}
 	
 	this.map.player.act();
@@ -739,6 +748,8 @@ Game.prototype.saveGame = function(){
 				instance.l = ins.level;
 				instance.iH = ins.isHole;
 				instance.dN = ins.dungeonName;
+				
+				console.log(instance);
 			}else if (ins.isTrap){
 				instance.iT = true;
 				instance.di = ins.active;
