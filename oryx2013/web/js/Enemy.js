@@ -172,6 +172,7 @@ Enemy.prototype.splitBlood = function(){
 		var xx = pos.x + Math.iRandom(-1, 1);
 		var yy = pos.y + Math.iRandom(-1, 1);
 		
+		if (!this.mapManager.map[yy]) continue;
 		if (this.mapManager.map[yy][xx] == 0) continue;
 		if (this.mapManager.isSolid(new Position(xx, yy), true)) continue;
 		

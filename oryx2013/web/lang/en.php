@@ -318,4 +318,6 @@
 	
 	msg.enPoison = "the X poisoned you!";
 	msg.enSteal = "the X steals you Y gold coins!";
+	
+	msg.saveGame = "Game saved!";
 </script>

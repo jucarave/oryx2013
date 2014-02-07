@@ -72,21 +72,20 @@
 * Days Progress                    *
 * Remake FOV system                *
 * Dungeon traps                    *
+* Progress Saving                  *
+* Progress Restore                 *
 *--------BUGS COMPLETED------------*
 * Wait during attack               *
 * Armours linked                   *
 * Fix Main Scene Space             *
+* Potions shows colors in inventory*
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
-************************************
-* Progress Saving                  *
-* Progress Restore                 * 
-* Doors                            *
-* Variety to Dungeon               *
-* New Tull                         *
+************************************ 
+* Destroy with the time            *
 * Music                            *
 *                                  *
 ************************************
@@ -95,7 +94,6 @@
 ************************************
 * PENDING BUGS                     *
 ************************************
-* Potions shows colors in inventory*
 * Random duplicated coins dropped  *
 * Weird random light               *
 * Enemies swap position            *
@@ -110,5 +108,8 @@
 * Sprite fonts                     *
 * Autobump Attack                  *
 * Torchs in world                  *
+* Doors                            *
+* Variety to Dungeon               *
+* New Tull                         *
 *                                  *
 ************************************

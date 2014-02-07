@@ -356,6 +356,10 @@ var RDG = {
 			var x = Math.iRandom(0, w - 3);
 			var y = Math.iRandom(1, h - 3);
 			
+			if (!map[y]){
+				i--;
+				continue;
+			}
 			var tile = map[y][x];
 			if (tile != 1 && tile != 201){
 				i--;

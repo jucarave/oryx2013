@@ -49,11 +49,11 @@ function Map(params){
 			if (ins.iS){
 				var tile = Tileset[name[0]][name[1]];
 				
-				var ins = new Stairs(tile, new Position(ins.x, ins.y), ins.d, ins.dN);
-				ins.mapManager = this;
-				ins.level = ins.l;
+				var sta = new Stairs(tile, new Position(ins.x, ins.y), ins.d, ins.dN);
+				sta.mapManager = this;
+				sta.level = ins.l;
 				
-				this.instances.push(ins);
+				this.instances.push(sta);
 			}else if (ins.iT){
 				var tile = Tileset[name[0]][name[1]];
 				
@@ -539,7 +539,10 @@ Map.prototype.parseMap = function(fromData){
 			for (var t=0;t<tile.length;t++){
 				var visible = 0;
 				if (this.light) visible = 2;
-				if (tile[t] > 200){ 
+				if (tile[t] instanceof Array && tile[t][0] > 200){
+					visible = 1;
+					tile[t] -= 200;
+				}else if (tile[t] > 200){ 
 					visible = 1;
 					tile[t] -= 200;
 				}
@@ -588,6 +591,9 @@ Map.prototype.inHotel = function(game){
 		this.player.setView(game);
 		this.store = null;
 		game.repoblateDungeons(1);
+		
+		game.saveGame();
+		Console.addMessage(msg.saveGame, "rgb(255,255,0)");
 	}else if (game.keyP[78] == 1){
 		Console.addMessage(msg.hNiceDay, "rgb(255,255,255)");
 		this.store = null;
@@ -735,7 +741,9 @@ Map.prototype.drawFloor = function(x, y, visible){
 			tile[t].visible = 2;
 		}
 		
-		if (this.light){
+		var day = (Clock.hour >= 8 && Clock.hour < 19);
+		
+		if (this.light && day){
 			game.drawTile(tile[t].tile, new Position(x - xx, y - yy), null, false);
 			tile[t].wasVisible = 2;
 		}else if (tile[t].visible == 2){
