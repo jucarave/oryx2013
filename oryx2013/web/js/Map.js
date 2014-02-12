@@ -539,12 +539,14 @@ Map.prototype.parseMap = function(fromData){
 			for (var t=0;t<tile.length;t++){
 				var visible = 0;
 				if (this.light) visible = 2;
-				if (tile[t] instanceof Array && tile[t][0] > 200){
+				
+				if (tile[t] > 200){ 
 					visible = 1;
 					tile[t] -= 200;
-				}else if (tile[t] > 200){ 
-					visible = 1;
-					tile[t] -= 200;
+				}
+				
+				if (t > 0 && this.map[i][j][0].visible){
+					visible = this.map[i][j][0].visible;
 				}
 				
 				if (!fromData && Tileset.dungeon.getByTileId(tile[t], this.level).isWall && this.map[i + 1]){
@@ -557,7 +559,7 @@ Map.prototype.parseMap = function(fromData){
 						}
 					}
 				}
-					
+				
 				this.map[i][j][t] = {
 					tileId: tile[t],
 					tile: Tileset.dungeon.getByTileId(tile[t], this.level),

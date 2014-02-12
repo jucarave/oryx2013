@@ -78,14 +78,14 @@
 * Wait during attack               *
 * Armours linked                   *
 * Fix Main Scene Space             *
-* Potions shows colors in inventory*
+* Potions colors in inventory      *
 *                                  *
 ************************************
 
 ************************************
 * ACTIVITIES PENDING               *
 ************************************ 
-* Destroy with the time            *
+* Destroy town with the time       *
 * Music                            *
 *                                  *
 ************************************

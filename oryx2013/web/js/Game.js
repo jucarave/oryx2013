@@ -508,7 +508,6 @@ Game.prototype.clearScreen = function(color){
 
 Game.prototype.repoblateDungeons = function(percentage){
 	for (var i=0;i<this.maps.length;i++){
-		if (this.maps[i].key == this.map.map) continue;
 		if (this.maps[i].total == 0) continue;
 		this.maps[i].createEnemies(percentage);
 	}
