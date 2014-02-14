@@ -591,7 +591,7 @@ Game.prototype.loadGame = function(){
 	PlayerStats.currentS = game.p.cs;
 	for (var i=0,len=game.p.spl.length;i<len;i++){
 		var s = game.p.spl[i];
-		var spl = ItemFactory.getItem(a.n, a.s);
+		var spl = ItemFactory.getItem(s.n, s.s);
 		item = new Item(spl.tile, new Position(0,0), spl);
 		PlayerStats.spells.push(item);
 	}
