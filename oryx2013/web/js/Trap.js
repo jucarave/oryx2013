@@ -28,6 +28,7 @@ Trap.prototype.step = function(game){
 				visible: 0,
 				wasVisible: true
 			});
+			this.mapManager.normalizeVisible(this.position.x, this.position.y);
 			
 			if (PlayerStats.health <= 0){
 				PlayerStats.deathCause = "t";

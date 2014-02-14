@@ -157,6 +157,7 @@ Enemy.prototype.splitBlood = function(){
 		visible: 0,
 		wasVisible: true
 	});
+	this.mapManager.normalizeVisible(this.position.x,this.position.y);
 	
 	if (this.enemy.hp > 0) return;
 	
@@ -183,6 +184,7 @@ Enemy.prototype.splitBlood = function(){
 			visible: 0,
 			wasVisible: true
 		});
+		this.mapManager.normalizeVisible(this.position.x,this.position.y);
 	}
 };
 

@@ -205,6 +205,20 @@ Map.prototype.isVisible = function(position){
 	return false;
 };
 
+Map.prototype.normalizeVisible = function(x, y){
+	if (y < 0 || x < 0) return;
+	if (y >= this.map.length || x >= this.map[0].length) return;
+	var tile = this.map[y][x];
+	if (!tile) return;
+	var l = this.map[y][x][0].visible;
+	var wl = this.map[y][x][0].wasVisible;
+	for (var i=1,len=tile.length;i<len;i++){
+		if (tile[i] === 0) return;
+		tile[i].visible = l;
+		tile[i].wasVisible = wl;
+	}
+};
+
 Map.prototype.setVisible = function(position, visible){
 	if (position.y < 0 || position.x < 0) return;
 	if (position.y >= this.map.length || position.x >= this.map[0].length) return;
@@ -733,6 +747,7 @@ Map.prototype.drawFloor = function(x, y, visible){
 	
 	var tile = this.map[y][x];
 	if (!tile && tile !== 0){ console.log(x + "_" + y); }
+	var setDark = false;
 	for (var t=0,tlen=tile.length;t<tlen;t++){
 		if (tile[t] === 0)  continue;
 		if (tile[t].visible == 0 && !this.reveal) continue;
@@ -759,7 +774,8 @@ Map.prototype.drawFloor = function(x, y, visible){
 			game.drawTile(tile[t].tile, new Position(x - xx, y - yy), null, dis);
 			tile[t].wasVisible = 2;
 		}else if (tile[t].visible == 1 || this.reveal){
-			var vis = (t==tlen-1);
+			setDark = true;
+			var vis = (t == tlen-1)? setDark : false;
 			game.drawTile(tile[t].tile, new Position(x - xx, y - yy), null, vis);
 			tile[t].wasVisible = 1;
 		}
