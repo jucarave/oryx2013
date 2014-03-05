@@ -61,6 +61,10 @@
 	<body>
 		<div style="text-align: center;">
 			<div id="divGame"></div>
+			
+			<div style="height: 32px;"></div>
+			Tull, Developed by <a href="http://camiloramirezblog.wordpress.com/">Jucarave</a> Graphics by <a href="http://oryxdesignlab.com/">Oryx</a>
+			<div>Try the <a href="http://jucarave.dx.am/tull">Trials of oryx version</a></div>
 		</div>
 	</body>
 </html>

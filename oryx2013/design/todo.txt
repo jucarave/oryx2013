@@ -110,6 +110,5 @@
 * Torchs in world                  *
 * Doors                            *
 * Variety to Dungeon               *
-* New Tull                         *
 *                                  *
 ************************************
